@@ -18,7 +18,7 @@
     <ClInclude Include="include\core-systems.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\i-renderer-backend.h">
+    <ClInclude Include="include\i-graphics-backend.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\i-window.h">
@@ -33,6 +33,9 @@
     <ClInclude Include="src\win32-window-class.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\ogl-graphics-backend.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core-systems.cpp">
@@ -42,6 +45,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\win32-window-class.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ogl-graphics-backend.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

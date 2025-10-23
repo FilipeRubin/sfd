@@ -12,6 +12,12 @@ void Win32Window::Finalize()
 
 void Win32Window::Process()
 {
+    HDC hdc = GetDC((HWND)m_hwnd);
+    if (hdc)
+    {
+        SwapBuffers(hdc);
+        ReleaseDC((HWND)m_hwnd, hdc);
+    }
     MSG msg = {};
     while (PeekMessage(&msg, (HWND)m_hwnd, NULL, NULL, PM_REMOVE) > 0)
     {
@@ -73,6 +79,11 @@ bool Win32Window::TryInitialize(const WindowParameters& parameters)
 void Win32Window::Close()
 {
     m_shouldClose = true;
+}
+
+const void* Win32Window::GetHandle() const
+{
+    return m_hwnd;
 }
 
 bool Win32Window::TryIncrement()

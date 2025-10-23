@@ -11,6 +11,7 @@ public:
 	bool IsInitialized() const override;
 	bool TryInitialize(const WindowParameters& parameters) override;
 	void Close();
+	const void* GetHandle() const;
 private:
 	static unsigned int s_instanceCount;
 	static Win32WindowClass s_windowClass;
