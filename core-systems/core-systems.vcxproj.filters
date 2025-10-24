@@ -36,6 +36,9 @@
     <ClInclude Include="src\ogl-graphics-backend.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\ogl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core-systems.cpp">
@@ -48,6 +51,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\ogl-graphics-backend.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ogl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

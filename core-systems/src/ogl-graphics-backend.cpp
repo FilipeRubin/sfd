@@ -1,7 +1,10 @@
 #include "ogl-graphics-backend.h"
+#include "ogl.h"
 #ifdef _WIN32
 #include <Windows.h>
-#include <gl/GL.h>
+#include <iostream>
+
+unsigned int OGLGraphicsBackend::s_instanceCount = 0U;
 
 OGLGraphicsBackend::OGLGraphicsBackend(const void* windowHandle) :
 	m_windowHandle(windowHandle),
@@ -61,6 +64,25 @@ bool OGLGraphicsBackend::TryInitialize()
 	m_oglContext = hglrc;
 	ReleaseDC((HWND)m_windowHandle, hdc);
 
+	if (not TryIncrement())
+	{
+		Finalize();
+		return false;
+	}
+
+	static bool showedDriverStrings = false;
+
+	if (not showedDriverStrings)
+	{
+		showedDriverStrings = true;
+		const unsigned char* glVendor = glGetString(GL_VENDOR);
+		const unsigned char* glRenderer = glGetString(GL_RENDERER);
+		const unsigned char* glVersion = glGetString(GL_VERSION);
+		std::cout << "GL_VENDOR: " << glVendor << std::endl;
+		std::cout << "GL_RENDERER: " << glRenderer << std::endl;
+		std::cout << "GL_VERSION: " << glVersion << std::endl;
+	}
+
 	return true;
 }
 
@@ -73,12 +95,13 @@ void OGLGraphicsBackend::MakeCurrent() const
 
 void OGLGraphicsBackend::Clear(float r, float g, float b) const
 {
-	glClearColor(r, g, b, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
+
 }
 
 void OGLGraphicsBackend::Finalize()
 {
+	Decrement();
+
 	HDC hdc = GetDC((HWND)m_windowHandle);
 
 	if (wglGetCurrentContext() == m_oglContext)
@@ -89,5 +112,27 @@ void OGLGraphicsBackend::Finalize()
 	wglDeleteContext((HGLRC)m_oglContext);
 
 	ReleaseDC((HWND)m_windowHandle, hdc);
+}
+
+bool OGLGraphicsBackend::TryIncrement()
+{
+	if (s_instanceCount == 0U)
+	{
+		if (not TryLoadOGL())
+		{
+			return false;
+		}
+	}
+	s_instanceCount++;
+	return true;
+}
+
+void OGLGraphicsBackend::Decrement()
+{
+	s_instanceCount--;
+	if (s_instanceCount == 0U)
+	{
+		UnloadOGL();
+	}
 }
 #endif // _WIN32

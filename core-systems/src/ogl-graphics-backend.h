@@ -10,6 +10,9 @@ public:
 	void Clear(float r, float g, float b) const override;
 	void Finalize() override;
 private:
+	static unsigned int s_instanceCount;
+	static bool TryIncrement();
+	static void Decrement();
 	const void* m_windowHandle;
 	const void* m_oglContext;
 };
