@@ -10,4 +10,4 @@ typedef unsigned char GLubyte;
 bool TryLoadOGL();
 void UnloadOGL();
 
-const GLubyte* glGetString(GLenum name);
+extern const GLubyte* (*glGetString)(GLenum name);

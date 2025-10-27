@@ -4,6 +4,12 @@
 unsigned int Win32Window::s_instanceCount = 0U;
 Win32WindowClass Win32Window::s_windowClass = Win32WindowClass();
 
+Win32Window::Win32Window() :
+    m_hwnd(NULL),
+    m_shouldClose(false)
+{
+}
+
 void Win32Window::Finalize()
 {
     DestroyWindow((HWND)m_hwnd);

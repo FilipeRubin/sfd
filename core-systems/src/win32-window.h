@@ -5,6 +5,7 @@
 class Win32Window : public IWindow
 {
 public:
+	Win32Window();
 	void Finalize() override;
 	void Process() override;
 	bool ShouldClose() const override;

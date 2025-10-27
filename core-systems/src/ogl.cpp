@@ -4,7 +4,8 @@
 static HMODULE s_glLib = NULL;
 
 typedef const GLubyte*(*PFNGLGETSTRINGPROC)(GLenum name);
-PFNGLGETSTRINGPROC impl_glGetString;
+
+PFNGLGETSTRINGPROC glGetString;
 
 bool TryLoadOGL()
 {
@@ -16,7 +17,7 @@ bool TryLoadOGL()
 	if (s_glLib == NULL)
 		return false;
 
-	impl_glGetString = (PFNGLGETSTRINGPROC)GetProcAddress(s_glLib, "glGetString");
+	glGetString = (PFNGLGETSTRINGPROC)GetProcAddress(s_glLib, "glGetString");
 
 	return true;
 }
@@ -28,9 +29,4 @@ void UnloadOGL()
 		FreeLibrary(s_glLib);
 		s_glLib = NULL;
 	}
-}
-
-const GLubyte* glGetString(GLenum name)
-{
-	return impl_glGetString(name);
 }
