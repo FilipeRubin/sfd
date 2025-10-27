@@ -53,6 +53,11 @@ bool Win32Window::TryInitialize(const WindowParameters& parameters)
 
     SetProcessDPIAware();
 
+    RECT windowRect = { 0, 0, parameters.width, parameters.height };
+    AdjustWindowRect(&windowRect, WS_OVERLAPPEDWINDOW, FALSE);
+    int width = windowRect.right - windowRect.left;
+    int height = windowRect.bottom - windowRect.top;
+
     m_hwnd = CreateWindowEx(
         0,
         s_windowClass.GetWindowClassName(),
@@ -60,8 +65,8 @@ bool Win32Window::TryInitialize(const WindowParameters& parameters)
         WS_OVERLAPPEDWINDOW,
         CW_USEDEFAULT,
         CW_USEDEFAULT,
-        parameters.width,
-        parameters.height,
+        width,
+        height,
         NULL,
         NULL,
         hInstance,
