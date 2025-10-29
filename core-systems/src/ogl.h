@@ -17,6 +17,7 @@ typedef float GLfloat;
 #define GL_VERSION  0x1F02
 
 bool TryLoadOGL();
+const void* CreateContext(const void* windowHandle);
 void UnloadOGL();
 
 extern void (*glClear)(GLbitfield mask);
