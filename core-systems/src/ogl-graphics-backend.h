@@ -13,6 +13,7 @@ private:
 	static unsigned int s_instanceCount;
 	static bool TryIncrement();
 	static void Decrement();
+	static void LoadFunctions();
 	const void* m_windowHandle;
 	const void* m_oglContext;
 };
