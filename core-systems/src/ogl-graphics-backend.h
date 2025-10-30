@@ -7,6 +7,7 @@ public:
 	OGLGraphicsBackend(const void* windowHandle);
 	bool TryInitialize() override;
 	void MakeCurrent() const override;
+	void SwapBuffers() const override;
 	void Clear(float r, float g, float b) const override;
 	void Finalize() override;
 private:
@@ -15,4 +16,5 @@ private:
 	static void Decrement();
 	const void* m_windowHandle;
 	const void* m_oglContext;
+	void* m_hdc;
 };

@@ -7,7 +7,8 @@ unsigned int OGLGraphicsBackend::s_instanceCount = 0U;
 
 OGLGraphicsBackend::OGLGraphicsBackend(const void* windowHandle) :
 	m_windowHandle(windowHandle),
-	m_oglContext(nullptr)
+	m_oglContext(nullptr),
+	m_hdc(nullptr)
 {
 }
 
@@ -18,6 +19,8 @@ bool OGLGraphicsBackend::TryInitialize()
 		return false;
 	}
 	
+	m_hdc = GetDC((HWND)m_windowHandle);
+
 	m_oglContext = CreateContext(m_windowHandle);
 	if (m_oglContext == nullptr)
 	{
@@ -30,9 +33,12 @@ bool OGLGraphicsBackend::TryInitialize()
 
 void OGLGraphicsBackend::MakeCurrent() const
 {
-	HDC hdc = GetDC((HWND)m_windowHandle);
-	wglMakeCurrent(hdc, (HGLRC)m_oglContext);
-	ReleaseDC((HWND)m_windowHandle, hdc);
+	wglMakeCurrent((HDC)m_hdc, (HGLRC)m_oglContext);
+}
+
+void OGLGraphicsBackend::SwapBuffers() const
+{
+	::SwapBuffers((HDC)m_hdc);
 }
 
 void OGLGraphicsBackend::Clear(float r, float g, float b) const
@@ -43,16 +49,14 @@ void OGLGraphicsBackend::Clear(float r, float g, float b) const
 
 void OGLGraphicsBackend::Finalize()
 {
-	HDC hdc = GetDC((HWND)m_windowHandle);
-
 	if (wglGetCurrentContext() == m_oglContext)
 	{
-		wglMakeCurrent(hdc, NULL);
+		wglMakeCurrent((HDC)m_hdc, NULL);
 	}
 
 	wglDeleteContext((HGLRC)m_oglContext);
 
-	ReleaseDC((HWND)m_windowHandle, hdc);
+	ReleaseDC((HWND)m_windowHandle, (HDC)m_hdc);
 
 	Decrement();
 }
