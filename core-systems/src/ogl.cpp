@@ -29,23 +29,39 @@ static PFNWGLCHOOSEPIXELFORMATARB wglChoosePixelFormatARB = nullptr;
 typedef HGLRC(*PFNWGLCREATECONTEXTATTRIBSARB)(HDC hdc, HGLRC hshareContext, const int* attribList);
 static PFNWGLCREATECONTEXTATTRIBSARB wglCreateContextAttribsARB = nullptr;
 
-typedef void (*PFNGLCLEARPROC)(GLbitfield mask);
-typedef void (*PFNGLCLEARCOLORPROC)(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha);
+typedef void          (*PFNGLBINDBUFFERPROC)(GLenum target, GLuint buffer);
+typedef void          (*PFNGLBINDVERTEXARRAYPROC)(GLuint array);
+typedef void          (*PFNGLBUFFERDATAPROC)(GLenum target, GLsizeiptr size, const GLvoid* data, GLenum usage);
+typedef void          (*PFNGLCLEARPROC)(GLbitfield mask);
+typedef void          (*PFNGLCLEARCOLORPROC)(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha);
+typedef void          (*PFNGLDELETEBUFFERSPROC)(GLsizei n, GLuint* buffers);
+typedef void          (*PFNGLDELETEVERTEXARRAYSPROC)(GLsizei n, GLuint* arrays);
+typedef void          (*PFNGLDRAWARRAYSPROC)(GLenum mode, GLint first, GLsizei count);
+typedef void          (*PFNGLENABLEVERTEXATTRIBARRAYPROC)(GLuint index);
+typedef void          (*PFNGLGENBUFFERSPROC)(GLsizei n, GLuint* buffers);
+typedef void          (*PFNGLGENVERTEXARRAYSPROC)(GLsizei n, GLuint* arrays);
 typedef const GLubyte*(*PFNGLGETSTRINGPROC)(GLenum name);
+typedef void          (*PFNGLVERTEXATTRIBPOINTERPROC)(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid* pointer);
 
+void (*glBindBuffer)(GLenum target, GLuint buffer);
+void (*glBindVertexArray)(GLuint array);
+void (*glBufferData)(GLenum target, GLsizeiptr size, const GLvoid* data, GLenum usage);
 void (*glClear)(GLbitfield mask);
 void (*glClearColor)(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha);
+void (*glDeleteBuffers)(GLsizei n, GLuint* arrays);
+void (*glDeleteVertexArrays)(GLsizei n, GLuint* arrays);
+void (*glDrawArrays)(GLenum mode, GLint first, GLsizei count);
+void (*glEnableVertexAttribArray)(GLuint index);
+void (*glGenBuffers)(GLsizei n, GLuint* buffers);
+void (*glGenVertexArrays)(GLsizei n, GLuint* arrays);
 const GLubyte* (*glGetString)(GLenum name);
+void (*glVertexAttribPointer)(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid* pointer);
 
 static bool TryLoadExtFunctions();
+static void LoadOGLFuncs();
 
 bool TryLoadOGL()
 {
-	if (not TryLoadExtFunctions())
-	{
-		return false;
-	}
-
 	if (s_glLib != NULL)
 		return true;
 
@@ -54,9 +70,10 @@ bool TryLoadOGL()
 	if (s_glLib == NULL)
 		return false;
 
-	glClear = (PFNGLCLEARPROC)GetProcAddress(s_glLib, "glClear");
-	glClearColor = (PFNGLCLEARCOLORPROC)GetProcAddress(s_glLib, "glClearColor");
-	glGetString = (PFNGLGETSTRINGPROC)GetProcAddress(s_glLib, "glGetString");
+	if (not TryLoadExtFunctions())
+	{
+		return false;
+	}
 
 	return true;
 }
@@ -198,10 +215,29 @@ static bool TryLoadExtFunctions()
 	wglChoosePixelFormatARB = (PFNWGLCHOOSEPIXELFORMATARB)wglGetProcAddress("wglChoosePixelFormatARB");
 	wglCreateContextAttribsARB = (PFNWGLCREATECONTEXTATTRIBSARB)wglGetProcAddress("wglCreateContextAttribsARB");
 
+	LoadOGLFuncs();
+
 	wglMakeCurrent(NULL, NULL);
 	wglDeleteContext(hglrc);
 	ReleaseDC(hwnd, hdc);
 	DestroyWindow(hwnd);
 	UnregisterClass(className, hInstance);
 	return true;
+}
+
+static void LoadOGLFuncs()
+{
+	glBindBuffer = (PFNGLBINDBUFFERPROC)wglGetProcAddress("glBindBuffer");
+	glBindVertexArray = (PFNGLBINDVERTEXARRAYPROC)wglGetProcAddress("glBindVertexArray");
+	glBufferData = (PFNGLBUFFERDATAPROC)wglGetProcAddress("glBufferData");
+	glClear = (PFNGLCLEARPROC)GetProcAddress(s_glLib, "glClear");
+	glClearColor = (PFNGLCLEARCOLORPROC)GetProcAddress(s_glLib, "glClearColor");
+	glDeleteBuffers = (PFNGLDELETEBUFFERSPROC)wglGetProcAddress("glDeleteBuffers");
+	glDeleteVertexArrays = (PFNGLDELETEVERTEXARRAYSPROC)wglGetProcAddress("glDeleteVertexArrays");
+	glDrawArrays = (PFNGLDRAWARRAYSPROC)wglGetProcAddress("glDrawArrays");
+	glEnableVertexAttribArray = (PFNGLENABLEVERTEXATTRIBARRAYPROC)wglGetProcAddress("glEnableVertexAttribArray");
+	glGenBuffers = (PFNGLGENBUFFERSPROC)wglGetProcAddress("glGenBuffers");
+	glGenVertexArrays = (PFNGLGENVERTEXARRAYSPROC)wglGetProcAddress("glGenVertexArrays");
+	glGetString = (PFNGLGETSTRINGPROC)GetProcAddress(s_glLib, "glGetString");
+	glVertexAttribPointer = (PFNGLVERTEXATTRIBPOINTERPROC)wglGetProcAddress("glVertexAttribPointer");
 }

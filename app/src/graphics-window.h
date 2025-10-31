@@ -12,9 +12,12 @@ public:
 	static bool IsAnyWindowOpen();
 	bool TryInitialize(const WindowParameters& params);
 	bool ShouldClose() const;
-	void Draw(float r, float g, float b);
+	void BeginDraw() const;
+	void EndDraw() const;
 	bool IsInitialized() const;
 	void Finalize();
+	IWindow* GetWindow() const;
+	IGraphicsBackend* GetGraphicsBackend() const;
 private:
 	static vector<GraphicsWindow*> s_instances;
 	unique_ptr<IWindow> m_window;

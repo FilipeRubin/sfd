@@ -40,10 +40,14 @@ bool GraphicsWindow::ShouldClose() const
 	return m_window->ShouldClose();
 }
 
-void GraphicsWindow::Draw(float r, float g, float b)
+void GraphicsWindow::BeginDraw() const
 {
 	m_graphics->MakeCurrent();
-	m_graphics->Clear(r, g, b);
+	m_graphics->GetRenderer()->ClearScreen();
+}
+
+void GraphicsWindow::EndDraw() const
+{
 	m_graphics->SwapBuffers();
 	m_window->Process();
 }
@@ -65,4 +69,14 @@ void GraphicsWindow::Finalize()
 	m_graphics->Finalize();
 	m_window->Finalize();
 	s_instances.erase(remove(s_instances.begin(), s_instances.end(), this), s_instances.end());
+}
+
+IWindow* GraphicsWindow::GetWindow() const
+{
+	return m_window.get();
+}
+
+IGraphicsBackend* GraphicsWindow::GetGraphicsBackend() const
+{
+	return m_graphics.get();
 }

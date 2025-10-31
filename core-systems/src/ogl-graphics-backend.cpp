@@ -1,5 +1,6 @@
 #include "ogl-graphics-backend.h"
 #include "ogl.h"
+#include "rendering/ogl-renderer.h"
 #ifdef _WIN32
 #include <Windows.h>
 
@@ -8,12 +9,18 @@ unsigned int OGLGraphicsBackend::s_instanceCount = 0U;
 OGLGraphicsBackend::OGLGraphicsBackend(const void* windowHandle) :
 	m_windowHandle(windowHandle),
 	m_oglContext(nullptr),
-	m_hdc(nullptr)
+	m_hdc(nullptr),
+	m_renderer(nullptr)
 {
 }
 
 bool OGLGraphicsBackend::TryInitialize()
 {
+	if (m_oglContext != nullptr)
+	{
+		return true;
+	}
+
 	if (not TryIncrement())
 	{
 		return false;
@@ -28,6 +35,8 @@ bool OGLGraphicsBackend::TryInitialize()
 		return false;
 	}
 
+	m_renderer = new OGLRenderer();
+
 	return true;
 }
 
@@ -41,12 +50,6 @@ void OGLGraphicsBackend::SwapBuffers() const
 	::SwapBuffers((HDC)m_hdc);
 }
 
-void OGLGraphicsBackend::Clear(float r, float g, float b) const
-{
-	glClearColor(r, g, b, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
-}
-
 void OGLGraphicsBackend::Finalize()
 {
 	if (wglGetCurrentContext() == m_oglContext)
@@ -58,7 +61,14 @@ void OGLGraphicsBackend::Finalize()
 
 	ReleaseDC((HWND)m_windowHandle, (HDC)m_hdc);
 
+	delete m_renderer;
+
 	Decrement();
+}
+
+IRenderer* OGLGraphicsBackend::GetRenderer() const
+{
+	return m_renderer;
 }
 
 bool OGLGraphicsBackend::TryIncrement()

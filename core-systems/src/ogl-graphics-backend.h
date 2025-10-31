@@ -8,8 +8,8 @@ public:
 	bool TryInitialize() override;
 	void MakeCurrent() const override;
 	void SwapBuffers() const override;
-	void Clear(float r, float g, float b) const override;
 	void Finalize() override;
+	IRenderer* GetRenderer() const override;
 private:
 	static unsigned int s_instanceCount;
 	static bool TryIncrement();
@@ -17,4 +17,5 @@ private:
 	const void* m_windowHandle;
 	const void* m_oglContext;
 	void* m_hdc;
+	IRenderer* m_renderer;
 };
