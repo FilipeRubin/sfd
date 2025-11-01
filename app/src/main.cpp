@@ -24,18 +24,14 @@ int main()
 	}
 
 	gw1.GetGraphicsBackend()->MakeCurrent();
-	gw1.GetGraphicsBackend()->GetRenderer()->SetClearColor(1.0f, 0.0f, 0.0f);
+	gw1.GetGraphicsBackend()->GetRenderer()->SetClearColor(0.6f, 0.0f, 0.0f);
 	gw2.GetGraphicsBackend()->MakeCurrent();
-	gw2.GetGraphicsBackend()->GetRenderer()->SetClearColor(0.0f, 1.0f, 0.0f);
+	gw2.GetGraphicsBackend()->GetRenderer()->SetClearColor(0.0f, 0.6f, 0.0f);
 
 	gw1.GetGraphicsBackend()->MakeCurrent();
 	{
-		float triangle[] = {
-			1.0f, -1.0f,
-			0.5f, 0.0f,
-			0.0f, -1.0f
-		};
-		unique_ptr<IDrawable> drawable = unique_ptr<IDrawable>(gw1.GetGraphicsBackend()->GetRenderer()->CreateNDCMesh(triangle, sizeof(triangle)));
+		INDCRenderingRule* renderingRule = gw1.GetGraphicsBackend()->GetRenderer()->GetResourceManager()->CreateNDCRenderingRule();
+		renderingRule->SetColor(0.1f, 0.5f, 0.7f);
 		while (GraphicsWindow::IsAnyWindowOpen())
 		{
 			if (gw1.IsInitialized())
@@ -43,7 +39,7 @@ int main()
 				else
 				{
 					gw1.BeginDraw();
-					drawable->Draw();
+					renderingRule->Bind();
 					gw1.EndDraw();
 				}
 

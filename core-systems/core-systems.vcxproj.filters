@@ -45,10 +45,19 @@
     <ClInclude Include="src\rendering\ogl-renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\rendering\i-drawable.h">
+    <ClInclude Include="include\rendering\i-rendering-rule.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\rendering\ogl-ndc-mesh.h">
+    <ClInclude Include="include\rendering\i-renderer-resource-manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rendering\ogl-ndc-rendering-rule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rendering\i-ndc-rendering-rule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rendering\ogl-renderer-resource-manager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -71,7 +80,10 @@
     <ClCompile Include="src\rendering\ogl-renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\rendering\ogl-ndc-mesh.cpp">
+    <ClCompile Include="src\rendering\ogl-ndc-rendering-rule.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rendering\ogl-renderer-resource-manager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

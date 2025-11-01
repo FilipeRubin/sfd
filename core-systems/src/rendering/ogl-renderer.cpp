@@ -1,6 +1,16 @@
 #include "ogl-renderer.h"
 #include "ogl.h"
-#include "ogl-ndc-mesh.h"
+#include "ogl-renderer-resource-manager.h"
+
+OGLRenderer::OGLRenderer() :
+	m_resourceManager(new OGLRendererResourceManager())
+{
+}
+
+OGLRenderer::~OGLRenderer()
+{
+	delete m_resourceManager;
+}
 
 void OGLRenderer::SetClearColor(float r, float g, float b)
 {
@@ -12,7 +22,7 @@ void OGLRenderer::ClearScreen() const
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-IDrawable* OGLRenderer::CreateNDCMesh(float* data, size_t dataLength) const
+IRendererResourceManager* OGLRenderer::GetResourceManager() const
 {
-	return new OGLNDCMesh(data, dataLength);
+	return m_resourceManager;
 }

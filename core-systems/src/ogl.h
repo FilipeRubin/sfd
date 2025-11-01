@@ -11,6 +11,7 @@ typedef unsigned int GLuint;
 typedef float GLfloat;
 typedef void GLvoid;
 typedef signed long long int GLsizeiptr;
+typedef char GLchar;
 
 #define GL_FALSE 0
 #define GL_TRUE 1
@@ -59,20 +60,35 @@ typedef signed long long int GLsizeiptr;
 #define GL_DYNAMIC_READ 0x88E9
 #define GL_DYNAMIC_COPY 0x88EA
 
+#define GL_FRAGMENT_SHADER 0x8B30
+#define GL_VERTEX_SHADER   0x8B31
+#define GL_GEOMETRY_SHADER 0x8DD9
+
 bool TryLoadOGL();
 const void* CreateContext(const void* windowHandle);
 void UnloadOGL();
 
-extern void (*glBindBuffer)(GLenum target, GLuint buffer);
-extern void (*glBindVertexArray)(GLuint array);
-extern void (*glBufferData)(GLenum target, GLsizeiptr size, const GLvoid* data, GLenum usage);
-extern void (*glClear)(GLbitfield mask);
-extern void (*glClearColor)(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha);
-extern void (*glDeleteBuffers)(GLsizei n, GLuint* arrays);
-extern void (*glDeleteVertexArrays)(GLsizei n, GLuint* arrays);
-extern void (*glDrawArrays)(GLenum mode, GLint first, GLsizei count);
-extern void (*glEnableVertexAttribArray)(GLuint index);
-extern void (*glGenBuffers)(GLsizei n, GLuint* buffers);
-extern void (*glGenVertexArrays)(GLsizei n, GLuint* arrays);
-extern const GLubyte* (*glGetString)(GLenum name);
-extern void (*glVertexAttribPointer)(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid* pointer);
+extern void          (*glAttachShader)(GLuint program, GLuint shader);
+extern void          (*glBindBuffer)(GLenum target, GLuint buffer);
+extern void          (*glBindVertexArray)(GLuint array);
+extern void          (*glBufferData)(GLenum target, GLsizeiptr size, const GLvoid* data, GLenum usage);
+extern void          (*glClear)(GLbitfield mask);
+extern void          (*glClearColor)(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha);
+extern void          (*glCompileShader)(GLuint shader);
+extern GLuint        (*glCreateProgram)();
+extern GLuint        (*glCreateShader)(GLenum shaderType);
+extern void          (*glDeleteBuffers)(GLsizei n, GLuint* arrays);
+extern void          (*glDeleteProgram)(GLuint program);
+extern void          (*glDeleteShader)(GLuint shader);
+extern void          (*glDeleteVertexArrays)(GLsizei n, GLuint* arrays);
+extern void          (*glDrawArrays)(GLenum mode, GLint first, GLsizei count);
+extern void          (*glEnableVertexAttribArray)(GLuint index);
+extern void          (*glGenBuffers)(GLsizei n, GLuint* buffers);
+extern void          (*glGenVertexArrays)(GLsizei n, GLuint* arrays);
+extern const GLubyte*(*glGetString)(GLenum name);
+extern GLint         (*glGetUniformLocation)(GLuint program, const GLchar* name);
+extern void          (*glLinkProgram)(GLuint program);
+extern void          (*glShaderSource)(GLuint shader, GLsizei count, const GLchar** string, const GLint* length);
+extern void          (*glUseProgram)(GLuint program);
+extern void          (*glUniform3f)(GLint location, GLfloat v0, GLfloat v1, GLfloat v2);
+extern void          (*glVertexAttribPointer)(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid* pointer);
