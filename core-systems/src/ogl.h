@@ -65,7 +65,7 @@ typedef char GLchar;
 #define GL_GEOMETRY_SHADER 0x8DD9
 
 bool TryLoadOGL();
-const void* CreateContext(const void* windowHandle);
+const void* CreateContext(const void* windowHandle, const void* sharedContext = nullptr);
 void UnloadOGL();
 
 extern void          (*glAttachShader)(GLuint program, GLuint shader);
@@ -87,6 +87,8 @@ extern void          (*glGenBuffers)(GLsizei n, GLuint* buffers);
 extern void          (*glGenVertexArrays)(GLsizei n, GLuint* arrays);
 extern const GLubyte*(*glGetString)(GLenum name);
 extern GLint         (*glGetUniformLocation)(GLuint program, const GLchar* name);
+extern GLboolean     (*glIsProgram)(GLuint program);
+extern GLboolean     (*glIsVertexArray)(GLuint array);
 extern void          (*glLinkProgram)(GLuint program);
 extern void          (*glShaderSource)(GLuint shader, GLsizei count, const GLchar** string, const GLint* length);
 extern void          (*glUseProgram)(GLuint program);

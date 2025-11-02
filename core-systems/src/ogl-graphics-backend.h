@@ -4,14 +4,16 @@
 class OGLGraphicsBackend : public IGraphicsBackend
 {
 public:
+	static OGLGraphicsBackend* GetCurrent();
 	OGLGraphicsBackend(const void* windowHandle);
-	bool TryInitialize() override;
+	bool TryInitialize(IGraphicsBackend* sharedBackend = nullptr) override;
 	void MakeCurrent() const override;
 	void SwapBuffers() const override;
 	void Finalize() override;
 	IRenderer* GetRenderer() const override;
 private:
 	static unsigned int s_instanceCount;
+	static OGLGraphicsBackend* s_current;
 	static bool TryIncrement();
 	static void Decrement();
 	const void* m_windowHandle;

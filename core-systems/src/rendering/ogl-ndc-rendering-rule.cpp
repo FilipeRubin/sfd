@@ -27,11 +27,9 @@ void main()
 }
 )";
 
-OGLNCDRenderingRule::OGLNCDRenderingRule() :
+OGLNDCRenderingRule::OGLNDCRenderingRule() :
 	m_program(0U),
-	m_colorUniform(0),
-	m_vbo(0U),
-	m_vao(0U)
+	m_colorUniform(0)
 {
 	m_program = glCreateProgram();
 	GLuint vs = glCreateShader(GL_VERTEX_SHADER);
@@ -47,42 +45,22 @@ OGLNCDRenderingRule::OGLNCDRenderingRule() :
 	glDeleteShader(fs);
 
 	m_colorUniform = glGetUniformLocation(m_program, "u_color");
-
-	float triangle[] = {
-		0.5f, -0.5f,
-		0.0f, 0.5f,
-		-0.5f, -0.5f
-	};
-
-	glGenBuffers(1, &m_vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(triangle), triangle, GL_STATIC_DRAW);
-	glGenVertexArrays(1, &m_vao);
-	glBindVertexArray(m_vao);
-	glVertexAttribPointer(0U, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2U, (void*)0);
-	glEnableVertexAttribArray(0U);
 }
 
-OGLNCDRenderingRule::~OGLNCDRenderingRule()
+OGLNDCRenderingRule::~OGLNDCRenderingRule()
 {
 	glDeleteProgram(m_program);
 	m_program = 0U;
 	m_colorUniform = 0;
-
-	glDeleteBuffers(1, &m_vbo);
-	glDeleteVertexArrays(1, &m_vao);
 }
 
-void OGLNCDRenderingRule::SetColor(float r, float g, float b)
+void OGLNDCRenderingRule::SetColor(float r, float g, float b)
 {
 	glUseProgram(m_program);
 	glUniform3f(m_colorUniform, r, g, b);
 }
 
-void OGLNCDRenderingRule::Bind() const
+void OGLNDCRenderingRule::Bind() const
 {
 	glUseProgram(m_program);
-
-	glBindVertexArray(m_vao);
-	glDrawArrays(GL_TRIANGLES, 0, 3);
 }

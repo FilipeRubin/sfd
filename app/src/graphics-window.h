@@ -10,7 +10,7 @@ class GraphicsWindow
 {
 public:
 	static bool IsAnyWindowOpen();
-	bool TryInitialize(const WindowParameters& params);
+	bool TryInitialize(const WindowParameters& params, IGraphicsBackend* sharedBackend = nullptr);
 	bool ShouldClose() const;
 	void BeginDraw() const;
 	void EndDraw() const;

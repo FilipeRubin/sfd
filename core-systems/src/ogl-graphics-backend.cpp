@@ -5,6 +5,12 @@
 #include <Windows.h>
 
 unsigned int OGLGraphicsBackend::s_instanceCount = 0U;
+OGLGraphicsBackend* OGLGraphicsBackend::s_current = nullptr;
+
+OGLGraphicsBackend* OGLGraphicsBackend::GetCurrent()
+{
+	return s_current;
+}
 
 OGLGraphicsBackend::OGLGraphicsBackend(const void* windowHandle) :
 	m_windowHandle(windowHandle),
@@ -14,7 +20,7 @@ OGLGraphicsBackend::OGLGraphicsBackend(const void* windowHandle) :
 {
 }
 
-bool OGLGraphicsBackend::TryInitialize()
+bool OGLGraphicsBackend::TryInitialize(IGraphicsBackend* sharedBackend)
 {
 	if (m_oglContext != nullptr)
 	{
@@ -28,7 +34,13 @@ bool OGLGraphicsBackend::TryInitialize()
 	
 	m_hdc = GetDC((HWND)m_windowHandle);
 
-	m_oglContext = CreateContext(m_windowHandle);
+	HGLRC sharedContext = nullptr;
+	if (sharedBackend)
+	{
+		sharedContext = (HGLRC)dynamic_cast<OGLGraphicsBackend*>(sharedBackend)->m_oglContext;
+	}
+
+	m_oglContext = CreateContext(m_windowHandle, sharedContext);
 	if (m_oglContext == nullptr)
 	{
 		Finalize();
@@ -43,6 +55,7 @@ bool OGLGraphicsBackend::TryInitialize()
 void OGLGraphicsBackend::MakeCurrent() const
 {
 	wglMakeCurrent((HDC)m_hdc, (HGLRC)m_oglContext);
+	s_current = const_cast<OGLGraphicsBackend*>(this);
 }
 
 void OGLGraphicsBackend::SwapBuffers() const

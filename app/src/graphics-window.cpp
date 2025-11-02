@@ -15,7 +15,7 @@ bool GraphicsWindow::IsAnyWindowOpen()
 	return false;
 }
 
-bool GraphicsWindow::TryInitialize(const WindowParameters& params)
+bool GraphicsWindow::TryInitialize(const WindowParameters& params, IGraphicsBackend* sharedBackend)
 {
 	m_window = unique_ptr<IWindow>(CoreSystems::CreateWindow());
 	if (not m_window->TryInitialize(params))
@@ -24,7 +24,7 @@ bool GraphicsWindow::TryInitialize(const WindowParameters& params)
 	}
 
 	m_graphics = unique_ptr<IGraphicsBackend>(CoreSystems::CreateGraphicsBackend(m_window.get()));
-	if (not m_graphics->TryInitialize())
+	if (not m_graphics->TryInitialize(sharedBackend))
 	{
 		m_window->Finalize();
 		return false;

@@ -165,7 +165,9 @@
   <ItemGroup>
     <ClInclude Include="include\core-systems.h" />
     <ClInclude Include="include\i-graphics-backend.h" />
+    <ClInclude Include="include\rendering\i-drawable.h" />
     <ClInclude Include="include\rendering\i-ndc-rendering-rule.h" />
+    <ClInclude Include="include\rendering\i-ndc-shape.h" />
     <ClInclude Include="include\rendering\i-renderer-resource-manager.h" />
     <ClInclude Include="include\rendering\i-renderer.h" />
     <ClInclude Include="include\i-window.h" />
@@ -173,6 +175,7 @@
     <ClInclude Include="include\window-parameters.h" />
     <ClInclude Include="src\ogl-graphics-backend.h" />
     <ClInclude Include="src\rendering\ogl-ndc-rendering-rule.h" />
+    <ClInclude Include="src\rendering\ogl-ndc-shape.h" />
     <ClInclude Include="src\rendering\ogl-renderer-resource-manager.h" />
     <ClInclude Include="src\rendering\ogl-renderer.h" />
     <ClInclude Include="src\ogl.h" />
@@ -183,6 +186,7 @@
     <ClCompile Include="src\core-systems.cpp" />
     <ClCompile Include="src\ogl-graphics-backend.cpp" />
     <ClCompile Include="src\rendering\ogl-ndc-rendering-rule.cpp" />
+    <ClCompile Include="src\rendering\ogl-ndc-shape.cpp" />
     <ClCompile Include="src\rendering\ogl-renderer-resource-manager.cpp" />
     <ClCompile Include="src\rendering\ogl-renderer.cpp" />
     <ClCompile Include="src\ogl.cpp" />

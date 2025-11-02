@@ -48,6 +48,8 @@ typedef void          (*PFNGLGENBUFFERSPROC)(GLsizei n, GLuint* buffers);
 typedef void          (*PFNGLGENVERTEXARRAYSPROC)(GLsizei n, GLuint* arrays);
 typedef const GLubyte*(*PFNGLGETSTRINGPROC)(GLenum name);
 typedef GLint         (*PFNGLGETUNIFORMLOCATIONPROC)(GLuint program, const GLchar* name);
+typedef GLboolean     (*PFNGLISPROGRAMPROC)(GLuint program);
+typedef GLboolean     (*PFNGLISVERTEXARRAYPROC)(GLuint array);
 typedef void          (*PFNGLLINKPROGRAMPROC)(GLuint program);
 typedef void          (*PFNGLSHADERSOURCEPROC)(GLuint shader, GLsizei count, const GLchar** string, const GLint* length);
 typedef void          (*PFNGLUNIFORM3FPROC)(GLint location, GLfloat v0, GLfloat v1, GLfloat v2);
@@ -73,6 +75,8 @@ void          (*glGenBuffers)(GLsizei n, GLuint* buffers);
 void          (*glGenVertexArrays)(GLsizei n, GLuint* arrays);
 const GLubyte*(*glGetString)(GLenum name);
 GLint         (*glGetUniformLocation)(GLuint program, const GLchar* name);
+GLboolean     (*glIsProgram)(GLuint program);
+GLboolean     (*glIsVertexArray)(GLuint array);
 void          (*glLinkProgram)(GLuint program);
 void          (*glShaderSource)(GLuint shader, GLsizei count, const GLchar** string, const GLint* length);
 void          (*glUseProgram)(GLuint program);
@@ -100,7 +104,7 @@ bool TryLoadOGL()
 	return true;
 }
 
-const void* CreateContext(const void* windowHandle)
+const void* CreateContext(const void* windowHandle, const void* sharedContext)
 {
 	HDC hdc = GetDC((HWND)windowHandle);
 
@@ -144,7 +148,7 @@ const void* CreateContext(const void* windowHandle)
 		WGL_CONTEXT_PROFILE_MASK_ARB, WGL_CONTEXT_CORE_PROFILE_BIT_ARB,
 		0
 	};
-	HGLRC hglrc = wglCreateContextAttribsARB(hdc, NULL, contextAttribs);
+	HGLRC hglrc = wglCreateContextAttribsARB(hdc, (HGLRC)sharedContext, contextAttribs);
 
 	ReleaseDC((HWND)windowHandle, hdc);
 	return hglrc;
@@ -268,6 +272,8 @@ static void LoadOGLFuncs()
 	glGenVertexArrays = (PFNGLGENVERTEXARRAYSPROC)wglGetProcAddress("glGenVertexArrays");
 	glGetString = (PFNGLGETSTRINGPROC)GetProcAddress(s_glLib, "glGetString");
 	glGetUniformLocation = (PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation");
+	glIsProgram = (PFNGLISPROGRAMPROC)wglGetProcAddress("glIsProgram");
+	glIsVertexArray = (PFNGLISVERTEXARRAYPROC)wglGetProcAddress("glIsVertexArray");
 	glLinkProgram = (PFNGLLINKPROGRAMPROC)wglGetProcAddress("glLinkProgram");
 	glShaderSource = (PFNGLSHADERSOURCEPROC)wglGetProcAddress("glShaderSource");
 	glUseProgram = (PFNGLUSEPROGRAMPROC)wglGetProcAddress("glUseProgram");
