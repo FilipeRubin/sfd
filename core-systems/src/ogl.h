@@ -44,6 +44,8 @@ typedef char GLchar;
 #define GL_RENDERER 0x1F01
 #define GL_VERSION  0x1F02
 
+#define GL_MULTISAMPLE 0x809D
+
 #define GL_ARRAY_BUFFER         0x8892
 #define GL_ELEMENT_ARRAY_BUFFER 0x8893
 #define GL_COPY_READ_BUFFER     0x8F36
@@ -82,6 +84,7 @@ extern void          (*glDeleteProgram)(GLuint program);
 extern void          (*glDeleteShader)(GLuint shader);
 extern void          (*glDeleteVertexArrays)(GLsizei n, GLuint* arrays);
 extern void          (*glDrawArrays)(GLenum mode, GLint first, GLsizei count);
+extern void          (*glEnable)(GLenum cap);
 extern void          (*glEnableVertexAttribArray)(GLuint index);
 extern void          (*glGenBuffers)(GLsizei n, GLuint* buffers);
 extern void          (*glGenVertexArrays)(GLsizei n, GLuint* arrays);

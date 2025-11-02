@@ -1,8 +1,41 @@
 #include "graphics-window.h"
+#include <math/matrix4x4.h>
+#include <iostream>
+#include <iomanip>
+
+void printMatrix(const Matrix4x4& matrix)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			std::cout << std::setw(3) << (int)matrix[j][i] << " ";
+		}
+		std::cout << std::endl;
+	}
+	std::cout << std::endl;
+}
 
 int main()
 {
-	GraphicsWindow gw1 = GraphicsWindow();
+	Matrix4x4 m1 = {
+		{ 1, 0, 2, 1 },
+		{ 2, 1, 3, 5 },
+		{ 3, 0, 4, 1 },
+		{ 4, 1, 7, 1 }
+	};
+	Matrix4x4 m2 = {
+		{ 1, 2, 3, 4 },
+		{ 1, 2, 1, 1 },
+		{ 3, 1, 4, 1 },
+		{ 2, 3, 6, 5 }
+	};
+
+	Matrix4x4 m3 = m1 * m2;
+
+	printMatrix(m3);
+
+	/*GraphicsWindow gw1 = GraphicsWindow();
 	GraphicsWindow gw2 = GraphicsWindow();
 	if (not gw1.TryInitialize({
 		.title = L"Game window",
@@ -78,7 +111,7 @@ int main()
 	}
 
 	gw1.Finalize();
-	gw2.Finalize();
+	gw2.Finalize();*/
 
 	return 0;
 }

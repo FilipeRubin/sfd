@@ -165,6 +165,10 @@
   <ItemGroup>
     <ClInclude Include="include\core-systems.h" />
     <ClInclude Include="include\i-graphics-backend.h" />
+    <ClInclude Include="include\math\matrix4x4.h" />
+    <ClInclude Include="include\math\vector2.h" />
+    <ClInclude Include="include\math\vector3.h" />
+    <ClInclude Include="include\math\vector4.h" />
     <ClInclude Include="include\rendering\i-drawable.h" />
     <ClInclude Include="include\rendering\i-ndc-rendering-rule.h" />
     <ClInclude Include="include\rendering\i-ndc-shape.h" />
