@@ -2,8 +2,8 @@
 #include "ogl.h"
 #include "ogl-renderer-resource-manager.h"
 
-OGLRenderer::OGLRenderer() :
-	m_resourceManager(new OGLRendererResourceManager())
+OGLRenderer::OGLRenderer(OGLGraphicsBackend* backend) :
+	m_resourceManager(new OGLRendererResourceManager(backend))
 {
 }
 

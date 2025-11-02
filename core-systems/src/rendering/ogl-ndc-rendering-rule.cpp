@@ -31,6 +31,10 @@ OGLNDCRenderingRule::OGLNDCRenderingRule() :
 	m_program(0U),
 	m_colorUniform(0)
 {
+}
+
+void OGLNDCRenderingRule::Create()
+{
 	m_program = glCreateProgram();
 	GLuint vs = glCreateShader(GL_VERTEX_SHADER);
 	GLuint fs = glCreateShader(GL_FRAGMENT_SHADER);
@@ -47,7 +51,7 @@ OGLNDCRenderingRule::OGLNDCRenderingRule() :
 	m_colorUniform = glGetUniformLocation(m_program, "u_color");
 }
 
-OGLNDCRenderingRule::~OGLNDCRenderingRule()
+void OGLNDCRenderingRule::Destroy()
 {
 	glDeleteProgram(m_program);
 	m_program = 0U;
@@ -56,7 +60,6 @@ OGLNDCRenderingRule::~OGLNDCRenderingRule()
 
 void OGLNDCRenderingRule::SetColor(float r, float g, float b)
 {
-	glUseProgram(m_program);
 	glUniform3f(m_colorUniform, r, g, b);
 }
 

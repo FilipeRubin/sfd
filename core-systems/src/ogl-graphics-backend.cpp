@@ -1,6 +1,7 @@
 #include "ogl-graphics-backend.h"
 #include "ogl.h"
 #include "rendering/ogl-renderer.h"
+#include "rendering/ogl-renderer-resource-manager.h"
 #ifdef _WIN32
 #include <Windows.h>
 
@@ -47,7 +48,7 @@ bool OGLGraphicsBackend::TryInitialize(IGraphicsBackend* sharedBackend)
 		return false;
 	}
 
-	m_renderer = new OGLRenderer();
+	m_renderer = new OGLRenderer(this);
 
 	return true;
 }
@@ -56,6 +57,8 @@ void OGLGraphicsBackend::MakeCurrent() const
 {
 	wglMakeCurrent((HDC)m_hdc, (HGLRC)m_oglContext);
 	s_current = const_cast<OGLGraphicsBackend*>(this);
+	OGLRendererResourceManager* rm = dynamic_cast<OGLRendererResourceManager*>(GetRenderer()->GetResourceManager());
+	rm->Update();
 }
 
 void OGLGraphicsBackend::SwapBuffers() const
@@ -65,6 +68,8 @@ void OGLGraphicsBackend::SwapBuffers() const
 
 void OGLGraphicsBackend::Finalize()
 {
+	delete m_renderer;
+
 	if (wglGetCurrentContext() == m_oglContext)
 	{
 		wglMakeCurrent((HDC)m_hdc, NULL);
@@ -73,8 +78,6 @@ void OGLGraphicsBackend::Finalize()
 	wglDeleteContext((HGLRC)m_oglContext);
 
 	ReleaseDC((HWND)m_windowHandle, (HDC)m_hdc);
-
-	delete m_renderer;
 
 	Decrement();
 }

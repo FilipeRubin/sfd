@@ -168,6 +168,7 @@
     <ClInclude Include="include\rendering\i-drawable.h" />
     <ClInclude Include="include\rendering\i-ndc-rendering-rule.h" />
     <ClInclude Include="include\rendering\i-ndc-shape.h" />
+    <ClInclude Include="include\rendering\i-renderer-managed.h" />
     <ClInclude Include="include\rendering\i-renderer-resource-manager.h" />
     <ClInclude Include="include\rendering\i-renderer.h" />
     <ClInclude Include="include\i-window.h" />

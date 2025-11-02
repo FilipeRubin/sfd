@@ -17,16 +17,16 @@ int main()
 		.title = L"Debug window",
 		.width = 640,
 		.height = 480
-		}, gw1.GetGraphicsBackend()))
+		}))
 	{
 		gw1.Finalize();
 		return 2;
 	}
 
 	gw1.GetGraphicsBackend()->MakeCurrent();
-	gw1.GetGraphicsBackend()->GetRenderer()->SetClearColor(0.6f, 0.0f, 0.0f);
+	gw1.GetGraphicsBackend()->GetRenderer()->SetClearColor(0.3f, 0.05f, 0.05f);
 	gw2.GetGraphicsBackend()->MakeCurrent();
-	gw2.GetGraphicsBackend()->GetRenderer()->SetClearColor(0.0f, 0.6f, 0.0f);
+	gw2.GetGraphicsBackend()->GetRenderer()->SetClearColor(0.05f, 0.3f, 0.05f);
 
 	{
 		float triangle[] = {
@@ -36,8 +36,17 @@ int main()
 		};
 		gw1.GetGraphicsBackend()->MakeCurrent();
 		IRendererResourceManager* rm = gw1.GetGraphicsBackend()->GetRenderer()->GetResourceManager();
-		INDCRenderingRule* renderingRule = rm->CreateNDCRenderingRule();
+		INDCRenderingRule* rr = rm->CreateNDCRenderingRule();
+		rr->Bind();
+		rr->SetColor(0.1f, 0.5f, 0.7f);
 		INDCShape* shape = rm->CreateNDCShape(triangle, sizeof(triangle));
+
+		gw2.GetGraphicsBackend()->MakeCurrent();
+		IRendererResourceManager* rm2 = gw2.GetGraphicsBackend()->GetRenderer()->GetResourceManager();
+		INDCRenderingRule* rr2 = rm2->CreateNDCRenderingRule();
+		rr2->Bind();
+		rr2->SetColor(0.75f, 0.7f, 0.65f);
+		INDCShape* shape2 = rm2->CreateNDCShape(triangle, sizeof(triangle));
 		while (GraphicsWindow::IsAnyWindowOpen())
 		{
 			if (gw1.IsInitialized())
@@ -45,8 +54,7 @@ int main()
 				else
 				{
 					gw1.BeginDraw();
-					renderingRule->Bind();
-					renderingRule->SetColor(0.1f, 0.5f, 0.7f);
+					rr->Bind();
 					shape->Draw();
 					gw1.EndDraw();
 				}
@@ -56,7 +64,8 @@ int main()
 				else
 				{
 					gw2.BeginDraw();
-					renderingRule->Bind();
+					rr2->Bind();
+					shape2->Draw();
 					gw2.EndDraw();
 				}
 		}
