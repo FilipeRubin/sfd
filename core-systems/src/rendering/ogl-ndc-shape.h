@@ -1,6 +1,6 @@
 #pragma once
 #include <rendering/i-ndc-shape.h>
-#include <rendering/i-renderer-managed.h>
+#include "i-renderer-managed.h"
 
 class OGLNDCShape : public INDCShape, public IRendererManaged
 {

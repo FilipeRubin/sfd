@@ -69,7 +69,7 @@
     <ClInclude Include="src\rendering\ogl-ndc-shape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\rendering\i-renderer-managed.h">
+    <ClInclude Include="src\rendering\i-renderer-managed.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

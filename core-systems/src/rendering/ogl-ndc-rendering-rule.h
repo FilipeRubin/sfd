@@ -1,6 +1,6 @@
 #pragma once
 #include <rendering/i-ndc-rendering-rule.h>
-#include <rendering/i-renderer-managed.h>
+#include "i-renderer-managed.h"
 
 class OGLNDCRenderingRule final : public INDCRenderingRule, public IRendererManaged
 {
