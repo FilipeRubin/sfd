@@ -1,6 +1,8 @@
 #include "ogl-renderer-resource-manager.h"
 #include "ogl-ndc-rendering-rule.h"
 #include "ogl-ndc-shape.h"
+#include "ogl-basic-3d-rendering-rule.h"
+#include "ogl-basic-3d-mesh.h"
 
 OGLRendererResourceManager::OGLRendererResourceManager(OGLGraphicsBackend* backend) :
     m_backend(backend),
@@ -38,30 +40,22 @@ OGLRendererResourceManager::~OGLRendererResourceManager()
 
 INDCRenderingRule* OGLRendererResourceManager::CreateNDCRenderingRule()
 {
-    bool isCurrentBackend = OGLGraphicsBackend::GetCurrent() == m_backend;
-    list<unique_ptr<IRendererManaged>>& container = isCurrentBackend ? m_resources : m_waitingToCreate;
-    unique_ptr<OGLNDCRenderingRule> renderingRule = std::make_unique<OGLNDCRenderingRule>();
-    if (isCurrentBackend)
-    {
-        renderingRule->Create();
-    }
-    OGLNDCRenderingRule* result = static_cast<OGLNDCRenderingRule*>(renderingRule.get());
-    container.emplace_back(std::move(renderingRule));
-    return result;
+    return CreateResource<OGLNDCRenderingRule>();
+}
+
+IBasic3DRenderingRule* OGLRendererResourceManager::CreateBasic3DRenderingRule()
+{
+    return CreateResource<OGLBasic3DRenderingRule>();
 }
 
 INDCShape* OGLRendererResourceManager::CreateNDCShape(float* vertices, size_t length)
 {
-    bool isCurrentBackend = OGLGraphicsBackend::GetCurrent() == m_backend;
-    list<unique_ptr<IRendererManaged>>& container = isCurrentBackend ? m_resources : m_waitingToCreate;
-    unique_ptr<OGLNDCShape> shape = std::make_unique<OGLNDCShape>(vertices, length);
-    if (isCurrentBackend)
-    {
-        shape->Create();
-    }
-    INDCShape* result = static_cast<INDCShape*>(shape.get());
-    container.emplace_back(std::move(shape));
-    return result;
+    return CreateResource<OGLNDCShape>(vertices, length);
+}
+
+IBasic3DMesh* OGLRendererResourceManager::CreateBasic3DMesh(float* vertices, size_t verticesLength, unsigned int* indices, size_t indicesLength)
+{
+    return CreateResource<OGLBasic3DMesh>(vertices, verticesLength, indices, indicesLength);
 }
 
 void OGLRendererResourceManager::Update()

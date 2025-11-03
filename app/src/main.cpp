@@ -18,100 +18,55 @@ void printMatrix(const Matrix4x4& matrix)
 
 int main()
 {
-	Matrix4x4 m1 = {
-		{ 1, 0, 2, 1 },
-		{ 2, 1, 3, 5 },
-		{ 3, 0, 4, 1 },
-		{ 4, 1, 7, 1 }
-	};
-	Matrix4x4 m2 = {
-		{ 1, 2, 3, 4 },
-		{ 1, 2, 1, 1 },
-		{ 3, 1, 4, 1 },
-		{ 2, 3, 6, 5 }
-	};
-
-	Matrix4x4 m3 = m1 * m2;
-
-	printMatrix(m3);
-
-	/*GraphicsWindow gw1 = GraphicsWindow();
-	GraphicsWindow gw2 = GraphicsWindow();
-	if (not gw1.TryInitialize({
-		.title = L"Game window",
-		.width = 1280,
-		.height = 720
-		}))
+	GraphicsWindow gw = GraphicsWindow();
+	WindowParameters wp = WindowParameters();
+	wp.title = L"Game";
+	wp.width = 1280;
+	wp.height = 720;
+	if (not gw.TryInitialize(wp))
 	{
 		return 1;
 	}
 
-	if (not gw2.TryInitialize({
-		.title = L"Debug window",
-		.width = 640,
-		.height = 480
-		}))
+	float vertices[]
 	{
-		gw1.Finalize();
-		return 2;
+		 1.0f, -1.0f, 0.0f, 1.0f, 0.3f, 0.0f,
+		 1.0f,  1.0f, 0.0f, 0.0f, 0.3f, 1.0f,
+		-1.0f,  1.0f, 0.0f, 0.3f, 1.0f, 0.0f,
+		-1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.3f
+	};
+
+	unsigned int indices[]
+	{
+		0U, 1U, 2U,
+		0U, 2U, 3U
+	};
+
+	IRendererResourceManager* rm = gw.GetGraphicsBackend()->GetRenderer()->GetResourceManager();
+	IBasic3DRenderingRule* rr = rm->CreateBasic3DRenderingRule();
+	IBasic3DMesh* mesh = rm->CreateBasic3DMesh(vertices, sizeof(vertices), indices, sizeof(indices));
+	gw.GetGraphicsBackend()->MakeCurrent();
+	rr->Bind();
+	Matrix4x4 perspective = Matrix4x4::Perspective(16.f / 9.f, 3.1415926 / 2.f, 0.1f, 10.0f);
+	rr->SetProjection(perspective);
+
+	float rotY = 0.0f;
+
+	while (not gw.ShouldClose())
+	{
+		Matrix4x4 model = Matrix4x4::Identity();
+		model = model * Matrix4x4::Translation({ 0.0f, 0.0f, -5.0f });
+		model = model * Matrix4x4::RotationY(rotY);
+		rr->SetModel(model);
+
+		gw.BeginDraw();
+		mesh->Draw();
+		gw.EndDraw();
+
+		rotY += 0.0002f;
 	}
 
-	gw1.GetGraphicsBackend()->MakeCurrent();
-	gw1.GetGraphicsBackend()->GetRenderer()->SetClearColor(0.3f, 0.05f, 0.05f);
-	gw2.GetGraphicsBackend()->MakeCurrent();
-	gw2.GetGraphicsBackend()->GetRenderer()->SetClearColor(0.05f, 0.3f, 0.05f);
-
-	{
-		float triangle[] = {
-			0.5f, -0.5f,
-			0.0f, 0.5f,
-			-0.5f, -0.5f
-		};
-
-		float square[] = {
-			0.5f, -0.5f,
-			0.5f, 0.5f,
-			-0.5f, -0.5f,
-			-0.5f, -0.5f,
-			0.5f, 0.5f,
-			-0.5f, 0.5f
-		};
-
-		IRendererResourceManager* rm = gw1.GetGraphicsBackend()->GetRenderer()->GetResourceManager();
-		INDCRenderingRule* rr = rm->CreateNDCRenderingRule();
-		INDCShape* shape = rm->CreateNDCShape(triangle, sizeof(triangle));
-
-		IRendererResourceManager* rm2 = gw2.GetGraphicsBackend()->GetRenderer()->GetResourceManager();
-		INDCRenderingRule* rr2 = rm2->CreateNDCRenderingRule();
-		INDCShape* shape2 = rm2->CreateNDCShape(square, sizeof(square));
-		while (GraphicsWindow::IsAnyWindowOpen())
-		{
-			if (gw1.IsInitialized())
-				if (gw1.ShouldClose()) gw1.Finalize();
-				else
-				{
-					gw1.BeginDraw();
-					rr->Bind();
-					rr->SetColor(0.1f, 0.5f, 0.7f);
-					shape->Draw();
-					gw1.EndDraw();
-				}
-
-			if (gw2.IsInitialized())
-				if (gw2.ShouldClose()) gw2.Finalize();
-				else
-				{
-					gw2.BeginDraw();
-					rr2->Bind();
-					rr2->SetColor(0.75f, 0.7f, 0.65f);
-					shape2->Draw();
-					gw2.EndDraw();
-				}
-		}
-	}
-
-	gw1.Finalize();
-	gw2.Finalize();*/
+	gw.Finalize();
 
 	return 0;
 }

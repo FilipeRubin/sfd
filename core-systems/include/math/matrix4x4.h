@@ -18,6 +18,22 @@ struct alignas(16) Matrix4x4
 		};
 	}
 
+	static inline Matrix4x4 Perspective(float aspectRatio, float hFOV, float zNear, float zFar) noexcept
+	{
+		const float& ar = aspectRatio;
+		const float& sf = std::tanf(hFOV / 2.0f);
+		const float& zn = zNear;
+		const float& zf = zFar;
+
+		return Matrix4x4
+		{
+			{ 1.0f / (ar * sf),      0.0f,                         0.0f,  0.0f },
+			{             0.0f, 1.0f / sf,                         0.0f,  0.0f },
+			{             0.0f,      0.0f,        (zf + zn) / (zn - zf), -1.0f },
+			{             0.0f,      0.0f, (2.0f * zf * zn) / (zn - zf),  0.0f }
+		};
+	}
+
 	static inline constexpr Matrix4x4 Translation(const Vector3& t) noexcept
 	{
 		return Matrix4x4
@@ -70,13 +86,13 @@ struct alignas(16) Matrix4x4
 		};
 	}
 
-	static inline constexpr Matrix4x4 Scaling() noexcept
+	static inline constexpr Matrix4x4 Scaling(const Vector3& s) noexcept
 	{
 		return Matrix4x4
 		{
-			{1.0f, 0.0f, 0.0f, 0.0f},
-			{0.0f, 1.0f, 0.0f, 0.0f},
-			{0.0f, 0.0f, 1.0f, 0.0f},
+			{ s.x, 0.0f, 0.0f, 0.0f},
+			{0.0f,  s.y, 0.0f, 0.0f},
+			{0.0f, 0.0f,  s.z, 0.0f},
 			{0.0f, 0.0f, 0.0f, 1.0f}
 		};
 	}
@@ -89,6 +105,11 @@ struct alignas(16) Matrix4x4
 	inline constexpr Matrix4x4(const Vector4& column0, const Vector4& column1, const Vector4& column2, const Vector4& column3) noexcept :
 		columns{ column0, column1, column2, column3 }
 	{
+	}
+
+	inline constexpr const float* Data() const noexcept
+	{
+		return static_cast<const float*>(static_cast<const void*>(columns));
 	}
 
 	inline constexpr Vector4& operator[](size_t index) noexcept

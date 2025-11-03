@@ -43,6 +43,7 @@ typedef void          (*PFNGLDELETEPROGRAMPROC)(GLuint program);
 typedef void          (*PFNGLDELETESHADERPROC)(GLuint shader);
 typedef void          (*PFNGLDELETEVERTEXARRAYSPROC)(GLsizei n, GLuint* arrays);
 typedef void          (*PFNGLDRAWARRAYSPROC)(GLenum mode, GLint first, GLsizei count);
+typedef void          (*PFNGLDRAWELEMENTSPROC)(GLenum mode, GLsizei count, GLenum type, const GLvoid* indices);
 typedef void          (*PFNGLENABLEPROC)(GLenum cap);
 typedef void          (*PFNGLENABLEVERTEXATTRIBARRAYPROC)(GLuint index);
 typedef void          (*PFNGLGENBUFFERSPROC)(GLsizei n, GLuint* buffers);
@@ -54,6 +55,7 @@ typedef GLboolean     (*PFNGLISVERTEXARRAYPROC)(GLuint array);
 typedef void          (*PFNGLLINKPROGRAMPROC)(GLuint program);
 typedef void          (*PFNGLSHADERSOURCEPROC)(GLuint shader, GLsizei count, const GLchar** string, const GLint* length);
 typedef void          (*PFNGLUNIFORM3FPROC)(GLint location, GLfloat v0, GLfloat v1, GLfloat v2);
+typedef void          (*PFNGLUNIFORMMATRIX4FVPROC)(GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
 typedef void          (*PFNGLUSEPROGRAMPROC)(GLuint program);
 typedef void          (*PFNGLVERTEXATTRIBPOINTERPROC)(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid* pointer);
 
@@ -71,6 +73,7 @@ void          (*glDeleteProgram)(GLuint program);
 void          (*glDeleteShader)(GLuint shader);
 void          (*glDeleteVertexArrays)(GLsizei n, GLuint* arrays);
 void          (*glDrawArrays)(GLenum mode, GLint first, GLsizei count);
+void          (*glDrawElements)(GLenum mode, GLsizei count, GLenum type, const GLvoid* indices);
 void          (*glEnable)(GLenum cap);
 void          (*glEnableVertexAttribArray)(GLuint index);
 void          (*glGenBuffers)(GLsizei n, GLuint* buffers);
@@ -83,6 +86,7 @@ void          (*glLinkProgram)(GLuint program);
 void          (*glShaderSource)(GLuint shader, GLsizei count, const GLchar** string, const GLint* length);
 void          (*glUseProgram)(GLuint program);
 void          (*glUniform3f)(GLint location, GLfloat v0, GLfloat v1, GLfloat v2);
+void          (*glUniformMatrix4fv)(GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
 void          (*glVertexAttribPointer)(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid* pointer);
 
 static bool TryLoadExtFunctions();
@@ -269,6 +273,7 @@ static void LoadOGLFuncs()
 	glDeleteShader = (PFNGLDELETESHADERPROC)wglGetProcAddress("glDeleteShader");
 	glDeleteVertexArrays = (PFNGLDELETEVERTEXARRAYSPROC)wglGetProcAddress("glDeleteVertexArrays");
 	glDrawArrays = (PFNGLDRAWARRAYSPROC)wglGetProcAddress("glDrawArrays");
+	glDrawElements = (PFNGLDRAWELEMENTSPROC)wglGetProcAddress("glDrawElements");
 	glEnable = (PFNGLENABLEPROC)GetProcAddress(s_glLib, "glEnable");
 	glEnableVertexAttribArray = (PFNGLENABLEVERTEXATTRIBARRAYPROC)wglGetProcAddress("glEnableVertexAttribArray");
 	glGenBuffers = (PFNGLGENBUFFERSPROC)wglGetProcAddress("glGenBuffers");
@@ -281,5 +286,6 @@ static void LoadOGLFuncs()
 	glShaderSource = (PFNGLSHADERSOURCEPROC)wglGetProcAddress("glShaderSource");
 	glUseProgram = (PFNGLUSEPROGRAMPROC)wglGetProcAddress("glUseProgram");
 	glUniform3f = (PFNGLUNIFORM3FPROC)wglGetProcAddress("glUniform3f");
+	glUniformMatrix4fv = (PFNGLUNIFORMMATRIX4FVPROC)wglGetProcAddress("glUniformMatrix4fv");
 	glVertexAttribPointer = (PFNGLVERTEXATTRIBPOINTERPROC)wglGetProcAddress("glVertexAttribPointer");
 }

@@ -169,6 +169,8 @@
     <ClInclude Include="include\math\vector2.h" />
     <ClInclude Include="include\math\vector3.h" />
     <ClInclude Include="include\math\vector4.h" />
+    <ClInclude Include="include\rendering\i-basic-3d-rendering-rule.h" />
+    <ClInclude Include="include\rendering\i-basic-3d-mesh.h" />
     <ClInclude Include="include\rendering\i-drawable.h" />
     <ClInclude Include="include\rendering\i-ndc-rendering-rule.h" />
     <ClInclude Include="include\rendering\i-ndc-shape.h" />
@@ -179,6 +181,8 @@
     <ClInclude Include="include\rendering\i-rendering-rule.h" />
     <ClInclude Include="include\window-parameters.h" />
     <ClInclude Include="src\ogl-graphics-backend.h" />
+    <ClInclude Include="src\rendering\ogl-basic-3d-mesh.h" />
+    <ClInclude Include="src\rendering\ogl-basic-3d-rendering-rule.h" />
     <ClInclude Include="src\rendering\ogl-ndc-rendering-rule.h" />
     <ClInclude Include="src\rendering\ogl-ndc-shape.h" />
     <ClInclude Include="src\rendering\ogl-renderer-resource-manager.h" />
@@ -190,6 +194,8 @@
   <ItemGroup>
     <ClCompile Include="src\core-systems.cpp" />
     <ClCompile Include="src\ogl-graphics-backend.cpp" />
+    <ClCompile Include="src\rendering\ogl-basic-3d-mesh.cpp" />
+    <ClCompile Include="src\rendering\ogl-basic-3d-rendering-rule.cpp" />
     <ClCompile Include="src\rendering\ogl-ndc-rendering-rule.cpp" />
     <ClCompile Include="src\rendering\ogl-ndc-shape.cpp" />
     <ClCompile Include="src\rendering\ogl-renderer-resource-manager.cpp" />
