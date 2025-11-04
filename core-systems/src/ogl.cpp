@@ -58,6 +58,7 @@ typedef void          (*PFNGLUNIFORM3FPROC)(GLint location, GLfloat v0, GLfloat 
 typedef void          (*PFNGLUNIFORMMATRIX4FVPROC)(GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
 typedef void          (*PFNGLUSEPROGRAMPROC)(GLuint program);
 typedef void          (*PFNGLVERTEXATTRIBPOINTERPROC)(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid* pointer);
+typedef void          (*PFNGLVIEWPORTPROC)(GLint x, GLint y, GLsizei width, GLsizei height);
 
 void          (*glAttachShader)(GLuint program, GLuint shader);
 void          (*glBindBuffer)(GLenum target, GLuint buffer);
@@ -88,6 +89,7 @@ void          (*glUseProgram)(GLuint program);
 void          (*glUniform3f)(GLint location, GLfloat v0, GLfloat v1, GLfloat v2);
 void          (*glUniformMatrix4fv)(GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
 void          (*glVertexAttribPointer)(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid* pointer);
+void          (*glViewport)(GLint x, GLint y, GLsizei width, GLsizei height);
 
 static bool TryLoadExtFunctions();
 static void LoadOGLFuncs();
@@ -288,4 +290,5 @@ static void LoadOGLFuncs()
 	glUniform3f = (PFNGLUNIFORM3FPROC)wglGetProcAddress("glUniform3f");
 	glUniformMatrix4fv = (PFNGLUNIFORMMATRIX4FVPROC)wglGetProcAddress("glUniformMatrix4fv");
 	glVertexAttribPointer = (PFNGLVERTEXATTRIBPOINTERPROC)wglGetProcAddress("glVertexAttribPointer");
+	glViewport = (PFNGLVIEWPORTPROC)wglGetProcAddress("glViewport");
 }

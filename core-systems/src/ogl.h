@@ -99,3 +99,4 @@ extern void          (*glUseProgram)(GLuint program);
 extern void          (*glUniform3f)(GLint location, GLfloat v0, GLfloat v1, GLfloat v2);
 extern void          (*glUniformMatrix4fv)(GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
 extern void          (*glVertexAttribPointer)(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid* pointer);
+extern void          (*glViewport)(GLint x, GLint y, GLsizei width, GLsizei height);
