@@ -22,6 +22,11 @@ void OGLRenderer::ClearScreen() const
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
+void OGLRenderer::SetViewportSize(int width, int height)
+{
+	glViewport(0, 0, width, height);
+}
+
 IRendererResourceManager* OGLRenderer::GetResourceManager() const
 {
 	return m_resourceManager;

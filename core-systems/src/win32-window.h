@@ -11,6 +11,8 @@ public:
 	bool ShouldClose() const override;
 	bool IsInitialized() const override;
 	bool TryInitialize(const WindowParameters& parameters) override;
+	WindowSizeCallback GetWindowSizeCallback() const override;
+	void SetWindowSizeCallback(WindowSizeCallback windowSizeCallback) override;
 	void Close();
 	const void* GetHandle() const;
 private:
@@ -20,4 +22,5 @@ private:
 	static void Decrement();
 	bool m_shouldClose;
 	void* m_hwnd;
+	WindowSizeCallback m_windowSizeCallback;
 };

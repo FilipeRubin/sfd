@@ -1,5 +1,6 @@
 #include "graphics-window.h"
 #include <algorithm>
+#include <iostream>
 
 vector<GraphicsWindow*> GraphicsWindow::s_instances = vector<GraphicsWindow*>();
 
@@ -29,6 +30,9 @@ bool GraphicsWindow::TryInitialize(const WindowParameters& params, IGraphicsBack
 		m_window->Finalize();
 		return false;
 	}
+
+	IRenderer* const & renderer = this->m_graphics->GetRenderer();
+	m_window->SetWindowSizeCallback([renderer](int width, int height) {renderer->SetViewportSize(width, height); });
 
 	s_instances.emplace_back(this);
 

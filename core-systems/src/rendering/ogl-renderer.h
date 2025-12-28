@@ -9,6 +9,7 @@ public:
 	~OGLRenderer();
 	void SetClearColor(float r, float g, float b) override;
 	void ClearScreen() const override;
+	void SetViewportSize(int width, int height) override;
 	IRendererResourceManager* GetResourceManager() const override;
 private:
 	IRendererResourceManager* m_resourceManager;

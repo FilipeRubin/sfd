@@ -6,7 +6,8 @@ Win32WindowClass Win32Window::s_windowClass = Win32WindowClass();
 
 Win32Window::Win32Window() :
     m_hwnd(NULL),
-    m_shouldClose(false)
+    m_shouldClose(false),
+    m_windowSizeCallback(nullptr)
 {
 }
 
@@ -86,6 +87,16 @@ bool Win32Window::TryInitialize(const WindowParameters& parameters)
     ShowWindow((HWND)m_hwnd, SW_SHOW);
 
     return true;
+}
+
+WindowSizeCallback Win32Window::GetWindowSizeCallback() const
+{
+    return m_windowSizeCallback;
+}
+
+void Win32Window::SetWindowSizeCallback(WindowSizeCallback windowSizeCallback)
+{
+    m_windowSizeCallback = windowSizeCallback;
 }
 
 void Win32Window::Close()
