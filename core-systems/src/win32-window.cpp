@@ -1,4 +1,5 @@
 #include "win32-window.h"
+#include "input/win32-basic-input.h"
 #include <Windows.h>
 
 unsigned int Win32Window::s_instanceCount = 0U;
@@ -7,6 +8,7 @@ Win32WindowClass Win32Window::s_windowClass = Win32WindowClass();
 Win32Window::Win32Window() :
     m_hwnd(NULL),
     m_shouldClose(false),
+    m_basicInput(Win32BasicInput()),
     m_windowSizeCallback(nullptr)
 {
 }
@@ -87,6 +89,11 @@ bool Win32Window::TryInitialize(const WindowParameters& parameters)
     ShowWindow((HWND)m_hwnd, SW_SHOW);
 
     return true;
+}
+
+const IBasicInput* Win32Window::GetBasicInput() const
+{
+    return dynamic_cast<const IBasicInput*>(&m_basicInput);
 }
 
 WindowSizeCallback Win32Window::GetWindowSizeCallback() const

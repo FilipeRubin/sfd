@@ -1,5 +1,6 @@
 #pragma once
 #include <i-window.h>
+#include "input/win32-basic-input.h"
 #include "win32-window-class.h"
 
 class Win32Window : public IWindow
@@ -11,6 +12,7 @@ public:
 	bool ShouldClose() const override;
 	bool IsInitialized() const override;
 	bool TryInitialize(const WindowParameters& parameters) override;
+	const IBasicInput* GetBasicInput() const override;
 	WindowSizeCallback GetWindowSizeCallback() const override;
 	void SetWindowSizeCallback(WindowSizeCallback windowSizeCallback) override;
 	void Close();
@@ -22,5 +24,6 @@ private:
 	static void Decrement();
 	bool m_shouldClose;
 	void* m_hwnd;
+	Win32BasicInput m_basicInput;
 	WindowSizeCallback m_windowSizeCallback;
 };

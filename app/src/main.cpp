@@ -51,18 +51,31 @@ int main()
 	rr->SetProjection(perspective);
 
 	float rotY = 0.0f;
+	float posX = 0.0f;
+	float posY = 0.0f;
 
 	while (not gw.ShouldClose())
 	{
-		Matrix4x4 trans = Matrix4x4::Translation({ 0.0f, 0.0f, -5.0f });
+		// Input
+		if (gw.GetWindow()->GetBasicInput()->IsKeyDown(0x25)) // Left
+			posX -= 0.01f;
+		if (gw.GetWindow()->GetBasicInput()->IsKeyDown(0x26)) // Up
+			posY += 0.01f;
+		if (gw.GetWindow()->GetBasicInput()->IsKeyDown(0x27)) // Right
+			posX += 0.01f;
+		if (gw.GetWindow()->GetBasicInput()->IsKeyDown(0x28)) // Down
+			posY -= 0.01f;
+
+		// Transforming
+		Matrix4x4 trans = Matrix4x4::Translation({ posX, posY, -5.0f });
 		Matrix4x4 rot = Matrix4x4::RotationY(rotY);
 		rr->SetModel(trans * rot);
+		rotY += 0.0002f;
 
+		// Rendering
 		gw.BeginDraw();
 		mesh->Draw();
 		gw.EndDraw();
-
-		rotY += 0.0002f;
 	}
 
 	gw.Finalize();

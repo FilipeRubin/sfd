@@ -96,6 +96,12 @@
     <ClInclude Include="src\rendering\ogl-basic-3d-mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\input\i-basic-input.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\input\win32-basic-input.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core-systems.cpp">
@@ -129,6 +135,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\rendering\ogl-basic-3d-mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\input\win32-basic-input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

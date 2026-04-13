@@ -29,26 +29,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -165,6 +165,7 @@
   <ItemGroup>
     <ClInclude Include="include\core-systems.h" />
     <ClInclude Include="include\i-graphics-backend.h" />
+    <ClInclude Include="include\input\i-basic-input.h" />
     <ClInclude Include="include\math\matrix4x4.h" />
     <ClInclude Include="include\math\vector2.h" />
     <ClInclude Include="include\math\vector3.h" />
@@ -174,6 +175,7 @@
     <ClInclude Include="include\rendering\i-drawable.h" />
     <ClInclude Include="include\rendering\i-ndc-rendering-rule.h" />
     <ClInclude Include="include\rendering\i-ndc-shape.h" />
+    <ClInclude Include="src\input\win32-basic-input.h" />
     <ClInclude Include="src\rendering\i-renderer-managed.h" />
     <ClInclude Include="include\rendering\i-renderer-resource-manager.h" />
     <ClInclude Include="include\rendering\i-renderer.h" />
@@ -193,6 +195,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core-systems.cpp" />
+    <ClCompile Include="src\input\win32-basic-input.cpp" />
     <ClCompile Include="src\ogl-graphics-backend.cpp" />
     <ClCompile Include="src\rendering\ogl-basic-3d-mesh.cpp" />
     <ClCompile Include="src\rendering\ogl-basic-3d-rendering-rule.cpp" />
