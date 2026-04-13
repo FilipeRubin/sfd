@@ -57,14 +57,14 @@ int main()
 	while (not gw.ShouldClose())
 	{
 		// Input
-		if (gw.GetWindow()->GetBasicInput()->IsKeyDown(0x25)) // Left
-			posX -= 0.01f;
-		if (gw.GetWindow()->GetBasicInput()->IsKeyDown(0x26)) // Up
-			posY += 0.01f;
-		if (gw.GetWindow()->GetBasicInput()->IsKeyDown(0x27)) // Right
-			posX += 0.01f;
-		if (gw.GetWindow()->GetBasicInput()->IsKeyDown(0x28)) // Down
-			posY -= 0.01f;
+		if (gw.GetWindow()->GetBasicInput()->IsKeyJustPressed(0x25)) // Left
+			posX -= 1.0f;
+		if (gw.GetWindow()->GetBasicInput()->IsKeyJustPressed(0x26)) // Up
+			posY += 1.0f;
+		if (gw.GetWindow()->GetBasicInput()->IsKeyJustPressed(0x27)) // Right
+			posX += 1.0f;
+		if (gw.GetWindow()->GetBasicInput()->IsKeyJustPressed(0x28)) // Down
+			posY -= 1.0f;
 
 		// Transforming
 		Matrix4x4 trans = Matrix4x4::Translation({ posX, posY, -5.0f });

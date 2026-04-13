@@ -23,6 +23,7 @@ void Win32Window::Finalize()
 
 void Win32Window::Process()
 {
+    m_basicInput.Update();
     MSG msg = {};
     while (PeekMessage(&msg, (HWND)m_hwnd, NULL, NULL, PM_REMOVE) != 0)
     {

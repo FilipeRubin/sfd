@@ -9,6 +9,8 @@ public:
 	bool IsKeyJustReleased(unsigned char keyCode) const override;
 	bool IsKeyDown(unsigned char keyCode) const override;
 	void SetKeyState(unsigned char keyCode, bool pressed);
+	void Update();
 private:
 	bool m_keyStates[256];
+	bool m_previouskeyStates[256];
 };
