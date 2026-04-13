@@ -5,6 +5,11 @@ struct Vector2
 	float x;
 	float y;
 
+	inline constexpr Vector2() noexcept :
+		x(0.0f), y(0.0f)
+	{
+	}
+
 	inline constexpr Vector2(float x, float y) noexcept :
 		x(x), y(x)
 	{

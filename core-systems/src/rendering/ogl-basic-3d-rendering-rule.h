@@ -7,12 +7,14 @@ class OGLBasic3DRenderingRule : public IBasic3DRenderingRule, public IRendererMa
 public:
 	OGLBasic3DRenderingRule();
 	void Bind() const override;
-	void SetProjection(const Matrix4x4& projection) override;
 	void SetModel(const Matrix4x4& model) override;
+	void SetView(const Matrix4x4& view) override;
+	void SetProjection(const Matrix4x4& projection) override;
 	void Create() override;
 	void Destroy() override;
 private:
 	unsigned int m_program;
-	int m_projectionUniform;
 	int m_modelUniform;
+	int m_viewUniform;
+	int m_projectionUniform;
 };

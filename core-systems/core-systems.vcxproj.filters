@@ -102,6 +102,12 @@
     <ClInclude Include="src\input\win32-basic-input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\types\vertex-3d.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rendering\i-lambert-rendering-rule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core-systems.cpp">

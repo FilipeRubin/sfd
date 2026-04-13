@@ -164,6 +164,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\core-systems.h" />
+    <ClInclude Include="include\rendering\i-lambert-rendering-rule.h" />
+    <ClInclude Include="include\types\vertex-3d.h" />
     <ClInclude Include="include\i-graphics-backend.h" />
     <ClInclude Include="include\input\i-basic-input.h" />
     <ClInclude Include="include\math\matrix4x4.h" />

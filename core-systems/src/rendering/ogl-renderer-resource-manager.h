@@ -18,6 +18,7 @@ public:
 	IBasic3DRenderingRule* CreateBasic3DRenderingRule() override;
 	INDCShape* CreateNDCShape(float* vertices, size_t length) override;
 	IBasic3DMesh* CreateBasic3DMesh(float* vertices, size_t verticesLength, unsigned int* indices, size_t indicesLength) override;
+
 	void Update();
 private:
 	OGLGraphicsBackend* m_backend;

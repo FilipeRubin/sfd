@@ -6,6 +6,7 @@ class IBasic3DRenderingRule : public IRenderingRule
 {
 public:
 	virtual ~IBasic3DRenderingRule() = default;
-	virtual void SetProjection(const Matrix4x4& projection) = 0;
 	virtual void SetModel(const Matrix4x4& model) = 0;
+	virtual void SetView(const Matrix4x4& view) = 0;
+	virtual void SetProjection(const Matrix4x4& projection) = 0;
 };

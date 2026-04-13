@@ -9,12 +9,13 @@ layout(location=1) in vec3 v_in_col;
 
 out vec3 v_out_col;
 
-uniform mat4 u_projection;
 uniform mat4 u_model;
+uniform mat4 u_view;
+uniform mat4 u_projection;
 
 void main()
 {
-	gl_Position = u_projection * u_model * vec4(v_in_pos, 1.0);
+	gl_Position = u_projection * u_view * u_model * vec4(v_in_pos, 1.0);
 	v_out_col = v_in_col;
 }
 )";
@@ -34,8 +35,9 @@ void main()
 
 OGLBasic3DRenderingRule::OGLBasic3DRenderingRule() :
 	m_program(0U),
-	m_projectionUniform(0),
-	m_modelUniform(0)
+	m_modelUniform(0),
+	m_viewUniform(0),
+	m_projectionUniform(0)
 {
 }
 
@@ -44,14 +46,19 @@ void OGLBasic3DRenderingRule::Bind() const
 	glUseProgram(m_program);
 }
 
-void OGLBasic3DRenderingRule::SetProjection(const Matrix4x4& projection)
-{
-	glUniformMatrix4fv(m_projectionUniform, 1, GL_FALSE, projection.Data());
-}
-
 void OGLBasic3DRenderingRule::SetModel(const Matrix4x4& model)
 {
 	glUniformMatrix4fv(m_modelUniform, 1, GL_FALSE, model.Data());
+}
+
+void OGLBasic3DRenderingRule::SetView(const Matrix4x4& view)
+{
+	glUniformMatrix4fv(m_viewUniform, 1, GL_FALSE, view.Data());
+}
+
+void OGLBasic3DRenderingRule::SetProjection(const Matrix4x4& projection)
+{
+	glUniformMatrix4fv(m_projectionUniform, 1, GL_FALSE, projection.Data());
 }
 
 void OGLBasic3DRenderingRule::Create()
@@ -69,8 +76,9 @@ void OGLBasic3DRenderingRule::Create()
 	glDeleteShader(vs);
 	glDeleteShader(fs);
 
-	m_projectionUniform = glGetUniformLocation(m_program, "u_projection");
 	m_modelUniform = glGetUniformLocation(m_program, "u_model");
+	m_viewUniform = glGetUniformLocation(m_program, "u_view");
+	m_projectionUniform = glGetUniformLocation(m_program, "u_projection");
 }
 
 void OGLBasic3DRenderingRule::Destroy()
@@ -78,6 +86,7 @@ void OGLBasic3DRenderingRule::Destroy()
 	glDeleteProgram(m_program);
 
 	m_program = 0U;
-	m_projectionUniform = 0;
 	m_modelUniform = 0;
+	m_viewUniform = 0;
+	m_projectionUniform = 0;
 }
