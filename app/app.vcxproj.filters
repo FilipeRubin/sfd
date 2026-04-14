@@ -26,5 +26,8 @@
     <ClInclude Include="src\graphics-window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\3d-data.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -29,8 +29,10 @@ static PFNWGLCHOOSEPIXELFORMATARB wglChoosePixelFormatARB = nullptr;
 typedef HGLRC(*PFNWGLCREATECONTEXTATTRIBSARB)(HDC hdc, HGLRC hshareContext, const int* attribList);
 static PFNWGLCREATECONTEXTATTRIBSARB wglCreateContextAttribsARB = nullptr;
 
+typedef void          (*PFNGLACTIVETEXTUREPROC)(GLenum texture);
 typedef void          (*PFNGLATTACHSHADERPROC)(GLuint program, GLuint shader);
 typedef void          (*PFNGLBINDBUFFERPROC)(GLenum target, GLuint buffer);
+typedef void          (*PFNGLBINDTEXTUREPROC)(GLenum target, GLuint texture);
 typedef void          (*PFNGLBINDVERTEXARRAYPROC)(GLuint array);
 typedef void          (*PFNGLBUFFERDATAPROC)(GLenum target, GLsizeiptr size, const GLvoid* data, GLenum usage);
 typedef void          (*PFNGLCLEARPROC)(GLbitfield mask);
@@ -41,12 +43,15 @@ typedef GLuint        (*PFNGLCREATESHADERPROC)(GLenum shaderType);
 typedef void          (*PFNGLDELETEBUFFERSPROC)(GLsizei n, GLuint* buffers);
 typedef void          (*PFNGLDELETEPROGRAMPROC)(GLuint program);
 typedef void          (*PFNGLDELETESHADERPROC)(GLuint shader);
+typedef void          (*PFNGLDELETETEXTURESPROC)(GLsizei n, const GLuint* textures);
 typedef void          (*PFNGLDELETEVERTEXARRAYSPROC)(GLsizei n, GLuint* arrays);
 typedef void          (*PFNGLDRAWARRAYSPROC)(GLenum mode, GLint first, GLsizei count);
 typedef void          (*PFNGLDRAWELEMENTSPROC)(GLenum mode, GLsizei count, GLenum type, const GLvoid* indices);
 typedef void          (*PFNGLENABLEPROC)(GLenum cap);
 typedef void          (*PFNGLENABLEVERTEXATTRIBARRAYPROC)(GLuint index);
 typedef void          (*PFNGLGENBUFFERSPROC)(GLsizei n, GLuint* buffers);
+typedef void          (*PFNGLGENERATEMIPMAPPROC)(GLenum target);
+typedef void          (*PFNGLGENTEXTURESPROC)(GLsizei n, GLuint* textures);
 typedef void          (*PFNGLGENVERTEXARRAYSPROC)(GLsizei n, GLuint* arrays);
 typedef const GLubyte*(*PFNGLGETSTRINGPROC)(GLenum name);
 typedef GLint         (*PFNGLGETUNIFORMLOCATIONPROC)(GLuint program, const GLchar* name);
@@ -54,14 +59,18 @@ typedef GLboolean     (*PFNGLISPROGRAMPROC)(GLuint program);
 typedef GLboolean     (*PFNGLISVERTEXARRAYPROC)(GLuint array);
 typedef void          (*PFNGLLINKPROGRAMPROC)(GLuint program);
 typedef void          (*PFNGLSHADERSOURCEPROC)(GLuint shader, GLsizei count, const GLchar** string, const GLint* length);
+typedef void          (*PFNGLTEXIMAGE2DPROC)(GLenum target, GLint level, GLint internalFormat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, const GLvoid* data);
+typedef void          (*PFNGLTEXPARAMETERIPROC)(GLenum target, GLenum pname, GLint param);
 typedef void          (*PFNGLUNIFORM3FPROC)(GLint location, GLfloat v0, GLfloat v1, GLfloat v2);
 typedef void          (*PFNGLUNIFORMMATRIX4FVPROC)(GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
 typedef void          (*PFNGLUSEPROGRAMPROC)(GLuint program);
 typedef void          (*PFNGLVERTEXATTRIBPOINTERPROC)(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid* pointer);
 typedef void          (*PFNGLVIEWPORTPROC)(GLint x, GLint y, GLsizei width, GLsizei height);
 
+void          (*glActiveTexture)(GLenum texture);
 void          (*glAttachShader)(GLuint program, GLuint shader);
 void          (*glBindBuffer)(GLenum target, GLuint buffer);
+void          (*glBindTexture)(GLenum target, GLuint texture);
 void          (*glBindVertexArray)(GLuint array);
 void          (*glBufferData)(GLenum target, GLsizeiptr size, const GLvoid* data, GLenum usage);
 void          (*glClear)(GLbitfield mask);
@@ -72,12 +81,15 @@ GLuint        (*glCreateShader)(GLenum shaderType);
 void          (*glDeleteBuffers)(GLsizei n, GLuint* arrays);
 void          (*glDeleteProgram)(GLuint program);
 void          (*glDeleteShader)(GLuint shader);
+void          (*glDeleteTextures)(GLsizei n, const GLuint* textures);
 void          (*glDeleteVertexArrays)(GLsizei n, GLuint* arrays);
 void          (*glDrawArrays)(GLenum mode, GLint first, GLsizei count);
 void          (*glDrawElements)(GLenum mode, GLsizei count, GLenum type, const GLvoid* indices);
 void          (*glEnable)(GLenum cap);
 void          (*glEnableVertexAttribArray)(GLuint index);
 void          (*glGenBuffers)(GLsizei n, GLuint* buffers);
+void          (*glGenerateMipmap)(GLenum target);
+void          (*glGenTextures)(GLsizei n, GLuint* textures);
 void          (*glGenVertexArrays)(GLsizei n, GLuint* arrays);
 const GLubyte*(*glGetString)(GLenum name);
 GLint         (*glGetUniformLocation)(GLuint program, const GLchar* name);
@@ -85,6 +97,8 @@ GLboolean     (*glIsProgram)(GLuint program);
 GLboolean     (*glIsVertexArray)(GLuint array);
 void          (*glLinkProgram)(GLuint program);
 void          (*glShaderSource)(GLuint shader, GLsizei count, const GLchar** string, const GLint* length);
+void          (*glTexImage2D)(GLenum target, GLint level, GLint internalFormat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, const GLvoid* data);
+void          (*glTexParameteri)(GLenum target, GLenum pname, GLint param);
 void          (*glUseProgram)(GLuint program);
 void          (*glUniform3f)(GLint location, GLfloat v0, GLfloat v1, GLfloat v2);
 void          (*glUniformMatrix4fv)(GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
@@ -106,6 +120,8 @@ bool TryLoadOGL()
 
 	if (not TryLoadExtFunctions())
 	{
+		FreeLibrary(s_glLib);
+		s_glLib = NULL;
 		return false;
 	}
 
@@ -261,8 +277,10 @@ static bool TryLoadExtFunctions()
 
 static void LoadOGLFuncs()
 {
+	glActiveTexture = (PFNGLACTIVETEXTUREPROC)wglGetProcAddress("glActiveTexture");
 	glAttachShader = (PFNGLATTACHSHADERPROC)wglGetProcAddress("glAttachShader");
 	glBindBuffer = (PFNGLBINDBUFFERPROC)wglGetProcAddress("glBindBuffer");
+	glBindTexture = (PFNGLBINDTEXTUREPROC)wglGetProcAddress("glBindTexture");
 	glBindVertexArray = (PFNGLBINDVERTEXARRAYPROC)wglGetProcAddress("glBindVertexArray");
 	glBufferData = (PFNGLBUFFERDATAPROC)wglGetProcAddress("glBufferData");
 	glClear = (PFNGLCLEARPROC)GetProcAddress(s_glLib, "glClear");
@@ -273,12 +291,15 @@ static void LoadOGLFuncs()
 	glDeleteBuffers = (PFNGLDELETEBUFFERSPROC)wglGetProcAddress("glDeleteBuffers");
 	glDeleteProgram = (PFNGLDELETEPROGRAMPROC)wglGetProcAddress("glDeleteProgram");
 	glDeleteShader = (PFNGLDELETESHADERPROC)wglGetProcAddress("glDeleteShader");
+	glDeleteTextures = (PFNGLDELETETEXTURESPROC)wglGetProcAddress("glDeleteTextures");
 	glDeleteVertexArrays = (PFNGLDELETEVERTEXARRAYSPROC)wglGetProcAddress("glDeleteVertexArrays");
 	glDrawArrays = (PFNGLDRAWARRAYSPROC)wglGetProcAddress("glDrawArrays");
 	glDrawElements = (PFNGLDRAWELEMENTSPROC)wglGetProcAddress("glDrawElements");
 	glEnable = (PFNGLENABLEPROC)GetProcAddress(s_glLib, "glEnable");
 	glEnableVertexAttribArray = (PFNGLENABLEVERTEXATTRIBARRAYPROC)wglGetProcAddress("glEnableVertexAttribArray");
 	glGenBuffers = (PFNGLGENBUFFERSPROC)wglGetProcAddress("glGenBuffers");
+	glGenerateMipmap = (PFNGLGENERATEMIPMAPPROC)wglGetProcAddress("glGenerateMipmap");
+	glGenTextures = (PFNGLGENTEXTURESPROC)wglGetProcAddress("glGenTextures");
 	glGenVertexArrays = (PFNGLGENVERTEXARRAYSPROC)wglGetProcAddress("glGenVertexArrays");
 	glGetString = (PFNGLGETSTRINGPROC)GetProcAddress(s_glLib, "glGetString");
 	glGetUniformLocation = (PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation");
@@ -286,6 +307,8 @@ static void LoadOGLFuncs()
 	glIsVertexArray = (PFNGLISVERTEXARRAYPROC)wglGetProcAddress("glIsVertexArray");
 	glLinkProgram = (PFNGLLINKPROGRAMPROC)wglGetProcAddress("glLinkProgram");
 	glShaderSource = (PFNGLSHADERSOURCEPROC)wglGetProcAddress("glShaderSource");
+	glTexImage2D = (PFNGLTEXIMAGE2DPROC)wglGetProcAddress("glTexImage2D");
+	glTexParameteri = (PFNGLTEXPARAMETERIPROC)wglGetProcAddress("glTexParameteri");
 	glUseProgram = (PFNGLUSEPROGRAMPROC)wglGetProcAddress("glUseProgram");
 	glUniform3f = (PFNGLUNIFORM3FPROC)wglGetProcAddress("glUniform3f");
 	glUniformMatrix4fv = (PFNGLUNIFORMMATRIX4FVPROC)wglGetProcAddress("glUniformMatrix4fv");

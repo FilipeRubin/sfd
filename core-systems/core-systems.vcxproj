@@ -165,6 +165,7 @@
   <ItemGroup>
     <ClInclude Include="include\core-systems.h" />
     <ClInclude Include="include\rendering\i-lambert-rendering-rule.h" />
+    <ClInclude Include="include\rendering\i-texture-2d.h" />
     <ClInclude Include="include\types\vertex-3d.h" />
     <ClInclude Include="include\i-graphics-backend.h" />
     <ClInclude Include="include\input\i-basic-input.h" />
@@ -187,11 +188,13 @@
     <ClInclude Include="src\ogl-graphics-backend.h" />
     <ClInclude Include="src\rendering\ogl-basic-3d-mesh.h" />
     <ClInclude Include="src\rendering\ogl-basic-3d-rendering-rule.h" />
+    <ClInclude Include="src\rendering\ogl-lambert-rendering-rule.h" />
     <ClInclude Include="src\rendering\ogl-ndc-rendering-rule.h" />
     <ClInclude Include="src\rendering\ogl-ndc-shape.h" />
     <ClInclude Include="src\rendering\ogl-renderer-resource-manager.h" />
     <ClInclude Include="src\rendering\ogl-renderer.h" />
     <ClInclude Include="src\ogl.h" />
+    <ClInclude Include="src\rendering\ogl-texture-2d.h" />
     <ClInclude Include="src\win32-window-class.h" />
     <ClInclude Include="src\win32-window.h" />
   </ItemGroup>
@@ -201,11 +204,13 @@
     <ClCompile Include="src\ogl-graphics-backend.cpp" />
     <ClCompile Include="src\rendering\ogl-basic-3d-mesh.cpp" />
     <ClCompile Include="src\rendering\ogl-basic-3d-rendering-rule.cpp" />
+    <ClCompile Include="src\rendering\ogl-lambert-rendering-rule.cpp" />
     <ClCompile Include="src\rendering\ogl-ndc-rendering-rule.cpp" />
     <ClCompile Include="src\rendering\ogl-ndc-shape.cpp" />
     <ClCompile Include="src\rendering\ogl-renderer-resource-manager.cpp" />
     <ClCompile Include="src\rendering\ogl-renderer.cpp" />
     <ClCompile Include="src\ogl.cpp" />
+    <ClCompile Include="src\rendering\ogl-texture-2d.cpp" />
     <ClCompile Include="src\win32-window-class.cpp" />
     <ClCompile Include="src\win32-window.cpp" />
   </ItemGroup>

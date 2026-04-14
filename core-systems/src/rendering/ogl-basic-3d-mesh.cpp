@@ -33,10 +33,12 @@ void OGLBasic3DMesh::Create()
 	glBufferData(GL_ARRAY_BUFFER, m_cachedVerticesSize, m_cachedVertices, GL_STATIC_DRAW);
 	glGenVertexArrays(1, &m_vao);
 	glBindVertexArray(m_vao);
-	glVertexAttribPointer(0U, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 6, (void*)0);
-	glVertexAttribPointer(1U, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 6, (void*)(sizeof(float) * 3));
+	glVertexAttribPointer(0U, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 8, (void*)0);
+	glVertexAttribPointer(1U, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 8, (void*)(sizeof(float) * 3));
+	glVertexAttribPointer(2U, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 8, (void*)(sizeof(float) * 6));
 	glEnableVertexAttribArray(0U);
 	glEnableVertexAttribArray(1U);
+	glEnableVertexAttribArray(2U);
 	glGenBuffers(1, &m_ebo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_cachedIndicesSize, m_cachedIndices, GL_STATIC_DRAW);

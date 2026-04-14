@@ -16,9 +16,11 @@ public:
 	~OGLRendererResourceManager();
 	INDCRenderingRule* CreateNDCRenderingRule() override;
 	IBasic3DRenderingRule* CreateBasic3DRenderingRule() override;
+	ILambertRenderingRule* CreateLambertRenderingRule() override;
 	INDCShape* CreateNDCShape(float* vertices, size_t length) override;
 	IBasic3DMesh* CreateBasic3DMesh(float* vertices, size_t verticesLength, unsigned int* indices, size_t indicesLength) override;
-
+	IBasic3DMesh* CreateBasic3DMesh(Vertex3D* vertices, size_t verticesLength, unsigned int* indices, size_t indicesLength) override;
+	ITexture2D* CreateTexture2D(const unsigned char* data, size_t dataLength, const Vector2& size) override;
 	void Update();
 private:
 	OGLGraphicsBackend* m_backend;
