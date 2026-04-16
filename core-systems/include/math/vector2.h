@@ -11,7 +11,7 @@ struct Vector2
 	}
 
 	inline constexpr Vector2(float x, float y) noexcept :
-		x(x), y(x)
+		x(x), y(y)
 	{
 	}
 

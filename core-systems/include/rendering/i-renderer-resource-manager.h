@@ -17,5 +17,5 @@ public:
 	virtual INDCShape* CreateNDCShape(float* vertices, size_t length) = 0;
 	virtual IBasic3DMesh* CreateBasic3DMesh(float* vertices, size_t verticesLength, unsigned int* indices, size_t indicesLength) = 0;
 	virtual IBasic3DMesh* CreateBasic3DMesh(Vertex3D* vertices, size_t verticesLength, unsigned int* indices, size_t indicesLength) = 0;
-	virtual ITexture2D* CreateTexture2D(const unsigned char* data, size_t dataLength, const Vector2& size) = 0;
+	virtual ITexture2D* CreateTexture2D(const unsigned char* data, size_t dataLength, const Dimensions& size) = 0;
 };

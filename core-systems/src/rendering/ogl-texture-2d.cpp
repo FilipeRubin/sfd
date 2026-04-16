@@ -1,7 +1,7 @@
 #include "ogl-texture-2d.h"
 #include <ogl.h>
 
-OGLTexture2D::OGLTexture2D(const unsigned char* data, size_t dataSize, const Vector2& size) :
+OGLTexture2D::OGLTexture2D(const unsigned char* data, size_t dataSize, const Dimensions& size) :
     m_data(data),
     m_dataSize(dataSize),
     m_size(size),
@@ -15,7 +15,7 @@ void OGLTexture2D::Bind()
     glBindTexture(GL_TEXTURE_2D, m_texture);
 }
 
-Vector2 OGLTexture2D::GetSize()
+Dimensions OGLTexture2D::GetSize()
 {
     return m_size;
 }
@@ -26,6 +26,7 @@ void OGLTexture2D::Create()
     glBindTexture(GL_TEXTURE_2D, m_texture);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_size.x, m_size.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_data);
     glGenerateMipmap(GL_TEXTURE_2D);
 }

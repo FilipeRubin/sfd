@@ -70,7 +70,7 @@ IBasic3DMesh* OGLRendererResourceManager::CreateBasic3DMesh(Vertex3D* vertices, 
     return CreateResource<OGLBasic3DMesh>(reinterpret_cast<float*>(vertices), verticesLength, indices, indicesLength);;
 }
 
-ITexture2D* OGLRendererResourceManager::CreateTexture2D(const unsigned char* data, size_t dataLength, const Vector2& size)
+ITexture2D* OGLRendererResourceManager::CreateTexture2D(const unsigned char* data, size_t dataLength, const Dimensions& size)
 {
     return CreateResource<OGLTexture2D>(data, dataLength, size);
 }

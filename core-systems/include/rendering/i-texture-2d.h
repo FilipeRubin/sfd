@@ -1,9 +1,9 @@
 #pragma once
-#include <math/vector2.h>
+#include <math/dimensions.h>
 
 class ITexture2D
 {
 public:
 	virtual ~ITexture2D() = default;
-	virtual Vector2 GetSize() = 0;
+	virtual Dimensions GetSize() = 0;
 };

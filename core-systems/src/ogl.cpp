@@ -58,6 +58,7 @@ typedef GLint         (*PFNGLGETUNIFORMLOCATIONPROC)(GLuint program, const GLcha
 typedef GLboolean     (*PFNGLISPROGRAMPROC)(GLuint program);
 typedef GLboolean     (*PFNGLISVERTEXARRAYPROC)(GLuint array);
 typedef void          (*PFNGLLINKPROGRAMPROC)(GLuint program);
+typedef void          (*PFNGLPIXELSTOREIPROC)(GLenum pname, GLint param);
 typedef void          (*PFNGLSHADERSOURCEPROC)(GLuint shader, GLsizei count, const GLchar** string, const GLint* length);
 typedef void          (*PFNGLTEXIMAGE2DPROC)(GLenum target, GLint level, GLint internalFormat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, const GLvoid* data);
 typedef void          (*PFNGLTEXPARAMETERIPROC)(GLenum target, GLenum pname, GLint param);
@@ -96,6 +97,7 @@ GLint         (*glGetUniformLocation)(GLuint program, const GLchar* name);
 GLboolean     (*glIsProgram)(GLuint program);
 GLboolean     (*glIsVertexArray)(GLuint array);
 void          (*glLinkProgram)(GLuint program);
+void          (*glPixelStorei)(GLenum pname, GLint param);
 void          (*glShaderSource)(GLuint shader, GLsizei count, const GLchar** string, const GLint* length);
 void          (*glTexImage2D)(GLenum target, GLint level, GLint internalFormat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, const GLvoid* data);
 void          (*glTexParameteri)(GLenum target, GLenum pname, GLint param);
@@ -306,6 +308,7 @@ static void LoadOGLFuncs()
 	glIsProgram = (PFNGLISPROGRAMPROC)wglGetProcAddress("glIsProgram");
 	glIsVertexArray = (PFNGLISVERTEXARRAYPROC)wglGetProcAddress("glIsVertexArray");
 	glLinkProgram = (PFNGLLINKPROGRAMPROC)wglGetProcAddress("glLinkProgram");
+	glPixelStorei = (PFNGLPIXELSTOREIPROC)GetProcAddress(s_glLib, "glPixelStorei");
 	glShaderSource = (PFNGLSHADERSOURCEPROC)wglGetProcAddress("glShaderSource");
 	glTexImage2D = (PFNGLTEXIMAGE2DPROC)wglGetProcAddress("glTexImage2D");
 	glTexParameteri = (PFNGLTEXPARAMETERIPROC)wglGetProcAddress("glTexParameteri");

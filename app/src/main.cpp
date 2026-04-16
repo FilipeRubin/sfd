@@ -31,7 +31,7 @@ int main()
 	const IBasicInput* input = gw.GetWindow()->GetBasicInput();
 
 	IBasic3DMesh* mesh = rm->CreateBasic3DMesh(planeVertices, sizeof(planeVertices), planeIndices, sizeof(planeIndices));
-	ITexture2D* texture = rm->CreateTexture2D(textureData, sizeof(textureData), { 4.0f, 4.0f });
+	ITexture2D* texture = rm->CreateTexture2D(textureData, sizeof(textureData), {10, 1});
 
 	while (not gw.ShouldClose())
 	{
