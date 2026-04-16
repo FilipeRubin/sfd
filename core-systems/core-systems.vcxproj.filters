@@ -51,22 +51,10 @@
     <ClInclude Include="include\rendering\i-renderer-resource-manager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\rendering\ogl-ndc-rendering-rule.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\rendering\i-ndc-rendering-rule.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\rendering\ogl-renderer-resource-manager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\rendering\i-ndc-shape.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\rendering\i-drawable.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\rendering\ogl-ndc-shape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\rendering\i-renderer-managed.h">
@@ -84,16 +72,10 @@
     <ClInclude Include="include\math\matrix4x4.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\rendering\i-basic-3d-rendering-rule.h">
+    <ClInclude Include="include\rendering\i-mesh-3d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\rendering\ogl-basic-3d-rendering-rule.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\rendering\i-basic-3d-mesh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\rendering\ogl-basic-3d-mesh.h">
+    <ClInclude Include="src\rendering\ogl-mesh-3d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\input\i-basic-input.h">
@@ -140,19 +122,10 @@
     <ClCompile Include="src\rendering\ogl-renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\rendering\ogl-ndc-rendering-rule.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\rendering\ogl-renderer-resource-manager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\rendering\ogl-ndc-shape.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\rendering\ogl-basic-3d-rendering-rule.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\rendering\ogl-basic-3d-mesh.cpp">
+    <ClCompile Include="src\rendering\ogl-mesh-3d.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\input\win32-basic-input.cpp">

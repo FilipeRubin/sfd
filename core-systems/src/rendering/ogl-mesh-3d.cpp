@@ -1,8 +1,8 @@
-#include "ogl-basic-3d-mesh.h"
+#include "ogl-mesh-3d.h"
 #include <ogl.h>
 #include <cstring>
 
-OGLBasic3DMesh::OGLBasic3DMesh(const float* vertices, size_t verticesSize, const unsigned int* indices, size_t indicesSize) :
+OGLMesh3D::OGLMesh3D(const float* vertices, size_t verticesSize, const unsigned int* indices, size_t indicesSize) :
 	m_vbo(0U), m_vao(0U), m_ebo(0U),
 	m_indicesCount(0U),
 	m_cachedVertices(nullptr), m_cachedVerticesSize(0ULL),
@@ -20,13 +20,13 @@ OGLBasic3DMesh::OGLBasic3DMesh(const float* vertices, size_t verticesSize, const
 	m_indicesCount = indicesSize / sizeof(unsigned int);
 }
 
-void OGLBasic3DMesh::Draw()
+void OGLMesh3D::Draw()
 {
 	glBindVertexArray(m_vao);
 	glDrawElements(GL_TRIANGLES, m_indicesCount, GL_UNSIGNED_INT, NULL);
 }
 
-void OGLBasic3DMesh::Create()
+void OGLMesh3D::Create()
 {
 	glGenVertexArrays(1, &m_vao);
 	glBindVertexArray(m_vao);
@@ -49,7 +49,7 @@ void OGLBasic3DMesh::Create()
 	ClearCachedData();
 }
 
-void OGLBasic3DMesh::Destroy()
+void OGLMesh3D::Destroy()
 {
 	glDeleteBuffers(1, &m_vbo);
 	glDeleteVertexArrays(1, &m_vao);
@@ -60,7 +60,7 @@ void OGLBasic3DMesh::Destroy()
 	ClearCachedData();
 }
 
-void OGLBasic3DMesh::ClearCachedData()
+void OGLMesh3D::ClearCachedData()
 {
 	delete[] m_cachedVertices;
 	delete[] m_cachedIndices;

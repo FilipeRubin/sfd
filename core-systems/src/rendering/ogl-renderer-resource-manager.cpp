@@ -1,9 +1,6 @@
 #include "ogl-renderer-resource-manager.h"
-#include "ogl-ndc-rendering-rule.h"
-#include "ogl-ndc-shape.h"
-#include "ogl-basic-3d-rendering-rule.h"
 #include "ogl-lambert-rendering-rule.h"
-#include "ogl-basic-3d-mesh.h"
+#include "ogl-mesh-3d.h"
 #include "ogl-texture-2d.h"
 
 OGLRendererResourceManager::OGLRendererResourceManager(OGLGraphicsBackend* backend) :
@@ -40,34 +37,14 @@ OGLRendererResourceManager::~OGLRendererResourceManager()
         currentBackend->MakeCurrent();
 }
 
-INDCRenderingRule* OGLRendererResourceManager::CreateNDCRenderingRule()
-{
-    return CreateResource<OGLNDCRenderingRule>();
-}
-
-IBasic3DRenderingRule* OGLRendererResourceManager::CreateBasic3DRenderingRule()
-{
-    return CreateResource<OGLBasic3DRenderingRule>();
-}
-
 ILambertRenderingRule* OGLRendererResourceManager::CreateLambertRenderingRule()
 {
     return CreateResource<OGLLambertRenderingRule>();
 }
 
-INDCShape* OGLRendererResourceManager::CreateNDCShape(float* vertices, size_t length)
+IMesh3D* OGLRendererResourceManager::Create3DMesh(Vertex3D* vertices, size_t verticesLength, unsigned int* indices, size_t indicesLength)
 {
-    return CreateResource<OGLNDCShape>(vertices, length);
-}
-
-IBasic3DMesh* OGLRendererResourceManager::CreateBasic3DMesh(float* vertices, size_t verticesLength, unsigned int* indices, size_t indicesLength)
-{
-    return CreateResource<OGLBasic3DMesh>(vertices, verticesLength, indices, indicesLength);
-}
-
-IBasic3DMesh* OGLRendererResourceManager::CreateBasic3DMesh(Vertex3D* vertices, size_t verticesLength, unsigned int* indices, size_t indicesLength)
-{
-    return CreateResource<OGLBasic3DMesh>(reinterpret_cast<float*>(vertices), verticesLength, indices, indicesLength);;
+    return CreateResource<OGLMesh3D>(reinterpret_cast<float*>(vertices), verticesLength, indices, indicesLength);;
 }
 
 ITexture2D* OGLRendererResourceManager::CreateTexture2D(const unsigned char* data, size_t dataLength, const Dimensions& size)

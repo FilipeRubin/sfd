@@ -1,10 +1,14 @@
 #pragma once
-#include "i-basic-3d-rendering-rule.h"
+#include "i-rendering-rule.h"
 #include "i-texture-2d.h"
+#include <math/matrix4x4.h>
 
-class ILambertRenderingRule : public IBasic3DRenderingRule
+class ILambertRenderingRule : public IRenderingRule
 {
 public:
 	virtual ~ILambertRenderingRule() = default;
+	virtual void SetModel(const Matrix4x4& model) = 0;
+	virtual void SetView(const Matrix4x4& view) = 0;
+	virtual void SetProjection(const Matrix4x4& projection) = 0;
 	virtual void SetTexture(ITexture2D* texture) = 0;
 };

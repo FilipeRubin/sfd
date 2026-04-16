@@ -1,11 +1,11 @@
 #pragma once
-#include <rendering/i-basic-3d-mesh.h>
+#include <rendering/i-mesh-3d.h>
 #include "i-renderer-managed.h"
 
-class OGLBasic3DMesh : public IBasic3DMesh, public IRendererManaged
+class OGLMesh3D : public IMesh3D, public IRendererManaged
 {
 public:
-	OGLBasic3DMesh(const float* vertices, size_t verticesSize, const unsigned int* indices, size_t indicesSize);
+	OGLMesh3D(const float* vertices, size_t verticesSize, const unsigned int* indices, size_t indicesSize);
 	void Draw() override;
 	void Create() override;
 	void Destroy() override;
