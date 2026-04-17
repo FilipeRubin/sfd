@@ -4,8 +4,6 @@
 #include <types/color.h>
 #include <types/color8.h>
 #include "3d-data.h"
-#include <assert.h>
-#include <iostream>
 
 unsigned char ComputeMiddleGradient(unsigned int stride, unsigned int value)
 {
@@ -27,7 +25,9 @@ ITexture2D* GeneratePatternTexture(IRendererResourceManager* rm, int width, int 
 	{
 		for (int j = height - 1; j >= 0; j--)
 		{
-			pixels[(j * width) + i] = Color8(255 / width * i, 255 / height * j, (255 / width * i + 255 / height * j) / 2);
+			Color8& pixel = pixels[(j * width) + i];
+			pixel = Color8(255 / width * i, 255 / height * j, (255 / width * i + 255 / height * j) / 2);
+			pixel.b = fmax(fmax(255-pixel.r, 255-pixel.b), pixel.b);
 		}
 	}
 	
@@ -88,10 +88,18 @@ int main()
 
 	const IBasicInput* input = gw.GetWindow()->GetBasicInput();
 
-	IMesh3D* mesh = rm->Create3DMesh(planeVertices, sizeof(planeVertices), planeIndices, sizeof(planeIndices));
-	ITexture2D* texture = GeneratePatternTexture2(rm, 16, 16);
+	IMesh3D* plane = rm->Create3DMesh(planeVertices, sizeof(planeVertices), planeIndices, sizeof(planeIndices));
+	IMesh3D* cube = rm->Create3DMesh(cubeVertices, sizeof(cubeVertices), cubeIndices, sizeof(cubeIndices));
+	ITexture2D* planeTexture = GeneratePatternTexture2(rm, 16, 16);
+	ITexture2D* cubeTexture = GeneratePatternTexture(rm, 16, 16);
 
-	rr->SetAmbientLight(Color(0.1f, 0.1f, 0.1f));
+	DirectionalLight dl = DirectionalLight();
+	dl.ambient = Color(0.1f, 0.1f, 0.1f);
+	dl.diffuse = Color(1.0f, 1.0f, 1.0f);
+	dl.direction = Vector3(1.0f, -1.0f, 0.0f);
+	rr->SetDirectionalLight(dl);
+
+	float planeRotation = 0.0f;
 
 	while (not gw.ShouldClose())
 	{
@@ -152,11 +160,12 @@ int main()
 		// Rendering
 		gw.BeginDraw();
 
-		rr->SetModel(Matrix4x4::Translation({ 0.0f, 0.0f, -5.0f }) * Matrix4x4::RotationX(3.1415f / 2.0f));
-		rr->SetTexture(texture);
-		mesh->Draw();
+		rr->SetModel(Matrix4x4::Translation({ 0.0f, 0.0f, -5.0f }) * Matrix4x4::RotationY(planeRotation) * Matrix4x4::RotationX(3.1415f / 2.0f));
+		rr->SetTexture(cubeTexture);
+		cube->Draw();
 		
 		gw.EndDraw();
+		planeRotation += 0.0004f;
 	}
 
 	gw.Finalize();

@@ -169,6 +169,7 @@
     <ClInclude Include="include\types\dimensions.h" />
     <ClInclude Include="include\rendering\i-lambert-rendering-rule.h" />
     <ClInclude Include="include\rendering\i-texture-2d.h" />
+    <ClInclude Include="include\types\directional-light.h" />
     <ClInclude Include="include\types\vertex-3d.h" />
     <ClInclude Include="include\i-graphics-backend.h" />
     <ClInclude Include="include\input\i-basic-input.h" />

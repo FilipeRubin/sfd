@@ -146,8 +146,13 @@ typedef char GLchar;
 #define GL_DYNAMIC_COPY         0x88EA
 
 // GL_VERSION_2_0
-#define GL_FRAGMENT_SHADER 0x8B30
-#define GL_VERTEX_SHADER   0x8B31
+#define GL_FRAGMENT_SHADER      0x8B30
+#define GL_VERTEX_SHADER        0x8B31
+#define GL_SHADER_TYPE          0x8B4F
+#define GL_DELETE_STATUS        0x8B80
+#define GL_COMPILE_STATUS       0x8B81
+#define GL_INFO_LOG_LENGTH      0x8B84
+#define GL_SHADER_SOURCE_LENGTH 0x8B88
 
 // GL_VERSION_3_0
 #define GL_RGBA32F    0x8814
@@ -214,6 +219,8 @@ extern void          (*glGenBuffers)(GLsizei n, GLuint* buffers);
 extern void          (*glGenerateMipmap)(GLenum target);
 extern void          (*glGenTextures)(GLsizei n, GLuint* textures);
 extern void          (*glGenVertexArrays)(GLsizei n, GLuint* arrays);
+extern void          (*glGetShaderInfoLog)(GLuint shader, GLsizei maxLength, GLsizei *length, GLchar* infoLog);
+extern void          (*glGetShaderiv)(GLuint shader, GLenum pname, GLint* params);
 extern const GLubyte*(*glGetString)(GLenum name);
 extern GLint         (*glGetUniformLocation)(GLuint program, const GLchar* name);
 extern GLboolean     (*glIsProgram)(GLuint program);
