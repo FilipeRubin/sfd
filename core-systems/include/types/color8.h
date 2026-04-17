@@ -1,5 +1,7 @@
 #pragma once
 
+struct Color;
+
 struct Color8
 {
 	union
@@ -38,4 +40,6 @@ struct Color8
 	{
 		return value;
 	}
+
+	explicit operator Color() const noexcept;
 };

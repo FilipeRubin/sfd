@@ -164,6 +164,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\core-systems.h" />
+    <ClInclude Include="include\types\color.h" />
     <ClInclude Include="include\types\color8.h" />
     <ClInclude Include="include\types\dimensions.h" />
     <ClInclude Include="include\rendering\i-lambert-rendering-rule.h" />
@@ -196,6 +197,8 @@
     <ClInclude Include="src\win32-window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="include\types\color.cpp" />
+    <ClCompile Include="include\types\color8.cpp" />
     <ClCompile Include="src\core-systems.cpp" />
     <ClCompile Include="src\input\win32-basic-input.cpp" />
     <ClCompile Include="src\ogl-graphics-backend.cpp" />

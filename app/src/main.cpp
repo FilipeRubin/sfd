@@ -1,6 +1,7 @@
 #include "graphics-window.h"
 #include <math/matrix4x4.h>
 #include <math/vector2.h>
+#include <types/color.h>
 #include <types/color8.h>
 #include "3d-data.h"
 #include <assert.h>
@@ -88,9 +89,9 @@ int main()
 	const IBasicInput* input = gw.GetWindow()->GetBasicInput();
 
 	IMesh3D* mesh = rm->Create3DMesh(planeVertices, sizeof(planeVertices), planeIndices, sizeof(planeIndices));
-	ITexture2D* textures[100];
-	for (int i = 0; i < 100; i++)
-		textures[i] = GeneratePatternTexture2(rm, 10 * (i + 1), 10 * (i + 1));
+	ITexture2D* texture = GeneratePatternTexture2(rm, 16, 16);
+
+	rr->SetAmbientLight(Color(0.1f, 0.1f, 0.1f));
 
 	while (not gw.ShouldClose())
 	{
@@ -150,15 +151,11 @@ int main()
 
 		// Rendering
 		gw.BeginDraw();
-		for (int i = 0; i < 10; i++)
-		{
-			for (int j = 0; j < 10; j++)
-			{
-				rr->SetTexture(textures[i*10 + j]);
-				rr->SetModel(Matrix4x4::Translation({ (float(i) * 21.0f), -1.0f, float(j) * 21.0f}));
-				mesh->Draw();
-			}
-		}
+
+		rr->SetModel(Matrix4x4::Translation({ 0.0f, 0.0f, -5.0f }) * Matrix4x4::RotationX(3.1415f / 2.0f));
+		rr->SetTexture(texture);
+		mesh->Draw();
+		
 		gw.EndDraw();
 	}
 

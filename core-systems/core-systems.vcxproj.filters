@@ -108,6 +108,9 @@
     <ClInclude Include="include\types\color8.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\types\color.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core-systems.cpp">
@@ -141,6 +144,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\rendering\ogl-texture-2d.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="include\types\color.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="include\types\color8.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,6 +1,7 @@
 #include "ogl-lambert-rendering-rule.h"
 #include "ogl-texture-2d.h"
 #include <ogl.h>
+#include <types/color.h>
 
 static const char* vertexShaderSource = R"(
 #version 460 core
@@ -30,12 +31,18 @@ in vec2 v_out_uv;
 out vec4 f_color;
 
 uniform sampler2D u_texture;
+uniform vec4 u_ambientLight;
 
 void main()
 {
-	f_color = texture(u_texture, v_out_uv);
+	f_color = texture(u_texture, v_out_uv) * vec4(u_ambientLight.rgb, 1.0);
 }
 )";
+
+void OGLLambertRenderingRule::SetAmbientLight(const Color& color)
+{
+	glUniform4fv(m_ambientLightUniform, 1, reinterpret_cast<const GLfloat*>(&color));
+}
 
 void OGLLambertRenderingRule::SetModel(const Matrix4x4& model)
 {
@@ -77,6 +84,7 @@ void OGLLambertRenderingRule::Create()
 	glDeleteShader(vs);
 	glDeleteShader(fs);
 
+	m_ambientLightUniform = glGetUniformLocation(m_program, "u_ambientLight");
 	m_modelUniform = glGetUniformLocation(m_program, "u_model");
 	m_viewUniform = glGetUniformLocation(m_program, "u_view");
 	m_projectionUniform = glGetUniformLocation(m_program, "u_projection");
@@ -87,6 +95,7 @@ void OGLLambertRenderingRule::Destroy()
 	glDeleteProgram(m_program);
 
 	m_program = 0U;
+	m_ambientLightUniform = 0;
 	m_modelUniform = 0;
 	m_viewUniform = 0;
 	m_projectionUniform = 0;

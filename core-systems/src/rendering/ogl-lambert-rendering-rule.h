@@ -6,6 +6,7 @@
 class OGLLambertRenderingRule : public ILambertRenderingRule, public IBindable, public IRendererManaged
 {
 public:
+	void SetAmbientLight(const Color& color) override;
 	void SetModel(const Matrix4x4& model) override;
 	void SetView(const Matrix4x4& view) override;
 	void SetProjection(const Matrix4x4& projection) override;
@@ -15,6 +16,7 @@ public:
 	void Destroy() override;
 private:
 	unsigned int m_program;
+	int m_ambientLightUniform;
 	int m_modelUniform;
 	int m_viewUniform;
 	int m_projectionUniform;

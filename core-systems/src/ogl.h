@@ -224,7 +224,8 @@ extern void          (*glShaderSource)(GLuint shader, GLsizei count, const GLcha
 extern void          (*glTexImage2D)(GLenum target, GLint level, GLint internalFormat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, const GLvoid* data);
 extern void          (*glTexParameteri)(GLenum target, GLenum pname, GLint param);
 extern void          (*glUseProgram)(GLuint program);
-extern void          (*glUniform3f)(GLint location, GLfloat v0, GLfloat v1, GLfloat v2);
+extern void          (*glUniform3fv)(GLint location, GLsizei count, const GLfloat* value);
+extern void          (*glUniform4fv)(GLint location, GLsizei count, const GLfloat* value);
 extern void          (*glUniformMatrix4fv)(GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
 extern void          (*glVertexAttribPointer)(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid* pointer);
 extern void          (*glViewport)(GLint x, GLint y, GLsizei width, GLsizei height);
