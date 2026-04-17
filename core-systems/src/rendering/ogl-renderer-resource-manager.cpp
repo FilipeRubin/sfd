@@ -47,7 +47,7 @@ IMesh3D* OGLRendererResourceManager::Create3DMesh(Vertex3D* vertices, size_t ver
     return CreateResource<OGLMesh3D>(reinterpret_cast<float*>(vertices), verticesLength, indices, indicesLength);;
 }
 
-ITexture2D* OGLRendererResourceManager::CreateTexture2D(const unsigned char* data, size_t dataLength, const Dimensions& size)
+ITexture2D* OGLRendererResourceManager::CreateTexture2D(Color8* data, size_t dataLength, const Dimensions& size)
 {
     return CreateResource<OGLTexture2D>(data, dataLength, size);
 }

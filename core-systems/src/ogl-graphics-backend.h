@@ -20,4 +20,5 @@ private:
 	const void* m_oglContext;
 	void* m_hdc;
 	IRenderer* m_renderer;
+	void SetDefaultRendererSettings();
 };

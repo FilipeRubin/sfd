@@ -50,6 +50,8 @@ bool OGLGraphicsBackend::TryInitialize(IGraphicsBackend* sharedBackend)
 
 	m_renderer = new OGLRenderer(this);
 
+	SetDefaultRendererSettings();
+
 	return true;
 }
 
@@ -107,6 +109,16 @@ void OGLGraphicsBackend::Decrement()
 	{
 		UnloadOGL();
 	}
+}
+
+void OGLGraphicsBackend::SetDefaultRendererSettings()
+{
+	HGLRC previousContext = wglGetCurrentContext();
+	wglMakeCurrent((HDC)m_hdc, (HGLRC)m_oglContext);
+
+	glEnable(GL_DEPTH_TEST);
+
+	wglMakeCurrent((HDC)m_hdc, previousContext);
 }
 
 #endif // _WIN32

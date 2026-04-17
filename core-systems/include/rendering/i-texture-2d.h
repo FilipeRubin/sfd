@@ -1,5 +1,5 @@
 #pragma once
-#include <math/dimensions.h>
+#include <types/dimensions.h>
 
 class ITexture2D
 {

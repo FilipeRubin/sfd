@@ -1,7 +1,7 @@
 #include "ogl-texture-2d.h"
 #include <ogl.h>
 
-OGLTexture2D::OGLTexture2D(const unsigned char* data, size_t dataSize, const Dimensions& size) :
+OGLTexture2D::OGLTexture2D(Color8* data, size_t dataSize, const Dimensions& size) :
     m_data(data),
     m_dataSize(dataSize),
     m_size(size),

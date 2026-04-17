@@ -37,11 +37,6 @@ void main()
 }
 )";
 
-void OGLLambertRenderingRule::Bind() const
-{
-	glUseProgram(m_program);
-}
-
 void OGLLambertRenderingRule::SetModel(const Matrix4x4& model)
 {
 	glUniformMatrix4fv(m_modelUniform, 1, GL_FALSE, model.Data());
@@ -60,6 +55,11 @@ void OGLLambertRenderingRule::SetProjection(const Matrix4x4& projection)
 void OGLLambertRenderingRule::SetTexture(ITexture2D* texture)
 {
 	dynamic_cast<OGLTexture2D*>(texture)->Bind();
+}
+
+void OGLLambertRenderingRule::Bind() const
+{
+	glUseProgram(m_program);
 }
 
 void OGLLambertRenderingRule::Create()

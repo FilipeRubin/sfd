@@ -164,7 +164,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\core-systems.h" />
-    <ClInclude Include="include\math\dimensions.h" />
+    <ClInclude Include="include\types\color8.h" />
+    <ClInclude Include="include\types\dimensions.h" />
     <ClInclude Include="include\rendering\i-lambert-rendering-rule.h" />
     <ClInclude Include="include\rendering\i-texture-2d.h" />
     <ClInclude Include="include\types\vertex-3d.h" />
@@ -189,6 +190,7 @@
     <ClInclude Include="src\rendering\ogl-renderer-resource-manager.h" />
     <ClInclude Include="src\rendering\ogl-renderer.h" />
     <ClInclude Include="src\ogl.h" />
+    <ClInclude Include="src\rendering\i-bindable.h" />
     <ClInclude Include="src\rendering\ogl-texture-2d.h" />
     <ClInclude Include="src\win32-window-class.h" />
     <ClInclude Include="src\win32-window.h" />

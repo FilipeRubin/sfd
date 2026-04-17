@@ -26,6 +26,8 @@ typedef char GLchar;
 #define GL_TRIANGLES              0x0004
 #define GL_TRIANGLE_STRIP         0x0005
 #define GL_TRIANGLE_FAN           0x0006
+#define GL_DEPTH_TEST             0x0B71
+#define GL_STENCIL_TEST           0x0B90
 #define GL_UNPACK_SWAP_BYTES      0x0CF0
 #define GL_UNPACK_LSB_FIRST       0x0CF1
 #define GL_UNPACK_ROW_LENGTH      0x0CF2
@@ -203,6 +205,7 @@ extern void          (*glDeleteProgram)(GLuint program);
 extern void          (*glDeleteShader)(GLuint shader);
 extern void          (*glDeleteTextures)(GLsizei n, const GLuint* textures);
 extern void          (*glDeleteVertexArrays)(GLsizei n, GLuint* arrays);
+extern void          (*glDisable)(GLenum cap);
 extern void          (*glDrawArrays)(GLenum mode, GLint first, GLsizei count);
 extern void          (*glDrawElements)(GLenum mode, GLsizei count, GLenum type, const GLvoid* indices);
 extern void          (*glEnable)(GLenum cap);
