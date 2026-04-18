@@ -1,7 +1,6 @@
 #include "ogl-renderer.h"
 #include "ogl.h"
 #include "ogl-renderer-resource-manager.h"
-#include "ogl-texture-2d.h"
 
 OGLRenderer::OGLRenderer(OGLGraphicsBackend* backend) :
 	m_resourceManager(new OGLRendererResourceManager(backend))
@@ -31,4 +30,12 @@ void OGLRenderer::SetViewportSize(int width, int height)
 IRendererResourceManager* OGLRenderer::GetResourceManager() const
 {
 	return m_resourceManager;
+}
+
+void OGLRenderer::SetCamera(const Camera& camera)
+{
+}
+
+void OGLRenderer::SetDirectionalLight(const DirectionalLight& light)
+{
 }

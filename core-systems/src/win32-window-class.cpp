@@ -18,6 +18,7 @@ static LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPara
 		Win32Window* window = (Win32Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
 		int width = (int)LOWORD(lParam);
 		int height = (int)HIWORD(lParam);
+		window->UpdateSize({ width, height });
 		if (window->GetWindowSizeCallback())
 			window->GetWindowSizeCallback()(width, height);
 		return 0;

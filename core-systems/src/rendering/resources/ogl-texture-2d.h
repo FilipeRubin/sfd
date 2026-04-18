@@ -1,8 +1,8 @@
 #pragma once
-#include <rendering/i-texture-2d.h>
+#include <rendering/resources/i-texture-2d.h>
 #include <types/dimensions.h>
 #include <types/color8.h>
-#include "i-renderer-managed.h"
+#include <rendering/i-renderer-managed.h>
 
 class OGLTexture2D : public ITexture2D, public IRendererManaged
 {

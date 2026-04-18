@@ -1,5 +1,5 @@
 #pragma once
-#include <rendering/i-texture-2d.h>
+#include <rendering/resources/i-texture-2d.h>
 #include <rendering/i-renderer-resource-manager.h>
 #include <types/vertex-3d.h>
 #include <types/color8.h>

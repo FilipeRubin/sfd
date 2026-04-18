@@ -6,10 +6,12 @@ IRendererResourceManager* resourceManager = nullptr;
 IWindow* window = nullptr;
 IBasicInput* input = nullptr;
 
-ILambertRenderingRule* renderingRule = nullptr;
+IRenderingRule* lambertRenderingRule = nullptr;
+IRenderingRule* redRenderingRule = nullptr;
 IMesh3D* cubeMesh = nullptr;
 ITexture2D* cubeTexture = nullptr;
-float cubeRotation = 0.0f;
+
+bool useLambertRenderingRule = true;
 
 void App::Init(GraphicsWindow& graphicsWindow)
 {
@@ -22,24 +24,23 @@ void App::Init(GraphicsWindow& graphicsWindow)
 void App::Start()
 {
 	renderer->SetClearColor(0.05f, 0.1f, 0.2f);
-	renderingRule = renderer->GetResourceManager()->CreateLambertRenderingRule();
+	lambertRenderingRule = renderer->GetResourceManager()->CreateLambertRenderingRule();
+	redRenderingRule = renderer->GetResourceManager()->CreateRedRenderingRule();
 	cubeTexture = GeneratePatternTexture(resourceManager, 16, 16);
 	cubeMesh = resourceManager->Create3DMesh(cubeVertices, sizeof(cubeVertices), cubeIndices, sizeof(cubeIndices));
-	renderingRule->Bind();
-	DirectionalLight directionalLight = DirectionalLight();
-	directionalLight.ambient = Color(0.0f, 0.0f, 0.0f);
-	directionalLight.diffuse = Color(1.0f, 1.0f, 1.0f);
-	directionalLight.direction = Vector3(0.0f, -1.0f, -1.0f);
-	renderingRule->SetDirectionalLight(directionalLight);
 }
 
 void App::Update()
 {
-	renderingRule->Bind();
-	renderingRule->SetProjection(Matrix4x4::Perspective(window->GetAspectRatio(), 3.1415f / 2.0f, 0.1f, 100.0f));
-	renderingRule->SetView(Matrix4x4::RotationX(3.1415 / 4.0f) * Matrix4x4::Translation({ 0.0f, -10.0f, -10.0f }));
-	renderingRule->SetModel(Matrix4x4::RotationY(cubeRotation));
+	if (useLambertRenderingRule)
+		lambertRenderingRule->Bind();
+	else
+		redRenderingRule->Bind();
 	cubeTexture->Bind();
 	cubeMesh->Draw();
-	cubeRotation += 0.001f;
+
+	if (input->IsKeyJustPressed(0x20))
+	{
+		useLambertRenderingRule = not useLambertRenderingRule;
+	}
 }

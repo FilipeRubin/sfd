@@ -1,6 +1,6 @@
 #pragma once
-#include <rendering/i-mesh-3d.h>
-#include "i-renderer-managed.h"
+#include <rendering/resources/i-mesh-3d.h>
+#include <rendering/i-renderer-managed.h>
 
 class OGLMesh3D : public IMesh3D, public IRendererManaged
 {

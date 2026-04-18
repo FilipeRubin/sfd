@@ -164,11 +164,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\core-systems.h" />
+    <ClInclude Include="include\types\camera.h" />
     <ClInclude Include="include\types\color.h" />
     <ClInclude Include="include\types\color8.h" />
     <ClInclude Include="include\types\dimensions.h" />
-    <ClInclude Include="include\rendering\i-lambert-rendering-rule.h" />
-    <ClInclude Include="include\rendering\i-texture-2d.h" />
+    <ClInclude Include="include\rendering\resources\i-texture-2d.h" />
     <ClInclude Include="include\types\directional-light.h" />
     <ClInclude Include="include\types\vertex-3d.h" />
     <ClInclude Include="include\i-graphics-backend.h" />
@@ -177,22 +177,24 @@
     <ClInclude Include="include\math\vector2.h" />
     <ClInclude Include="include\math\vector3.h" />
     <ClInclude Include="include\math\vector4.h" />
-    <ClInclude Include="include\rendering\i-mesh-3d.h" />
+    <ClInclude Include="include\rendering\resources\i-mesh-3d.h" />
     <ClInclude Include="include\rendering\i-drawable.h" />
+    <ClInclude Include="src\data\lambert-shader.h" />
+    <ClInclude Include="src\data\red-shader.h" />
     <ClInclude Include="src\input\win32-basic-input.h" />
     <ClInclude Include="src\rendering\i-renderer-managed.h" />
     <ClInclude Include="include\rendering\i-renderer-resource-manager.h" />
     <ClInclude Include="include\rendering\i-renderer.h" />
     <ClInclude Include="include\i-window.h" />
-    <ClInclude Include="include\rendering\i-rendering-rule.h" />
+    <ClInclude Include="include\rendering\resources\i-rendering-rule.h" />
     <ClInclude Include="include\window-parameters.h" />
     <ClInclude Include="src\ogl-graphics-backend.h" />
-    <ClInclude Include="src\rendering\ogl-mesh-3d.h" />
-    <ClInclude Include="src\rendering\ogl-lambert-rendering-rule.h" />
+    <ClInclude Include="src\rendering\resources\ogl-mesh-3d.h" />
+    <ClInclude Include="src\rendering\resources\ogl-rendering-rule.h" />
     <ClInclude Include="src\rendering\ogl-renderer-resource-manager.h" />
     <ClInclude Include="src\rendering\ogl-renderer.h" />
     <ClInclude Include="src\ogl.h" />
-    <ClInclude Include="src\rendering\ogl-texture-2d.h" />
+    <ClInclude Include="src\rendering\resources\ogl-texture-2d.h" />
     <ClInclude Include="src\win32-window-class.h" />
     <ClInclude Include="src\win32-window.h" />
   </ItemGroup>
@@ -202,12 +204,12 @@
     <ClCompile Include="src\core-systems.cpp" />
     <ClCompile Include="src\input\win32-basic-input.cpp" />
     <ClCompile Include="src\ogl-graphics-backend.cpp" />
-    <ClCompile Include="src\rendering\ogl-mesh-3d.cpp" />
-    <ClCompile Include="src\rendering\ogl-lambert-rendering-rule.cpp" />
+    <ClCompile Include="src\rendering\resources\ogl-mesh-3d.cpp" />
+    <ClCompile Include="src\rendering\resources\ogl-rendering-rule.cpp" />
     <ClCompile Include="src\rendering\ogl-renderer-resource-manager.cpp" />
     <ClCompile Include="src\rendering\ogl-renderer.cpp" />
     <ClCompile Include="src\ogl.cpp" />
-    <ClCompile Include="src\rendering\ogl-texture-2d.cpp" />
+    <ClCompile Include="src\rendering\resources\ogl-texture-2d.cpp" />
     <ClCompile Include="src\win32-window-class.cpp" />
     <ClCompile Include="src\win32-window.cpp" />
   </ItemGroup>

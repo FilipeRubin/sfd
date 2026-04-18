@@ -45,7 +45,7 @@
     <ClInclude Include="src\rendering\ogl-renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\rendering\i-rendering-rule.h">
+    <ClInclude Include="include\rendering\resources\i-rendering-rule.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\rendering\i-renderer-resource-manager.h">
@@ -72,10 +72,10 @@
     <ClInclude Include="include\math\matrix4x4.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\rendering\i-mesh-3d.h">
+    <ClInclude Include="include\rendering\resources\i-mesh-3d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\rendering\ogl-mesh-3d.h">
+    <ClInclude Include="src\rendering\resources\ogl-mesh-3d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\input\i-basic-input.h">
@@ -87,16 +87,13 @@
     <ClInclude Include="include\types\vertex-3d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\rendering\i-lambert-rendering-rule.h">
+    <ClInclude Include="src\rendering\resources\ogl-rendering-rule.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\rendering\ogl-lambert-rendering-rule.h">
+    <ClInclude Include="include\rendering\resources\i-texture-2d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\rendering\i-texture-2d.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\rendering\ogl-texture-2d.h">
+    <ClInclude Include="src\rendering\resources\ogl-texture-2d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\types\dimensions.h">
@@ -109,6 +106,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\types\directional-light.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\types\camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\data\lambert-shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\data\red-shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -134,16 +140,16 @@
     <ClCompile Include="src\rendering\ogl-renderer-resource-manager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\rendering\ogl-mesh-3d.cpp">
+    <ClCompile Include="src\rendering\resources\ogl-mesh-3d.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\input\win32-basic-input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\rendering\ogl-lambert-rendering-rule.cpp">
+    <ClCompile Include="src\rendering\resources\ogl-rendering-rule.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\rendering\ogl-texture-2d.cpp">
+    <ClCompile Include="src\rendering\resources\ogl-texture-2d.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="include\types\color.cpp">
