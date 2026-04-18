@@ -1,7 +1,7 @@
 #include "ogl-renderer.h"
 #include "ogl.h"
 #include "ogl-renderer-resource-manager.h"
-#include "i-bindable.h"
+#include "ogl-texture-2d.h"
 
 OGLRenderer::OGLRenderer(OGLGraphicsBackend* backend) :
 	m_resourceManager(new OGLRendererResourceManager(backend))
@@ -11,11 +11,6 @@ OGLRenderer::OGLRenderer(OGLGraphicsBackend* backend) :
 OGLRenderer::~OGLRenderer()
 {
 	delete m_resourceManager;
-}
-
-void OGLRenderer::BindRenderingRule(IRenderingRule* renderingRule)
-{
-	dynamic_cast<IBindable*>(renderingRule)->Bind();
 }
 
 void OGLRenderer::ClearScreen() const

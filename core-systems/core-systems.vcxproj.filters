@@ -102,9 +102,6 @@
     <ClInclude Include="include\types\dimensions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\rendering\i-bindable.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\types\color8.h">
       <Filter>Header Files</Filter>
     </ClInclude>

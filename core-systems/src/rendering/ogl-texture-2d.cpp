@@ -15,11 +15,6 @@ void OGLTexture2D::Bind()
     glBindTexture(GL_TEXTURE_2D, m_texture);
 }
 
-Dimensions OGLTexture2D::GetSize()
-{
-    return m_size;
-}
-
 void OGLTexture2D::Create()
 {
     glGenTextures(1, &m_texture);

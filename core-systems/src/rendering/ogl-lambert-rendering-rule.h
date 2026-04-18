@@ -1,17 +1,15 @@
 #pragma once
-#include "i-bindable.h"
 #include "i-renderer-managed.h"
 #include <rendering/i-lambert-rendering-rule.h>
 
-class OGLLambertRenderingRule : public ILambertRenderingRule, public IBindable, public IRendererManaged
+class OGLLambertRenderingRule : public ILambertRenderingRule, public IRendererManaged
 {
 public:
 	void SetDirectionalLight(const DirectionalLight& directionalLight) override;
 	void SetModel(const Matrix4x4& model) override;
 	void SetView(const Matrix4x4& view) override;
 	void SetProjection(const Matrix4x4& projection) override;
-	void SetTexture(ITexture2D* texture) override;
-	void Bind() const override;
+	void Bind() override;
 	void Create() override;
 	void Destroy() override;
 private:

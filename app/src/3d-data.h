@@ -1,4 +1,6 @@
 #pragma once
+#include <rendering/i-texture-2d.h>
+#include <rendering/i-renderer-resource-manager.h>
 #include <types/vertex-3d.h>
 #include <types/color8.h>
 
@@ -191,3 +193,59 @@ static Color8 textureData[] = {
 	Color8( 50,   0, 255),
 	Color8(  0,   0, 255)
 };
+
+unsigned char ComputeMiddleGradient(unsigned int stride, unsigned int value)
+{
+	const bool evenStride = stride % 2 == 0;
+	const int transformedValue = value - (stride / 2);
+	const bool negativeValue = transformedValue < 0;
+	const int index = abs(evenStride and negativeValue ? int(value + 1 - (stride / 2)) : transformedValue);
+	const int indexMultiplier = evenStride ?
+		(255 / (stride / 2 - 1)) :
+		(255 / (stride / 2));
+	return index * indexMultiplier;
+}
+
+ITexture2D* GeneratePatternTexture(IRendererResourceManager* rm, int width, int height)
+{
+	Color8* pixels = new Color8[width * height];
+
+	for (int i = 0; i < width; i++)
+	{
+		for (int j = height - 1; j >= 0; j--)
+		{
+			Color8& pixel = pixels[(j * width) + i];
+			pixel = Color8(255 / width * i, 255 / height * j, (255 / width * i + 255 / height * j) / 2);
+			pixel.b = fmax(fmax(255 - pixel.r, 255 - pixel.b), pixel.b);
+		}
+	}
+
+	ITexture2D* result = rm->CreateTexture2D(pixels, sizeof(pixels[0]) * width * height, Dimensions(width, height));
+
+	delete[] pixels;
+
+	return result;
+}
+
+ITexture2D* GeneratePatternTexture2(IRendererResourceManager* rm, int width, int height)
+{
+	Color8* pixels = new Color8[width * height];
+
+	for (int i = 0; i < width; i++)
+	{
+		for (int j = height - 1; j >= 0; j--)
+		{
+			pixels[(j * width) + i] = Color8(
+				ComputeMiddleGradient(width, i),
+				ComputeMiddleGradient(height, j),
+				0
+			);
+		}
+	}
+
+	ITexture2D* result = rm->CreateTexture2D(pixels, sizeof(pixels[0]) * width * height, Dimensions(width, height));
+
+	delete[] pixels;
+
+	return result;
+}

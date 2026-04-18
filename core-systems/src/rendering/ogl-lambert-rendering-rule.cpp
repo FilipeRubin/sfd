@@ -1,5 +1,4 @@
 #include "ogl-lambert-rendering-rule.h"
-#include "ogl-texture-2d.h"
 #include <ogl.h>
 #include <types/color.h>
 
@@ -69,12 +68,7 @@ void OGLLambertRenderingRule::SetProjection(const Matrix4x4& projection)
 	glUniformMatrix4fv(m_projectionUniform, 1, GL_FALSE, projection.Data());
 }
 
-void OGLLambertRenderingRule::SetTexture(ITexture2D* texture)
-{
-	dynamic_cast<OGLTexture2D*>(texture)->Bind();
-}
-
-void OGLLambertRenderingRule::Bind() const
+void OGLLambertRenderingRule::Bind()
 {
 	glUseProgram(m_program);
 }

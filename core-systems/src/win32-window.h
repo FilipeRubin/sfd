@@ -12,11 +12,14 @@ public:
 	bool ShouldClose() const override;
 	bool IsInitialized() const override;
 	bool TryInitialize(const WindowParameters& parameters) override;
-	const IBasicInput* GetBasicInput() const override;
+	IBasicInput* GetBasicInput() override;
+	Dimensions GetSize() const override;
+	float GetAspectRatio() const override;
 	WindowSizeCallback GetWindowSizeCallback() const override;
 	void SetWindowSizeCallback(WindowSizeCallback windowSizeCallback) override;
 	void Close();
 	const void* GetHandle() const;
+	void UpdateSize(const Dimensions& size);
 private:
 	static unsigned int s_instanceCount;
 	static Win32WindowClass s_windowClass;
@@ -26,4 +29,5 @@ private:
 	void* m_hwnd;
 	Win32BasicInput m_basicInput;
 	WindowSizeCallback m_windowSizeCallback;
+	Dimensions m_size;
 };

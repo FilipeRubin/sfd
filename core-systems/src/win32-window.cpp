@@ -9,7 +9,8 @@ Win32Window::Win32Window() :
     m_hwnd(NULL),
     m_shouldClose(false),
     m_basicInput(Win32BasicInput()),
-    m_windowSizeCallback(nullptr)
+    m_windowSizeCallback(nullptr),
+    m_size(Dimensions())
 {
 }
 
@@ -89,12 +90,24 @@ bool Win32Window::TryInitialize(const WindowParameters& parameters)
 
     ShowWindow((HWND)m_hwnd, SW_SHOW);
 
+    m_size = Dimensions(parameters.width, parameters.height);
+
     return true;
 }
 
-const IBasicInput* Win32Window::GetBasicInput() const
+IBasicInput* Win32Window::GetBasicInput()
 {
-    return dynamic_cast<const IBasicInput*>(&m_basicInput);
+    return dynamic_cast<IBasicInput*>(&m_basicInput);
+}
+
+Dimensions Win32Window::GetSize() const
+{
+    return m_size;
+}
+
+float Win32Window::GetAspectRatio() const
+{
+    return float(m_size.x) / float(m_size.y);
 }
 
 WindowSizeCallback Win32Window::GetWindowSizeCallback() const
@@ -115,6 +128,11 @@ void Win32Window::Close()
 const void* Win32Window::GetHandle() const
 {
     return m_hwnd;
+}
+
+void Win32Window::UpdateSize(const Dimensions& size)
+{
+    m_size = size;
 }
 
 bool Win32Window::TryIncrement()

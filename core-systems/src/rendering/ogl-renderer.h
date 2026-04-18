@@ -7,7 +7,6 @@ class OGLRenderer : public IRenderer
 public:
 	OGLRenderer(OGLGraphicsBackend* backend);
 	~OGLRenderer();
-	void BindRenderingRule(IRenderingRule* renderingRule) override;
 	void ClearScreen() const override;
 	void SetClearColor(float r, float g, float b) override;
 	void SetViewportSize(int width, int height) override;

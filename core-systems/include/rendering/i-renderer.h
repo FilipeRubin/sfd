@@ -5,7 +5,6 @@ class IRenderer
 {
 public:
 	virtual ~IRenderer() = default;
-	virtual void BindRenderingRule(IRenderingRule* renderingRule) = 0;
 	virtual void ClearScreen() const = 0;
 	virtual void SetClearColor(float r, float g, float b) = 0;
 	virtual void SetViewportSize(int width, int height) = 0;

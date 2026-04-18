@@ -22,7 +22,7 @@ private:
 	OGLGraphicsBackend* m_backend;
 	list<unique_ptr<IRendererManaged>> m_waitingToCreate;
 	list<unique_ptr<IRendererManaged>> m_resources;
-
+	
 	template<typename T, typename... Args>
 	inline T* CreateResource(Args&&... args)
 	{

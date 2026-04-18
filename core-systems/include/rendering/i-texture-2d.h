@@ -5,5 +5,5 @@ class ITexture2D
 {
 public:
 	virtual ~ITexture2D() = default;
-	virtual Dimensions GetSize() = 0;
+	virtual void Bind() = 0;
 };

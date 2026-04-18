@@ -1,174 +1,41 @@
 #include "graphics-window.h"
-#include <math/matrix4x4.h>
-#include <math/vector2.h>
-#include <types/color.h>
-#include <types/color8.h>
-#include "3d-data.h"
+#include "app.h"
 
-unsigned char ComputeMiddleGradient(unsigned int stride, unsigned int value)
-{
-	const bool evenStride = stride % 2 == 0;
-	const int transformedValue = value - (stride / 2);
-	const bool negativeValue = transformedValue < 0;
-	const int index = abs(evenStride and negativeValue ? int(value + 1 - (stride / 2)) : transformedValue);
-	const int indexMultiplier = evenStride ?
-		(255 / (stride / 2 - 1)) :
-		(255 / (stride / 2));
-	return index * indexMultiplier;
-}
-
-ITexture2D* GeneratePatternTexture(IRendererResourceManager* rm, int width, int height)
-{
-	Color8* pixels = new Color8[width * height];
-
-	for (int i = 0; i < width; i++)
-	{
-		for (int j = height - 1; j >= 0; j--)
-		{
-			Color8& pixel = pixels[(j * width) + i];
-			pixel = Color8(255 / width * i, 255 / height * j, (255 / width * i + 255 / height * j) / 2);
-			pixel.b = fmax(fmax(255-pixel.r, 255-pixel.b), pixel.b);
-		}
-	}
-	
-	ITexture2D* result = rm->CreateTexture2D(pixels, sizeof(pixels[0]) * width * height, Dimensions(width, height));
-
-	delete[] pixels;
-
-	return result;
-}
-
-ITexture2D* GeneratePatternTexture2(IRendererResourceManager* rm, int width, int height)
-{
-	Color8* pixels = new Color8[width * height];
-
-	for (int i = 0; i < width; i++)
-	{
-		for (int j = height - 1; j >= 0; j--)
-		{
-			pixels[(j * width) + i] = Color8(
-				ComputeMiddleGradient(width, i),
-				ComputeMiddleGradient(height, j),
-				0
-			);
-		}
-	}
-
-	ITexture2D* result = rm->CreateTexture2D(pixels, sizeof(pixels[0]) * width * height, Dimensions(width, height));
-
-	delete[] pixels;
-
-	return result;
-}
+bool TryInitializeGraphicsWindow(GraphicsWindow& graphicsWindow);
 
 int main()
 {
-	GraphicsWindow gw = GraphicsWindow();
-	WindowParameters wp = WindowParameters();
-	wp.title = L"Game";
-	wp.width = 1280;
-	wp.height = 720;
-	if (not gw.TryInitialize(wp))
+	GraphicsWindow graphicsWindow;
+	if (not TryInitializeGraphicsWindow(graphicsWindow))
 	{
-		return 1;
+		return -1;
 	}
 
-	IRendererResourceManager* rm = gw.GetGraphicsBackend()->GetRenderer()->GetResourceManager();
-	ILambertRenderingRule* rr = rm->CreateLambertRenderingRule();
-	gw.GetGraphicsBackend()->MakeCurrent();
-	gw.GetGraphicsBackend()->GetRenderer()->SetClearColor(0.1f, 0.1f, 0.15f);
-	gw.GetGraphicsBackend()->GetRenderer()->BindRenderingRule(rr);
-	Matrix4x4 perspective = Matrix4x4::Perspective(16.f / 9.f, 3.1415926 / 2.f, 0.1f, 1000.0f);
-	rr->SetProjection(perspective);
+	App::Init(graphicsWindow);
+	App::Start();
 
-	Vector3 camPos;
-	Vector2 camRot;
-	
-	float camSpeed = 0.01f;
-
-	const IBasicInput* input = gw.GetWindow()->GetBasicInput();
-
-	IMesh3D* plane = rm->Create3DMesh(planeVertices, sizeof(planeVertices), planeIndices, sizeof(planeIndices));
-	IMesh3D* cube = rm->Create3DMesh(cubeVertices, sizeof(cubeVertices), cubeIndices, sizeof(cubeIndices));
-	ITexture2D* planeTexture = GeneratePatternTexture2(rm, 16, 16);
-	ITexture2D* cubeTexture = GeneratePatternTexture(rm, 16, 16);
-
-	DirectionalLight dl = DirectionalLight();
-	dl.ambient = Color(0.1f, 0.1f, 0.1f);
-	dl.diffuse = Color(1.0f, 1.0f, 1.0f);
-	dl.direction = Vector3(1.0f, -1.0f, 0.0f);
-	rr->SetDirectionalLight(dl);
-
-	float planeRotation = 0.0f;
-
-	while (not gw.ShouldClose())
+	while (not graphicsWindow.ShouldClose())
 	{
-		// Input
-		if (input->IsKeyDown(0x25)) // Left
-		{
-			camRot.y -= 0.001;
-		}
-		if (input->IsKeyDown(0x26)) // Up
-		{
-			camRot.x -= 0.001;
-		}
-		if (input->IsKeyDown(0x27)) // Right
-		{
-			camRot.y += 0.001;
-		}
-		if (input->IsKeyDown(0x28)) // Down
-		{
-			camRot.x += 0.001;
-		}
-		if (input->IsKeyDown(0x57)) // W
-		{
-			camPos.x += (-sinf(camRot.y) * camSpeed);
-			camPos.z += (cosf(camRot.y) * camSpeed);
-			camPos.y += (sinf(camRot.x) * camSpeed);
-		}
-		if (input->IsKeyDown(0x53)) // S
-		{
-			camPos.x -= (-sinf(camRot.y) * camSpeed);
-			camPos.z -= (cosf(camRot.y) * camSpeed);
-			camPos.y -= (sinf(camRot.x) * camSpeed);
-		}
-		if (input->IsKeyDown(0x41)) // A
-		{
-			camPos.x += (cosf(camRot.y) * camSpeed);
-			camPos.z += (sinf(camRot.y) * camSpeed);
-		}
-		if (input->IsKeyDown(0x44)) // D
-		{
-			camPos.x -= (cosf(camRot.y) * camSpeed);
-			camPos.z -= (sinf(camRot.y) * camSpeed);
-		}
-		if (input->IsKeyDown(0x10)) // LShift
-		{
-			camPos.y += camSpeed;
-		}
-		if (input->IsKeyDown(0x20)) // Space
-		{
-			camPos.y -= camSpeed;
-		}
-
-		// Camera
-		Matrix4x4 viewMatrixRot = Matrix4x4::RotationX(camRot.x) * Matrix4x4::RotationY(camRot.y);
-		Matrix4x4 viewMatrixTrans = Matrix4x4::Translation(camPos);
-		Matrix4x4 viewMatrix = viewMatrixRot * viewMatrixTrans;
-		rr->SetView(viewMatrix);
-
-		// Rendering
-		gw.BeginDraw();
-
-		rr->SetModel(Matrix4x4::Translation({ 0.0f, 0.0f, -5.0f }) * Matrix4x4::RotationY(planeRotation) * Matrix4x4::RotationX(3.1415f / 2.0f));
-		rr->SetTexture(cubeTexture);
-		cube->Draw();
-		
-		gw.EndDraw();
-		planeRotation += 0.0004f;
+		graphicsWindow.BeginDraw();
+		App::Update();
+		graphicsWindow.EndDraw();
 	}
-
-	gw.Finalize();
 
 	return 0;
+}
+
+bool TryInitializeGraphicsWindow(GraphicsWindow& graphicsWindow)
+{
+	WindowParameters params = WindowParameters();
+	params.title = L"Game";
+	params.width = 1280;
+	params.height = 720;
+	if (not graphicsWindow.TryInitialize(params))
+	{
+		return false;
+	}
+
+	graphicsWindow.GetGraphicsBackend()->MakeCurrent();
+
+	return true;
 }

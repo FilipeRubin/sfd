@@ -13,5 +13,4 @@ public:
 	virtual void SetModel(const Matrix4x4& model) = 0;
 	virtual void SetView(const Matrix4x4& view) = 0;
 	virtual void SetProjection(const Matrix4x4& projection) = 0;
-	virtual void SetTexture(ITexture2D* texture) = 0;
 };
