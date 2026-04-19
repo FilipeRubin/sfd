@@ -1,5 +1,5 @@
-#include "color.h"
-#include "color8.h"
+#include <types/color.h>
+#include <types/color8.h>
 #include <algorithm>
 
 Color::operator Color8() const noexcept

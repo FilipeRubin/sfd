@@ -42,17 +42,13 @@ void App::Update()
 	if (input->IsKeyJustPressed(0x20)) // Spacebar
 		useLambertRenderingRule = not useLambertRenderingRule;
 	if (input->IsKeyDown(0x25)) // Left
-		cameraParameter->Camera().rotation.y -= 0.001;
+		cameraParameter->Camera().rotation.y -= 0.001f;
 	if (input->IsKeyDown(0x26)) // Up
-		cameraParameter->Camera().rotation.x -= 0.001;
+		cameraParameter->Camera().rotation.x -= 0.001f;
 	if (input->IsKeyDown(0x27)) // Right
-		cameraParameter->Camera().rotation.y += 0.001;
+		cameraParameter->Camera().rotation.y += 0.001f;
 	if (input->IsKeyDown(0x28)) // Down
-		cameraParameter->Camera().rotation.x += 0.001;
-	if (input->IsKeyDown(0x51)) // Q
-		cameraParameter->Camera().rotation.z += 0.001;
-	if (input->IsKeyDown(0x45)) // E
-		cameraParameter->Camera().rotation.z -= 0.001;
+		cameraParameter->Camera().rotation.x += 0.001f;
 
 	// Animation
 	cubeTransformParameter->Transform().position.y = 3.0f + (sinf(cubeHeightOffset) * 1.75f);
