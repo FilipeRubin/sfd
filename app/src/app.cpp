@@ -7,11 +7,22 @@ IWindow* window = nullptr;
 IBasicInput* input = nullptr;
 
 IRenderingRule* lambertRenderingRule = nullptr;
-IRenderingRule* redRenderingRule = nullptr;
+IRenderingRule* unshadedRenderingRule = nullptr;
+IRenderingRule* currentRenderingRule = nullptr;
 IMesh3D* cubeMesh = nullptr;
+IMesh3D* planeMesh = nullptr;
 ITexture2D* cubeTexture = nullptr;
+ITexture2D* planeTexture = nullptr;
+
+ICamera3DParameter* cameraParameter = nullptr;
+IDirectionalLightParameter* lightParameter = nullptr;
+ITransform3DParameter* cubeTransformParameter = nullptr;
+ITransform3DParameter* planeTransformParameter = nullptr;
 
 bool useLambertRenderingRule = true;
+
+float lightRotation = 0.0f;
+float cubeHeightOffset = 0.0f;
 
 void App::Init(GraphicsWindow& graphicsWindow)
 {
@@ -23,24 +34,70 @@ void App::Init(GraphicsWindow& graphicsWindow)
 
 void App::Start()
 {
-	renderer->SetClearColor(0.05f, 0.1f, 0.2f);
 	lambertRenderingRule = renderer->GetResourceManager()->CreateLambertRenderingRule();
-	redRenderingRule = renderer->GetResourceManager()->CreateRedRenderingRule();
-	cubeTexture = GeneratePatternTexture(resourceManager, 16, 16);
+	unshadedRenderingRule = renderer->GetResourceManager()->CreateRedRenderingRule();
 	cubeMesh = resourceManager->Create3DMesh(cubeVertices, sizeof(cubeVertices), cubeIndices, sizeof(cubeIndices));
+	planeMesh = resourceManager->Create3DMesh(planeVertices, sizeof(planeVertices), planeIndices, sizeof(planeIndices));
+	cubeTexture = GeneratePatternTexture(resourceManager, 16, 16);
+	planeTexture = GeneratePatternTexture2(resourceManager, 16, 16);
+
+	cameraParameter = renderer->GetParameterManager()->CreateCamera3D();
+	lightParameter = renderer->GetParameterManager()->CreateDirectionalLight();
+	cubeTransformParameter = renderer->GetParameterManager()->CreateTransform3D();
+	planeTransformParameter = renderer->GetParameterManager()->CreateTransform3D();
+
+	cameraParameter->Camera().aspectRatio = window->GetAspectRatio();
+	cameraParameter->Camera().vFOV = 3.1415f / 2.0f;
+	cameraParameter->Camera().zNear = 0.1f;
+	cameraParameter->Camera().zFar = 100.0f;
+	cameraParameter->Camera().rotation.x = 3.1415f / 4.0f;
+	cameraParameter->Camera().position = Vector3(0.0f, -10.0f, -10.0f);
+
+	lightParameter->Light().ambient = Color(0.05f, 0.05f, 0.05f);
+	lightParameter->Light().diffuse = Color(1.0f, 1.0f, 1.0f);
+
+	cubeTransformParameter->Transform().position = Vector3(-5.0f, 1.5f, -0.5f);
+	cubeTransformParameter->Transform().scale = Vector3(4.0f, 3.0f, 3.0f);
 }
 
 void App::Update()
 {
+	// Input
+	if (input->IsKeyJustPressed(0x20))
+		useLambertRenderingRule = not useLambertRenderingRule;
+
+	// Animation
+	cubeTransformParameter->Transform().position.y = 3.0f + (sinf(cubeHeightOffset) * 1.75f);
+	cubeTransformParameter->Transform().rotation.y += 0.00015f;
+	lightParameter->Light().direction = Vector3(sinf(lightRotation), -0.5f, cosf(lightRotation));
+	lightRotation += 0.0005f;
+	cubeHeightOffset += 0.001f;
+
+	// Rule binding
 	if (useLambertRenderingRule)
-		lambertRenderingRule->Bind();
+	{
+		currentRenderingRule = lambertRenderingRule;
+		renderer->SetClearColor(0.05f, 0.1f, 0.2f);
+	}
 	else
-		redRenderingRule->Bind();
+	{
+		currentRenderingRule = unshadedRenderingRule;
+		renderer->SetClearColor(0.1f, 0.2f, 0.4f);
+	}
+	currentRenderingRule->Bind();
+	
+	// State updating
+	cameraParameter->Camera().aspectRatio = window->GetAspectRatio();
+
+	// State binding
+	cameraParameter->Bind(currentRenderingRule);
+	lightParameter->Bind(currentRenderingRule);
+
+	// Drawing
+	cubeTransformParameter->Bind(currentRenderingRule);
 	cubeTexture->Bind();
 	cubeMesh->Draw();
-
-	if (input->IsKeyJustPressed(0x20))
-	{
-		useLambertRenderingRule = not useLambertRenderingRule;
-	}
+	planeTransformParameter->Bind(currentRenderingRule);
+	planeTexture->Bind();
+	planeMesh->Draw();
 }

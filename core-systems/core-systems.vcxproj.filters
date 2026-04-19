@@ -108,13 +108,46 @@
     <ClInclude Include="include\types\directional-light.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\types\camera.h">
+    <ClInclude Include="include\types\camera-3d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\data\lambert-shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\data\red-shader.h">
+    <ClInclude Include="src\data\unshaded-shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rendering\state\i-render-state.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rendering\parameters\i-render-parameter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rendering\parameters\i-camera-3d-parameter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rendering\i-renderer-parameter-manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rendering\parameters\i-directional-light-parameter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rendering\ogl-renderer-parameter-manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rendering\parameters\ogl-camera-3d-parameter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rendering\parameters\ogl-directional-light-parameter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rendering\parameters\i-transform-3d-parameter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\types\transform-3d.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rendering\parameters\ogl-transform-3d-parameter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -156,6 +189,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="include\types\color8.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rendering\ogl-renderer-parameter-manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rendering\parameters\ogl-camera-3d-parameter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rendering\parameters\ogl-directional-light-parameter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rendering\parameters\ogl-transform-3d-parameter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

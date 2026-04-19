@@ -1,8 +1,10 @@
 #include "ogl-renderer.h"
 #include "ogl.h"
+#include "ogl-renderer-parameter-manager.h"
 #include "ogl-renderer-resource-manager.h"
 
 OGLRenderer::OGLRenderer(OGLGraphicsBackend* backend) :
+	m_parameterManager(new OGLRendererParameterManager()),
 	m_resourceManager(new OGLRendererResourceManager(backend))
 {
 }
@@ -27,15 +29,12 @@ void OGLRenderer::SetViewportSize(int width, int height)
 	glViewport(0, 0, width, height);
 }
 
+IRendererParameterManager* OGLRenderer::GetParameterManager() const
+{
+	return m_parameterManager;
+}
+
 IRendererResourceManager* OGLRenderer::GetResourceManager() const
 {
 	return m_resourceManager;
-}
-
-void OGLRenderer::SetCamera(const Camera& camera)
-{
-}
-
-void OGLRenderer::SetDirectionalLight(const DirectionalLight& light)
-{
 }

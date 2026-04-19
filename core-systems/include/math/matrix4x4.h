@@ -18,10 +18,10 @@ struct alignas(16) Matrix4x4
 		};
 	}
 
-	static inline Matrix4x4 Perspective(float aspectRatio, float hFOV, float zNear, float zFar) noexcept
+	static inline Matrix4x4 Perspective(float aspectRatio, float vFOV, float zNear, float zFar) noexcept
 	{
 		const float& ar = aspectRatio;
-		const float& sf = std::tanf(hFOV / 2.0f);
+		const float& sf = std::tanf(vFOV / 2.0f);
 		const float& zn = zNear;
 		const float& zf = zFar;
 

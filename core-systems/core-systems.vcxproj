@@ -164,12 +164,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\core-systems.h" />
-    <ClInclude Include="include\types\camera.h" />
+    <ClInclude Include="include\rendering\parameters\i-camera-3d-parameter.h" />
+    <ClInclude Include="include\rendering\i-renderer-parameter-manager.h" />
+    <ClInclude Include="include\rendering\parameters\i-directional-light-parameter.h" />
+    <ClInclude Include="include\rendering\parameters\i-render-parameter.h" />
+    <ClInclude Include="include\rendering\parameters\i-transform-3d-parameter.h" />
+    <ClInclude Include="include\rendering\state\i-render-state.h" />
+    <ClInclude Include="include\types\camera-3d.h" />
     <ClInclude Include="include\types\color.h" />
     <ClInclude Include="include\types\color8.h" />
     <ClInclude Include="include\types\dimensions.h" />
     <ClInclude Include="include\rendering\resources\i-texture-2d.h" />
     <ClInclude Include="include\types\directional-light.h" />
+    <ClInclude Include="include\types\transform-3d.h" />
     <ClInclude Include="include\types\vertex-3d.h" />
     <ClInclude Include="include\i-graphics-backend.h" />
     <ClInclude Include="include\input\i-basic-input.h" />
@@ -180,7 +187,7 @@
     <ClInclude Include="include\rendering\resources\i-mesh-3d.h" />
     <ClInclude Include="include\rendering\i-drawable.h" />
     <ClInclude Include="src\data\lambert-shader.h" />
-    <ClInclude Include="src\data\red-shader.h" />
+    <ClInclude Include="src\data\unshaded-shader.h" />
     <ClInclude Include="src\input\win32-basic-input.h" />
     <ClInclude Include="src\rendering\i-renderer-managed.h" />
     <ClInclude Include="include\rendering\i-renderer-resource-manager.h" />
@@ -189,6 +196,10 @@
     <ClInclude Include="include\rendering\resources\i-rendering-rule.h" />
     <ClInclude Include="include\window-parameters.h" />
     <ClInclude Include="src\ogl-graphics-backend.h" />
+    <ClInclude Include="src\rendering\ogl-renderer-parameter-manager.h" />
+    <ClInclude Include="src\rendering\parameters\ogl-camera-3d-parameter.h" />
+    <ClInclude Include="src\rendering\parameters\ogl-directional-light-parameter.h" />
+    <ClInclude Include="src\rendering\parameters\ogl-transform-3d-parameter.h" />
     <ClInclude Include="src\rendering\resources\ogl-mesh-3d.h" />
     <ClInclude Include="src\rendering\resources\ogl-rendering-rule.h" />
     <ClInclude Include="src\rendering\ogl-renderer-resource-manager.h" />
@@ -204,6 +215,10 @@
     <ClCompile Include="src\core-systems.cpp" />
     <ClCompile Include="src\input\win32-basic-input.cpp" />
     <ClCompile Include="src\ogl-graphics-backend.cpp" />
+    <ClCompile Include="src\rendering\ogl-renderer-parameter-manager.cpp" />
+    <ClCompile Include="src\rendering\parameters\ogl-camera-3d-parameter.cpp" />
+    <ClCompile Include="src\rendering\parameters\ogl-directional-light-parameter.cpp" />
+    <ClCompile Include="src\rendering\parameters\ogl-transform-3d-parameter.cpp" />
     <ClCompile Include="src\rendering\resources\ogl-mesh-3d.cpp" />
     <ClCompile Include="src\rendering\resources\ogl-rendering-rule.cpp" />
     <ClCompile Include="src\rendering\ogl-renderer-resource-manager.cpp" />

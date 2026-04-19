@@ -6,9 +6,6 @@
 #include <memory>
 #include <utility>
 
-using std::list;
-using std::unique_ptr;
-
 class OGLRendererResourceManager : public IRendererResourceManager
 {
 public:
@@ -21,21 +18,21 @@ public:
 	void Update();
 private:
 	OGLGraphicsBackend* m_backend;
-	list<unique_ptr<IRendererManaged>> m_waitingToCreate;
-	list<unique_ptr<IRendererManaged>> m_resources;
+	std::list<std::unique_ptr<IRendererManaged>> m_waitingToCreate;
+	std::list<std::unique_ptr<IRendererManaged>> m_resources;
 	
 	template<typename T, typename... Args>
 	inline T* CreateResource(Args&&... args)
 	{
 		bool isCurrentBackend = OGLGraphicsBackend::GetCurrent() == m_backend;
-		list<unique_ptr<IRendererManaged>>& container = isCurrentBackend ? m_resources : m_waitingToCreate;
-		unique_ptr<T> renderingRule = std::make_unique<T>(std::forward<Args>(args)...);
+		std::list<std::unique_ptr<IRendererManaged>>& container = isCurrentBackend ? m_resources : m_waitingToCreate;
+		std::unique_ptr<T> resource = std::make_unique<T>(std::forward<Args>(args)...);
 		if (isCurrentBackend)
 		{
-			renderingRule->Create();
+			resource->Create();
 		}
-		T* result = static_cast<T*>(renderingRule.get());
-		container.emplace_back(std::move(renderingRule));
+		T* result = static_cast<T*>(resource.get());
+		container.emplace_back(std::move(resource));
 		return result;
 	}
 };
