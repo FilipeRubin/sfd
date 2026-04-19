@@ -11,6 +11,7 @@ OGLRenderer::OGLRenderer(OGLGraphicsBackend* backend) :
 
 OGLRenderer::~OGLRenderer()
 {
+	delete m_parameterManager;
 	delete m_resourceManager;
 }
 

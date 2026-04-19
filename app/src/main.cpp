@@ -1,24 +1,61 @@
 #include "graphics-window.h"
 #include "app.h"
 
+const int WINDOWS_COUNT = 1;
+
 bool TryInitializeGraphicsWindow(GraphicsWindow& graphicsWindow);
 
 int main()
 {
-	GraphicsWindow graphicsWindow;
-	if (not TryInitializeGraphicsWindow(graphicsWindow))
+	GraphicsWindow graphicsWindows[WINDOWS_COUNT];
+	App apps[WINDOWS_COUNT];
+	for (int i = 0; i < WINDOWS_COUNT; i++)
 	{
-		return -1;
+		if (not TryInitializeGraphicsWindow(graphicsWindows[i]))
+		{
+			for (int j = i - 1; j >= 0; j--)
+			{
+				graphicsWindows[j].Finalize();
+			}
+			return 1;
+		}
+		else
+		{
+			apps[i].Init(graphicsWindows[i]);
+		}
 	}
 
-	App::Init(graphicsWindow);
-	App::Start();
-
-	while (not graphicsWindow.ShouldClose())
+	for (int i = 0; i < WINDOWS_COUNT; i++)
 	{
-		graphicsWindow.BeginDraw();
-		App::Update();
-		graphicsWindow.EndDraw();
+		graphicsWindows[i].GetGraphicsBackend()->MakeCurrent();
+		apps[i].Start();
+	}
+
+	while (GraphicsWindow::IsAnyWindowOpen())
+	{
+		for (int i = 0; i < WINDOWS_COUNT; i++)
+		{
+			if (not graphicsWindows[i].IsInitialized())
+			{
+				continue;
+			}
+			else if (graphicsWindows[i].ShouldClose())
+			{
+				graphicsWindows[i].Finalize();
+				continue;
+			}
+			graphicsWindows[i].BeginDraw();
+			apps[i].Update();
+			graphicsWindows[i].EndDraw();
+		}
+	}
+
+	for (int i = 0; i < WINDOWS_COUNT; i++)
+	{
+		if (graphicsWindows[i].IsInitialized())
+		{
+			graphicsWindows[i].Finalize();
+		}
 	}
 
 	return 0;
@@ -26,16 +63,17 @@ int main()
 
 bool TryInitializeGraphicsWindow(GraphicsWindow& graphicsWindow)
 {
-	WindowParameters params = WindowParameters();
-	params.title = L"Game";
-	params.width = 1280;
-	params.height = 720;
+	WindowParameters params
+	{
+		.title = L"Game",
+		.width = 1280,
+		.height = 720
+	};
+
 	if (not graphicsWindow.TryInitialize(params))
 	{
 		return false;
 	}
-
-	graphicsWindow.GetGraphicsBackend()->MakeCurrent();
 
 	return true;
 }

@@ -48,7 +48,7 @@ IRenderingRule* OGLRendererResourceManager::CreateLambertRenderingRule()
     return CreateResource<OGLRenderingRule>(lambertVertexShaderSource, lambertFragmentShaderSource);
 }
 
-IRenderingRule* OGLRendererResourceManager::CreateRedRenderingRule()
+IRenderingRule* OGLRendererResourceManager::CreateUnshadedRenderingRule()
 {
     return CreateResource<OGLRenderingRule>(unshadedVertexShaderSource, unshadedFragmentShaderSource);;
 }

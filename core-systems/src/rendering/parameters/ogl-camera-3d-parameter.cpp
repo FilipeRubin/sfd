@@ -8,7 +8,7 @@ void OGLCamera3DParameter::Bind(IRenderingRule* renderingRule)
 		m_camera.zNear,
 		m_camera.zFar
 	);
-	Matrix4x4 view = Matrix4x4::RotationX(m_camera.rotation.x) * Matrix4x4::Translation(m_camera.position);
+	Matrix4x4 view = Matrix4x4::RotationX(m_camera.rotation.x) * Matrix4x4::RotationY(m_camera.rotation.y) * Matrix4x4::RotationZ(m_camera.rotation.z) * Matrix4x4::Translation(m_camera.position);
 
 	OGLRenderingRule* oglRenderingRule = dynamic_cast<OGLRenderingRule*>(renderingRule);
 

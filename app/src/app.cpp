@@ -1,29 +1,6 @@
 #include "app.h"
 #include "3d-data.h"
 
-IRenderer* renderer = nullptr;
-IRendererResourceManager* resourceManager = nullptr;
-IWindow* window = nullptr;
-IBasicInput* input = nullptr;
-
-IRenderingRule* lambertRenderingRule = nullptr;
-IRenderingRule* unshadedRenderingRule = nullptr;
-IRenderingRule* currentRenderingRule = nullptr;
-IMesh3D* cubeMesh = nullptr;
-IMesh3D* planeMesh = nullptr;
-ITexture2D* cubeTexture = nullptr;
-ITexture2D* planeTexture = nullptr;
-
-ICamera3DParameter* cameraParameter = nullptr;
-IDirectionalLightParameter* lightParameter = nullptr;
-ITransform3DParameter* cubeTransformParameter = nullptr;
-ITransform3DParameter* planeTransformParameter = nullptr;
-
-bool useLambertRenderingRule = true;
-
-float lightRotation = 0.0f;
-float cubeHeightOffset = 0.0f;
-
 void App::Init(GraphicsWindow& graphicsWindow)
 {
 	renderer = graphicsWindow.GetGraphicsBackend()->GetRenderer();
@@ -35,7 +12,7 @@ void App::Init(GraphicsWindow& graphicsWindow)
 void App::Start()
 {
 	lambertRenderingRule = renderer->GetResourceManager()->CreateLambertRenderingRule();
-	unshadedRenderingRule = renderer->GetResourceManager()->CreateRedRenderingRule();
+	unshadedRenderingRule = renderer->GetResourceManager()->CreateUnshadedRenderingRule();
 	cubeMesh = resourceManager->Create3DMesh(cubeVertices, sizeof(cubeVertices), cubeIndices, sizeof(cubeIndices));
 	planeMesh = resourceManager->Create3DMesh(planeVertices, sizeof(planeVertices), planeIndices, sizeof(planeIndices));
 	cubeTexture = GeneratePatternTexture(resourceManager, 16, 16);
@@ -50,7 +27,6 @@ void App::Start()
 	cameraParameter->Camera().vFOV = 3.1415f / 2.0f;
 	cameraParameter->Camera().zNear = 0.1f;
 	cameraParameter->Camera().zFar = 100.0f;
-	cameraParameter->Camera().rotation.x = 3.1415f / 4.0f;
 	cameraParameter->Camera().position = Vector3(0.0f, -10.0f, -10.0f);
 
 	lightParameter->Light().ambient = Color(0.05f, 0.05f, 0.05f);
@@ -63,8 +39,20 @@ void App::Start()
 void App::Update()
 {
 	// Input
-	if (input->IsKeyJustPressed(0x20))
+	if (input->IsKeyJustPressed(0x20)) // Spacebar
 		useLambertRenderingRule = not useLambertRenderingRule;
+	if (input->IsKeyDown(0x25)) // Left
+		cameraParameter->Camera().rotation.y -= 0.001;
+	if (input->IsKeyDown(0x26)) // Up
+		cameraParameter->Camera().rotation.x -= 0.001;
+	if (input->IsKeyDown(0x27)) // Right
+		cameraParameter->Camera().rotation.y += 0.001;
+	if (input->IsKeyDown(0x28)) // Down
+		cameraParameter->Camera().rotation.x += 0.001;
+	if (input->IsKeyDown(0x51)) // Q
+		cameraParameter->Camera().rotation.z += 0.001;
+	if (input->IsKeyDown(0x45)) // E
+		cameraParameter->Camera().rotation.z -= 0.001;
 
 	// Animation
 	cubeTransformParameter->Transform().position.y = 3.0f + (sinf(cubeHeightOffset) * 1.75f);
