@@ -53,9 +53,15 @@ IRenderingRule* OGLRendererResourceManager::CreateUnshadedRenderingRule()
     return CreateResource<OGLRenderingRule>(unshadedVertexShaderSource, unshadedFragmentShaderSource);;
 }
 
-IMesh3D* OGLRendererResourceManager::Create3DMesh(Vertex3D* vertices, size_t verticesLength, unsigned int* indices, size_t indicesLength)
+IMesh3D* OGLRendererResourceManager::Create3DMesh(const IMesh3DGenerator& generator)
 {
-    return CreateResource<OGLMesh3D>(reinterpret_cast<float*>(vertices), verticesLength, indices, indicesLength);;
+    const MeshData& data = generator.GenerateMeshData();
+    return CreateResource<OGLMesh3D>(
+        data.GetVertices(),
+        data.GetVerticesCount(),
+        data.GetIndices(),
+        data.GetIndicesCount()
+    );
 }
 
 ITexture2D* OGLRendererResourceManager::CreateTexture2D(Color8* data, size_t dataLength, const Dimensions& size)

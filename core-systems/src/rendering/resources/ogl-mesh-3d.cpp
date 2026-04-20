@@ -2,22 +2,22 @@
 #include <ogl.h>
 #include <cstring>
 
-OGLMesh3D::OGLMesh3D(const float* vertices, size_t verticesSize, const unsigned int* indices, size_t indicesSize) :
+OGLMesh3D::OGLMesh3D(const Vertex3D* vertices, size_t verticesCount, const unsigned int* indices, size_t indicesCount) :
 	m_vbo(0U), m_vao(0U), m_ebo(0U),
 	m_indicesCount(0U),
 	m_cachedVertices(nullptr), m_cachedVerticesSize(0ULL),
 	m_cachedIndices(nullptr), m_cachedIndicesSize(0ULL)
 {
-	m_cachedVertices = new float[verticesSize];
-	m_cachedIndices = new unsigned int[indicesSize];
+	m_cachedVertices = new Vertex3D[verticesCount];
+	m_cachedIndices = new unsigned int[indicesCount];
 
-	std::memcpy(m_cachedVertices, vertices, verticesSize);
-	std::memcpy(m_cachedIndices, indices, indicesSize);
+	m_cachedVerticesSize = verticesCount * sizeof(Vertex3D);
+	m_cachedIndicesSize = indicesCount * sizeof(unsigned int);
 
-	m_cachedVerticesSize = verticesSize;
-	m_cachedIndicesSize = indicesSize;
+	std::memcpy(m_cachedVertices, vertices, m_cachedVerticesSize);
+	std::memcpy(m_cachedIndices, indices, m_cachedIndicesSize);
 
-	m_indicesCount = indicesSize / sizeof(unsigned int);
+	m_indicesCount = indicesCount;
 }
 
 void OGLMesh3D::Draw()

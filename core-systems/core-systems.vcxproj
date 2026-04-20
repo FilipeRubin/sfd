@@ -164,6 +164,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\core-systems.h" />
+    <ClInclude Include="include\rendering\data-generation\plane-mesh-3d-generator.h" />
     <ClInclude Include="include\rendering\parameters\i-camera-3d-parameter.h" />
     <ClInclude Include="include\rendering\i-renderer-parameter-manager.h" />
     <ClInclude Include="include\rendering\parameters\i-directional-light-parameter.h" />
@@ -176,6 +177,7 @@
     <ClInclude Include="include\types\dimensions.h" />
     <ClInclude Include="include\rendering\resources\i-texture-2d.h" />
     <ClInclude Include="include\types\directional-light.h" />
+    <ClInclude Include="include\containers\mesh-data.h" />
     <ClInclude Include="include\types\transform-3d.h" />
     <ClInclude Include="include\types\vertex-3d.h" />
     <ClInclude Include="include\i-graphics-backend.h" />
@@ -189,6 +191,8 @@
     <ClInclude Include="src\data\lambert-shader.h" />
     <ClInclude Include="src\data\unshaded-shader.h" />
     <ClInclude Include="src\input\win32-basic-input.h" />
+    <ClInclude Include="include\rendering\data-generation\cube-mesh-3d-generator.h" />
+    <ClInclude Include="include\rendering\data-generation\i-mesh-3d-generator.h" />
     <ClInclude Include="src\rendering\i-renderer-managed.h" />
     <ClInclude Include="include\rendering\i-renderer-resource-manager.h" />
     <ClInclude Include="include\rendering\i-renderer.h" />
@@ -210,8 +214,11 @@
     <ClInclude Include="src\win32-window.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="include\types\color.cpp" />
-    <ClCompile Include="include\types\color8.cpp" />
+    <ClCompile Include="src\rendering\data-generation\plane-mesh-3d-generator.cpp" />
+    <ClCompile Include="src\containers\mesh-data.cpp" />
+    <ClCompile Include="src\rendering\data-generation\cube-mesh-3d-generator.cpp" />
+    <ClCompile Include="src\types\color.cpp" />
+    <ClCompile Include="src\types\color8.cpp" />
     <ClCompile Include="src\core-systems.cpp" />
     <ClCompile Include="src\input\win32-basic-input.cpp" />
     <ClCompile Include="src\ogl-graphics-backend.cpp" />

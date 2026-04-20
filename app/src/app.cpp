@@ -1,5 +1,7 @@
 #include "app.h"
 #include "3d-data.h"
+#include <rendering/data-generation/plane-mesh-3d-generator.h>
+#include <rendering/data-generation/cube-mesh-3d-generator.h>
 
 void App::Init(GraphicsWindow& graphicsWindow)
 {
@@ -13,8 +15,9 @@ void App::Start()
 {
 	lambertRenderingRule = renderer->GetResourceManager()->CreateLambertRenderingRule();
 	unshadedRenderingRule = renderer->GetResourceManager()->CreateUnshadedRenderingRule();
-	cubeMesh = resourceManager->Create3DMesh(cubeVertices, sizeof(cubeVertices), cubeIndices, sizeof(cubeIndices));
-	planeMesh = resourceManager->Create3DMesh(planeVertices, sizeof(planeVertices), planeIndices, sizeof(planeIndices));
+	PlaneMesh3DGenerator planeGen = PlaneMesh3DGenerator({ 50.0f, 50.0f });
+	cubeMesh = resourceManager->Create3DMesh(CubeMesh3DGenerator({4.0f, 4.0f, 1.5f}));
+	planeMesh = resourceManager->Create3DMesh(planeGen);
 	cubeTexture = GeneratePatternTexture(resourceManager, 16, 16);
 	planeTexture = GeneratePatternTexture2(resourceManager, 16, 16);
 
@@ -29,8 +32,8 @@ void App::Start()
 	cameraParameter->Camera().zFar = 100.0f;
 	cameraParameter->Camera().position = Vector3(0.0f, -10.0f, -10.0f);
 
-	lightParameter->Light().ambient = Color(0.05f, 0.05f, 0.05f);
-	lightParameter->Light().diffuse = Color(1.0f, 1.0f, 1.0f);
+	lightParameter->Light().ambient = Color(0.05f, 0.05f, 0.2f);
+	lightParameter->Light().diffuse = Color(1.0f, 0.85f, 0.7f);
 
 	cubeTransformParameter->Transform().position = Vector3(-5.0f, 1.5f, -0.5f);
 	cubeTransformParameter->Transform().scale = Vector3(4.0f, 3.0f, 3.0f);

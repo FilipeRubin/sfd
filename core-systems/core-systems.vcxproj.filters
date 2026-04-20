@@ -150,6 +150,18 @@
     <ClInclude Include="src\rendering\parameters\ogl-transform-3d-parameter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\rendering\data-generation\i-mesh-3d-generator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rendering\data-generation\cube-mesh-3d-generator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\containers\mesh-data.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rendering\data-generation\plane-mesh-3d-generator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core-systems.cpp">
@@ -185,10 +197,10 @@
     <ClCompile Include="src\rendering\resources\ogl-texture-2d.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="include\types\color.cpp">
+    <ClCompile Include="src\types\color.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="include\types\color8.cpp">
+    <ClCompile Include="src\types\color8.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\rendering\ogl-renderer-parameter-manager.cpp">
@@ -201,6 +213,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\rendering\parameters\ogl-transform-3d-parameter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rendering\data-generation\cube-mesh-3d-generator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\containers\mesh-data.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rendering\data-generation\plane-mesh-3d-generator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
