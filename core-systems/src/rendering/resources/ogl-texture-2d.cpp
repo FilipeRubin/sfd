@@ -7,9 +7,9 @@ OGLTexture2D::OGLTexture2D(const Color8* data, const Dimensions& dimensions) :
     m_dimensions(dimensions),
     m_texture(0U)
 {
-    size_t pixelCount = size_t(dimensions.x) * size_t(dimensions.y);
+    size_t pixelCount = size_t(dimensions.width) * size_t(dimensions.height);
     m_data = new Color8[pixelCount];
-    std::memcpy(m_data, data, size_t(dimensions.x) * size_t(dimensions.y) * sizeof(Color8));
+    std::memcpy(m_data, data, size_t(dimensions.width) * size_t(dimensions.height) * sizeof(Color8));
 }
 
 OGLTexture2D::~OGLTexture2D()
@@ -30,7 +30,7 @@ void OGLTexture2D::Create()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_dimensions.x, m_dimensions.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_data);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_dimensions.width, m_dimensions.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_data);
     glGenerateMipmap(GL_TEXTURE_2D);
 }
 

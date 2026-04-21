@@ -67,8 +67,8 @@ void SourceContainer::SetSources(const char** const sources, size_t sourceCount)
     m_sourceCount = sourceCount;
     for (unsigned long long i = 0ULL; i < sourceCount; i++)
     {
-        size_t sourceLength = std::strlen(sources[i]) + 1ULL;
-        m_sources[i] = new char[sourceLength];
+        size_t sourceSize = std::strlen(sources[i]) + 1ULL;
+        m_sources[i] = new char[sourceSize];
         std::strcpy(m_sources[i], sources[i]);
     }
 }

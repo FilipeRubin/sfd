@@ -8,8 +8,8 @@ public:
 	OGLRenderer(OGLGraphicsBackend* backend);
 	~OGLRenderer();
 	void ClearScreen() const override;
-	void SetClearColor(float r, float g, float b) override;
-	void SetViewportSize(int width, int height) override;
+	void SetClearColor(const Color& color) override;
+	void SetViewportSize(const Dimensions& size) override;
 	IRendererParameterManager* GetParameterManager() const override;
 	IRendererResourceManager* GetResourceManager() const override;
 private:

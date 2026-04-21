@@ -31,7 +31,7 @@ bool GraphicsWindow::TryInitialize(const WindowParameters& params, IGraphicsBack
 	}
 
 	IRenderer* const & renderer = this->m_graphics->GetRenderer();
-	m_window->SetWindowSizeCallback([renderer](int width, int height) {renderer->SetViewportSize(width, height); });
+	m_window->SetWindowSizeCallback([renderer](const Dimensions& size) {renderer->SetViewportSize({ size.width, size.height }); });
 
 	s_instances.emplace_back(this);
 

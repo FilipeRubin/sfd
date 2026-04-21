@@ -41,9 +41,9 @@ const Color8* TextureData::GetData() const
 	return m_data;
 }
 
-size_t TextureData::GetDataLength() const
+size_t TextureData::GetDataSize() const
 {
-	return size_t(m_dimensions.x * m_dimensions.y) * sizeof(Color8);
+	return size_t(m_dimensions.width * m_dimensions.height) * sizeof(Color8);
 }
 
 const Dimensions& TextureData::GetDimensions() const
@@ -55,10 +55,10 @@ void TextureData::SetData(const Color8* const data, const Dimensions& dimensions
 {
 	delete[] m_data;
 
-	size_t pixelCount = size_t(dimensions.x) * size_t(dimensions.y);
+	size_t pixelCount = size_t(dimensions.width) * size_t(dimensions.height);
 	m_data = new Color8[pixelCount];
-	size_t dataLength = size_t(dimensions.x) * size_t(dimensions.y) * sizeof(Color8);
-	std::memcpy(m_data, data, dataLength);
+	size_t dataSize = size_t(dimensions.width) * size_t(dimensions.height) * sizeof(Color8);
+	std::memcpy(m_data, data, dataSize);
 	m_dimensions = dimensions;
 }
 
@@ -66,12 +66,12 @@ void TextureData::SetEmptyData(const Dimensions& dimensions)
 {
 	delete[] m_data;
 
-	size_t pixelCount = size_t(dimensions.x) * size_t(dimensions.y);
+	size_t pixelCount = size_t(dimensions.width) * size_t(dimensions.height);
 	m_data = new Color8[pixelCount];
 	m_dimensions = dimensions;
 }
 
 Color8& TextureData::Pixel(const Dimensions& index)
 {
-	return m_data[index.y * m_dimensions.x + index.x];
+	return m_data[index.height * m_dimensions.width + index.width];
 }

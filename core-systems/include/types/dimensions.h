@@ -2,16 +2,16 @@
 
 struct Dimensions
 {
-	int x = 0;
-	int y = 0;
+	int width = 0;
+	int height = 0;
 
 	inline Dimensions() noexcept :
-		x(0), y(0)
+		width(0), height(0)
 	{
 	}
 
 	inline Dimensions(int x, int y) noexcept :
-		x(x), y(y)
+		width(x), height(y)
 	{
 	}
 };

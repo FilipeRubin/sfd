@@ -4,7 +4,7 @@
 #include "types/dimensions.h"
 #include <functional>
 
-using WindowSizeCallback = std::function<void(int width, int height)>;
+using WindowSizeCallback = std::function<void(const Dimensions& size)>;
 
 class IWindow
 {

@@ -69,12 +69,12 @@ void App::Update()
 	if (useLambertRenderingRule)
 	{
 		currentRenderingRule = lambertRenderingRule;
-		renderer->SetClearColor(0.05f, 0.1f, 0.2f);
+		renderer->SetClearColor({ 0.05f, 0.1f, 0.2f });
 	}
 	else
 	{
 		currentRenderingRule = unshadedRenderingRule;
-		renderer->SetClearColor(0.1f, 0.2f, 0.4f);
+		renderer->SetClearColor({ 0.1f, 0.2f, 0.4f });
 	}
 	currentRenderingRule->Bind();
 	

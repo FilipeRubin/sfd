@@ -17,7 +17,7 @@ OGLMesh3D::OGLMesh3D(const Vertex3D* vertices, size_t verticesCount, const unsig
 	std::memcpy(m_cachedVertices, vertices, m_cachedVerticesSize);
 	std::memcpy(m_cachedIndices, indices, m_cachedIndicesSize);
 
-	m_indicesCount = indicesCount;
+	m_indicesCount = unsigned int(indicesCount);
 }
 
 void OGLMesh3D::Draw()

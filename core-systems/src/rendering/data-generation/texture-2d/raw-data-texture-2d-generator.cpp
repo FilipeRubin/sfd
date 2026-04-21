@@ -2,11 +2,11 @@
 #include <cstring>
 
 RawDataTexture2DGenerator::RawDataTexture2DGenerator(Color8* data, const Dimensions& dimensions) :
-    m_data(new Color8[dimensions.x * dimensions.y]),
+    m_data(new Color8[dimensions.width * dimensions.height]),
     m_dimensions(dimensions)
 {
-    size_t dataLength = size_t(dimensions.x) * size_t(dimensions.y) * sizeof(Color8);
-    std::memcpy(m_data, data, dataLength);
+    size_t dataSize = size_t(dimensions.width) * size_t(dimensions.height) * sizeof(Color8);
+    std::memcpy(m_data, data, dataSize);
 }
 
 RawDataTexture2DGenerator::~RawDataTexture2DGenerator()

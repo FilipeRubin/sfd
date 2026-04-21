@@ -20,14 +20,14 @@ void OGLRenderer::ClearScreen() const
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void OGLRenderer::SetClearColor(float r, float g, float b)
+void OGLRenderer::SetClearColor(const Color& color)
 {
-	glClearColor(r, g, b, 1.0f);
+	glClearColor(color.r, color.g, color.b, color.a);
 }
 
-void OGLRenderer::SetViewportSize(int width, int height)
+void OGLRenderer::SetViewportSize(const Dimensions& size)
 {
-	glViewport(0, 0, width, height);
+	glViewport(0, 0, size.width, size.height);
 }
 
 IRendererParameterManager* OGLRenderer::GetParameterManager() const

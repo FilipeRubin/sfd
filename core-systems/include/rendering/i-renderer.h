@@ -7,8 +7,8 @@ class IRenderer
 public:
 	virtual ~IRenderer() = default;
 	virtual void ClearScreen() const = 0;
-	virtual void SetClearColor(float r, float g, float b) = 0;
-	virtual void SetViewportSize(int width, int height) = 0;
+	virtual void SetClearColor(const Color& color) = 0;
+	virtual void SetViewportSize(const Dimensions& size) = 0;
 	virtual IRendererParameterManager* GetParameterManager() const = 0;
 	virtual IRendererResourceManager* GetResourceManager() const = 0;
 };

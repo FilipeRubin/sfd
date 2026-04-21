@@ -20,14 +20,14 @@ static LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPara
 		int height = (int)HIWORD(lParam);
 		window->UpdateSize({ width, height });
 		if (window->GetWindowSizeCallback())
-			window->GetWindowSizeCallback()(width, height);
+			window->GetWindowSizeCallback()({ width, height });
 		return 0;
 	}
 	case WM_KEYDOWN:
 	{
 		Win32Window* window = (Win32Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
 		Win32BasicInput* basicInput = (Win32BasicInput*)window->GetBasicInput();
-		unsigned char key = wParam;
+		unsigned char key = unsigned char(wParam);
 		bool repeating = (lParam & (1 << 30)) != 0;
 		if (not repeating)
 		{
@@ -39,7 +39,7 @@ static LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPara
 	{
 		Win32Window* window = (Win32Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
 		Win32BasicInput* basicInput = (Win32BasicInput*)window->GetBasicInput();
-		unsigned char key = wParam;
+		unsigned char key = unsigned char(wParam);
 		basicInput->SetKeyState(key, false);
 		return 0;
 	}

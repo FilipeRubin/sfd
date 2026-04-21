@@ -107,7 +107,7 @@ Dimensions Win32Window::GetSize() const
 
 float Win32Window::GetAspectRatio() const
 {
-    return float(m_size.x) / float(m_size.y);
+    return float(m_size.width) / float(m_size.height);
 }
 
 WindowSizeCallback Win32Window::GetWindowSizeCallback() const

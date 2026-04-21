@@ -12,7 +12,7 @@ public:
 	TextureData& operator=(const TextureData& other) = delete;
 	TextureData& operator=(TextureData&& other) noexcept;
 	const Color8* GetData() const;
-	size_t GetDataLength() const;
+	size_t GetDataSize() const;
 	const Dimensions& GetDimensions() const;
 	void SetData(const Color8* const data, const Dimensions& dimensions);
 	void SetEmptyData(const Dimensions& dimensions);
