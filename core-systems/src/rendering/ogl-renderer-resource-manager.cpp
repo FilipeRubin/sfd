@@ -78,9 +78,13 @@ IMesh3D* OGLRendererResourceManager::Create3DMesh(const IMesh3DGenerator& genera
     );
 }
 
-ITexture2D* OGLRendererResourceManager::CreateTexture2D(Color8* data, size_t dataLength, const Dimensions& size)
+ITexture2D* OGLRendererResourceManager::CreateTexture2D(const ITexture2DGenerator& generator)
 {
-    return CreateResource<OGLTexture2D>(data, dataLength, size);
+    const TextureData& data = generator.GenerateTextureData();
+    return CreateResource<OGLTexture2D>(
+        data.GetData(),
+        data.GetDimensions()
+    );
 }
 
 void OGLRendererResourceManager::Update()

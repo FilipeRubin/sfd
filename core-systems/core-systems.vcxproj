@@ -165,11 +165,14 @@
   <ItemGroup>
     <ClInclude Include="include\containers\source-collection.h" />
     <ClInclude Include="include\containers\source-container.h" />
+    <ClInclude Include="include\containers\texture-data.h" />
     <ClInclude Include="include\core-systems.h" />
     <ClInclude Include="include\rendering\data-generation\rendering-rule\i-rendering-rule-generator.h" />
     <ClInclude Include="include\rendering\data-generation\mesh-3d\plane-mesh-3d-generator.h" />
     <ClInclude Include="include\rendering\data-generation\rendering-rule\lambert-rendering-rule-generator.h" />
     <ClInclude Include="include\rendering\data-generation\rendering-rule\unshaded-rendering-rule-generator.h" />
+    <ClInclude Include="include\rendering\data-generation\texture-2d\i-texture-2d-generator.h" />
+    <ClInclude Include="include\rendering\data-generation\texture-2d\raw-data-texture-2d-generator.h" />
     <ClInclude Include="include\rendering\parameters\i-camera-3d-parameter.h" />
     <ClInclude Include="include\rendering\i-renderer-parameter-manager.h" />
     <ClInclude Include="include\rendering\parameters\i-directional-light-parameter.h" />
@@ -219,6 +222,8 @@
     <ClInclude Include="src\win32-window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\rendering\data-generation\texture-2d\raw-data-texture-2d-generator.cpp" />
+    <ClCompile Include="src\containers\texture-data.cpp" />
     <ClCompile Include="src\rendering\data-generation\rendering-rule\lambert-rendering-rule-generator.cpp" />
     <ClCompile Include="src\containers\source-container.cpp" />
     <ClCompile Include="src\rendering\data-generation\rendering-rule\unshaded-rendering-rule-generator.cpp" />

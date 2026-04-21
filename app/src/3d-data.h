@@ -115,7 +115,7 @@ static Color8 textureData[] = {
 	Color8(  0,   0, 255)
 };
 
-unsigned char ComputeMiddleGradient(unsigned int stride, unsigned int value)
+static unsigned char ComputeMiddleGradient(unsigned int stride, unsigned int value)
 {
 	const bool evenStride = stride % 2 == 0;
 	const int transformedValue = value - (stride / 2);
@@ -127,9 +127,9 @@ unsigned char ComputeMiddleGradient(unsigned int stride, unsigned int value)
 	return index * indexMultiplier;
 }
 
-ITexture2D* GeneratePatternTexture(IRendererResourceManager* rm, int width, int height)
+static std::unique_ptr<Color8[]> GeneratePatternTexture(IRendererResourceManager* rm, int width, int height)
 {
-	Color8* pixels = new Color8[width * height];
+	std::unique_ptr<Color8[]> pixels = std::make_unique<Color8[]>(width * height);
 
 	for (int i = 0; i < width; i++)
 	{
@@ -141,16 +141,12 @@ ITexture2D* GeneratePatternTexture(IRendererResourceManager* rm, int width, int 
 		}
 	}
 
-	ITexture2D* result = rm->CreateTexture2D(pixels, sizeof(pixels[0]) * width * height, Dimensions(width, height));
-
-	delete[] pixels;
-
-	return result;
+	return std::move(pixels);
 }
 
-ITexture2D* GeneratePatternTexture2(IRendererResourceManager* rm, int width, int height)
+static std::unique_ptr<Color8[]> GeneratePatternTexture2(IRendererResourceManager* rm, int width, int height)
 {
-	Color8* pixels = new Color8[width * height];
+	std::unique_ptr<Color8[]> pixels = std::make_unique<Color8[]>(width * height);
 
 	for (int i = 0; i < width; i++)
 	{
@@ -164,9 +160,5 @@ ITexture2D* GeneratePatternTexture2(IRendererResourceManager* rm, int width, int
 		}
 	}
 
-	ITexture2D* result = rm->CreateTexture2D(pixels, sizeof(pixels[0]) * width * height, Dimensions(width, height));
-
-	delete[] pixels;
-
-	return result;
+	return std::move(pixels);
 }

@@ -177,6 +177,15 @@
     <ClInclude Include="include\rendering\data-generation\rendering-rule\lambert-rendering-rule-generator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\rendering\data-generation\texture-2d\i-texture-2d-generator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\containers\texture-data.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rendering\data-generation\texture-2d\raw-data-texture-2d-generator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core-systems.cpp">
@@ -246,6 +255,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\rendering\data-generation\rendering-rule\lambert-rendering-rule-generator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\containers\texture-data.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rendering\data-generation\texture-2d\raw-data-texture-2d-generator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

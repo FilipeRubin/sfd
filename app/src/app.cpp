@@ -4,6 +4,7 @@
 #include <rendering/data-generation/mesh-3d/cube-mesh-3d-generator.h>
 #include <rendering/data-generation/rendering-rule/unshaded-rendering-rule-generator.h>
 #include <rendering/data-generation/rendering-rule/lambert-rendering-rule-generator.h>
+#include <rendering/data-generation/texture-2d/raw-data-texture-2d-generator.h>
 
 void App::Init(GraphicsWindow& graphicsWindow)
 {
@@ -15,13 +16,15 @@ void App::Init(GraphicsWindow& graphicsWindow)
 
 void App::Start()
 {
+	std::unique_ptr<Color8[]> patTexture1 = GeneratePatternTexture(resourceManager, 16, 16);
+	std::unique_ptr<Color8[]> patTexture2 = GeneratePatternTexture2(resourceManager, 16, 16);
+
 	lambertRenderingRule = renderer->GetResourceManager()->CreateRenderingRule(LambertRenderingRuleGenerator());
 	unshadedRenderingRule = renderer->GetResourceManager()->CreateRenderingRule(UnshadedRenderingRuleGenerator());
-	PlaneMesh3DGenerator planeGen = PlaneMesh3DGenerator({ 50.0f, 50.0f });
 	cubeMesh = resourceManager->Create3DMesh(CubeMesh3DGenerator({4.0f, 4.0f, 1.5f}));
-	planeMesh = resourceManager->Create3DMesh(planeGen);
-	cubeTexture = GeneratePatternTexture(resourceManager, 16, 16);
-	planeTexture = GeneratePatternTexture2(resourceManager, 16, 16);
+	planeMesh = resourceManager->Create3DMesh(PlaneMesh3DGenerator({ 50.0f, 50.0f }));
+	cubeTexture = resourceManager->CreateTexture2D(RawDataTexture2DGenerator(patTexture1.get(), {16, 16}));
+	planeTexture = resourceManager->CreateTexture2D(RawDataTexture2DGenerator(patTexture1.get(), {16, 16}));
 
 	cameraParameter = renderer->GetParameterManager()->CreateCamera3D();
 	lightParameter = renderer->GetParameterManager()->CreateDirectionalLight();

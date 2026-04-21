@@ -13,11 +13,8 @@ SourceContainer::SourceContainer(SourceContainer&& other) noexcept :
     m_sources(other.m_sources),
     m_sourceCount(other.m_sourceCount)
 {
-    if (this != &other)
-    {
-        other.m_sources = nullptr;
-        other.m_sourceCount = 0ULL;
-    }
+    other.m_sources = nullptr;
+    other.m_sourceCount = 0ULL;
 }
 
 SourceContainer::~SourceContainer()

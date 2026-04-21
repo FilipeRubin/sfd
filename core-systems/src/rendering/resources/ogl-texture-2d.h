@@ -7,13 +7,13 @@
 class OGLTexture2D : public ITexture2D, public IRendererManaged
 {
 public:
-	OGLTexture2D(Color8* data, size_t dataSize, const Dimensions& size);
+	OGLTexture2D(const Color8* data, const Dimensions& dimensions);
+	~OGLTexture2D();
 	void Bind() override;
 	void Create() override;
 	void Destroy() override;
 private:
 	Color8* m_data;
-	size_t m_dataSize;
-	Dimensions m_size;
+	Dimensions m_dimensions;
 	unsigned int m_texture;
 };

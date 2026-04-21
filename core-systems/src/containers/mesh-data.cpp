@@ -15,13 +15,10 @@ MeshData::MeshData(MeshData&& other) noexcept :
 	m_indices(other.m_indices),
 	m_indiceCount(other.m_indiceCount)
 {
-	if (&other != this)
-	{
-		other.m_vertices = nullptr;
-		other.m_verticeCount = 0ULL;
-		other.m_indices = nullptr;
-		other.m_indiceCount = 0ULL;
-	}
+	other.m_vertices = nullptr;
+	other.m_verticeCount = 0ULL;
+	other.m_indices = nullptr;
+	other.m_indiceCount = 0ULL;
 }
 
 MeshData& MeshData::operator=(MeshData&& other) noexcept
