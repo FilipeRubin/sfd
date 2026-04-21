@@ -3,27 +3,24 @@
 
 MeshData::MeshData() :
 	m_vertices(nullptr),
-	m_verticesCount(0ULL),
+	m_verticeCount(0ULL),
 	m_indices(nullptr),
-	m_indicesCount(0ULL)
+	m_indiceCount(0ULL)
 {
 }
 
 MeshData::MeshData(MeshData&& other) noexcept :
 	m_vertices(other.m_vertices),
-	m_verticesCount(other.m_verticesCount),
+	m_verticeCount(other.m_verticeCount),
 	m_indices(other.m_indices),
-	m_indicesCount(other.m_indicesCount)
+	m_indiceCount(other.m_indiceCount)
 {
 	if (&other != this)
 	{
-		delete[] m_vertices;
-		delete[] m_indices;
-
 		other.m_vertices = nullptr;
-		other.m_verticesCount = 0ULL;
+		other.m_verticeCount = 0ULL;
 		other.m_indices = nullptr;
-		other.m_indicesCount = 0ULL;
+		other.m_indiceCount = 0ULL;
 	}
 }
 
@@ -35,14 +32,14 @@ MeshData& MeshData::operator=(MeshData&& other) noexcept
 		delete[] m_indices;
 
 		m_vertices = other.m_vertices;
-		m_verticesCount = other.m_verticesCount;
+		m_verticeCount = other.m_verticeCount;
 		m_indices = other.m_indices;
-		m_indicesCount = other.m_indicesCount;
+		m_indiceCount = other.m_indiceCount;
 
 		other.m_vertices = nullptr;
-		other.m_verticesCount = 0ULL;
+		other.m_verticeCount = 0ULL;
 		other.m_indices = nullptr;
-		other.m_indicesCount = 0ULL;
+		other.m_indiceCount = 0ULL;
 	}
 
 	return *this;
@@ -60,7 +57,7 @@ void MeshData::SetVertices(const Vertex3D* vertices, size_t count)
 
 	m_vertices = new Vertex3D[count];
 	std::memcpy(m_vertices, vertices, count * sizeof(Vertex3D));
-	m_verticesCount = count;
+	m_verticeCount = count;
 }
 
 void MeshData::SetIndices(const unsigned int* indices, size_t count)
@@ -69,7 +66,7 @@ void MeshData::SetIndices(const unsigned int* indices, size_t count)
 
 	m_indices = new unsigned int[count];
 	std::memcpy(m_indices, indices, count * sizeof(unsigned int));
-	m_indicesCount = count;
+	m_indiceCount = count;
 }
 
 const Vertex3D* MeshData::GetVertices() const
@@ -77,9 +74,9 @@ const Vertex3D* MeshData::GetVertices() const
 	return m_vertices;
 }
 
-size_t MeshData::GetVerticesCount() const
+size_t MeshData::GetVerticeCount() const
 {
-	return m_verticesCount;
+	return m_verticeCount;
 }
 
 const unsigned int* MeshData::GetIndices() const
@@ -87,7 +84,7 @@ const unsigned int* MeshData::GetIndices() const
 	return m_indices;
 }
 
-size_t MeshData::GetIndicesCount() const
+size_t MeshData::GetIndiceCount() const
 {
-	return m_indicesCount;
+	return m_indiceCount;
 }
