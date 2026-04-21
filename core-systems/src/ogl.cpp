@@ -321,12 +321,12 @@ static void LoadOGLFuncs()
 	glLinkProgram = (PFNGLLINKPROGRAMPROC)wglGetProcAddress("glLinkProgram");
 	glPixelStorei = (PFNGLPIXELSTOREIPROC)GetProcAddress(s_glLib, "glPixelStorei");
 	glShaderSource = (PFNGLSHADERSOURCEPROC)wglGetProcAddress("glShaderSource");
-	glTexImage2D = (PFNGLTEXIMAGE2DPROC)wglGetProcAddress("glTexImage2D");
-	glTexParameteri = (PFNGLTEXPARAMETERIPROC)wglGetProcAddress("glTexParameteri");
+	glTexImage2D = (PFNGLTEXIMAGE2DPROC)GetProcAddress(s_glLib, "glTexImage2D");
+	glTexParameteri = (PFNGLTEXPARAMETERIPROC)GetProcAddress(s_glLib, "glTexParameteri");
 	glUseProgram = (PFNGLUSEPROGRAMPROC)wglGetProcAddress("glUseProgram");
 	glUniform3fv = (PFNGLUNIFORM3FVPROC)wglGetProcAddress("glUniform3fv");
 	glUniform4fv = (PFNGLUNIFORM4FVPROC)wglGetProcAddress("glUniform4fv");
 	glUniformMatrix4fv = (PFNGLUNIFORMMATRIX4FVPROC)wglGetProcAddress("glUniformMatrix4fv");
 	glVertexAttribPointer = (PFNGLVERTEXATTRIBPOINTERPROC)wglGetProcAddress("glVertexAttribPointer");
-	glViewport = (PFNGLVIEWPORTPROC)wglGetProcAddress("glViewport");
+	glViewport = (PFNGLVIEWPORTPROC)GetProcAddress(s_glLib, "glViewport");
 }
