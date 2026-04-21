@@ -11,8 +11,7 @@ class OGLRendererResourceManager : public IRendererResourceManager
 public:
 	OGLRendererResourceManager(OGLGraphicsBackend* backend);
 	~OGLRendererResourceManager();
-	IRenderingRule* CreateLambertRenderingRule() override;
-	IRenderingRule* CreateUnshadedRenderingRule() override;
+	IRenderingRule* CreateRenderingRule(const IRenderingRuleGenerator& generator) override;
 	IMesh3D* Create3DMesh(const IMesh3DGenerator& generator) override;
 	ITexture2D* CreateTexture2D(Color8* data, size_t dataLength, const Dimensions& size) override;
 	void Update();

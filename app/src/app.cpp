@@ -1,7 +1,9 @@
 #include "app.h"
 #include "3d-data.h"
-#include <rendering/data-generation/plane-mesh-3d-generator.h>
-#include <rendering/data-generation/cube-mesh-3d-generator.h>
+#include <rendering/data-generation/mesh-3d/plane-mesh-3d-generator.h>
+#include <rendering/data-generation/mesh-3d/cube-mesh-3d-generator.h>
+#include <rendering/data-generation/rendering-rule/unshaded-rendering-rule-generator.h>
+#include <rendering/data-generation/rendering-rule/lambert-rendering-rule-generator.h>
 
 void App::Init(GraphicsWindow& graphicsWindow)
 {
@@ -13,8 +15,8 @@ void App::Init(GraphicsWindow& graphicsWindow)
 
 void App::Start()
 {
-	lambertRenderingRule = renderer->GetResourceManager()->CreateLambertRenderingRule();
-	unshadedRenderingRule = renderer->GetResourceManager()->CreateUnshadedRenderingRule();
+	lambertRenderingRule = renderer->GetResourceManager()->CreateRenderingRule(LambertRenderingRuleGenerator());
+	unshadedRenderingRule = renderer->GetResourceManager()->CreateRenderingRule(UnshadedRenderingRuleGenerator());
 	PlaneMesh3DGenerator planeGen = PlaneMesh3DGenerator({ 50.0f, 50.0f });
 	cubeMesh = resourceManager->Create3DMesh(CubeMesh3DGenerator({4.0f, 4.0f, 1.5f}));
 	planeMesh = resourceManager->Create3DMesh(planeGen);

@@ -150,16 +150,31 @@
     <ClInclude Include="src\rendering\parameters\ogl-transform-3d-parameter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\rendering\data-generation\i-mesh-3d-generator.h">
+    <ClInclude Include="include\rendering\data-generation\mesh-3d\i-mesh-3d-generator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\rendering\data-generation\cube-mesh-3d-generator.h">
+    <ClInclude Include="include\rendering\data-generation\mesh-3d\cube-mesh-3d-generator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\containers\mesh-data.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\rendering\data-generation\plane-mesh-3d-generator.h">
+    <ClInclude Include="include\rendering\data-generation\mesh-3d\plane-mesh-3d-generator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rendering\data-generation\rendering-rule\i-rendering-rule-generator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rendering\data-generation\rendering-rule\unshaded-rendering-rule-generator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\containers\source-collection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\containers\source-container.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rendering\data-generation\rendering-rule\lambert-rendering-rule-generator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -215,13 +230,22 @@
     <ClCompile Include="src\rendering\parameters\ogl-transform-3d-parameter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\rendering\data-generation\cube-mesh-3d-generator.cpp">
+    <ClCompile Include="src\rendering\data-generation\mesh-3d\cube-mesh-3d-generator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\containers\mesh-data.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\rendering\data-generation\plane-mesh-3d-generator.cpp">
+    <ClCompile Include="src\rendering\data-generation\mesh-3d\plane-mesh-3d-generator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rendering\data-generation\rendering-rule\unshaded-rendering-rule-generator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\containers\source-container.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rendering\data-generation\rendering-rule\lambert-rendering-rule-generator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

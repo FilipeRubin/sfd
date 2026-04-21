@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -163,8 +163,13 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\containers\source-collection.h" />
+    <ClInclude Include="include\containers\source-container.h" />
     <ClInclude Include="include\core-systems.h" />
-    <ClInclude Include="include\rendering\data-generation\plane-mesh-3d-generator.h" />
+    <ClInclude Include="include\rendering\data-generation\rendering-rule\i-rendering-rule-generator.h" />
+    <ClInclude Include="include\rendering\data-generation\mesh-3d\plane-mesh-3d-generator.h" />
+    <ClInclude Include="include\rendering\data-generation\rendering-rule\lambert-rendering-rule-generator.h" />
+    <ClInclude Include="include\rendering\data-generation\rendering-rule\unshaded-rendering-rule-generator.h" />
     <ClInclude Include="include\rendering\parameters\i-camera-3d-parameter.h" />
     <ClInclude Include="include\rendering\i-renderer-parameter-manager.h" />
     <ClInclude Include="include\rendering\parameters\i-directional-light-parameter.h" />
@@ -191,8 +196,8 @@
     <ClInclude Include="src\data\lambert-shader.h" />
     <ClInclude Include="src\data\unshaded-shader.h" />
     <ClInclude Include="src\input\win32-basic-input.h" />
-    <ClInclude Include="include\rendering\data-generation\cube-mesh-3d-generator.h" />
-    <ClInclude Include="include\rendering\data-generation\i-mesh-3d-generator.h" />
+    <ClInclude Include="include\rendering\data-generation\mesh-3d\cube-mesh-3d-generator.h" />
+    <ClInclude Include="include\rendering\data-generation\mesh-3d\i-mesh-3d-generator.h" />
     <ClInclude Include="src\rendering\i-renderer-managed.h" />
     <ClInclude Include="include\rendering\i-renderer-resource-manager.h" />
     <ClInclude Include="include\rendering\i-renderer.h" />
@@ -214,9 +219,12 @@
     <ClInclude Include="src\win32-window.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\rendering\data-generation\plane-mesh-3d-generator.cpp" />
+    <ClCompile Include="src\rendering\data-generation\rendering-rule\lambert-rendering-rule-generator.cpp" />
+    <ClCompile Include="src\containers\source-container.cpp" />
+    <ClCompile Include="src\rendering\data-generation\rendering-rule\unshaded-rendering-rule-generator.cpp" />
+    <ClCompile Include="src\rendering\data-generation\mesh-3d\plane-mesh-3d-generator.cpp" />
     <ClCompile Include="src\containers\mesh-data.cpp" />
-    <ClCompile Include="src\rendering\data-generation\cube-mesh-3d-generator.cpp" />
+    <ClCompile Include="src\rendering\data-generation\mesh-3d\cube-mesh-3d-generator.cpp" />
     <ClCompile Include="src\types\color.cpp" />
     <ClCompile Include="src\types\color8.cpp" />
     <ClCompile Include="src\core-systems.cpp" />

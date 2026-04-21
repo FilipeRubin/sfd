@@ -2,9 +2,9 @@
 #include "resources/ogl-rendering-rule.h"
 #include "resources/ogl-mesh-3d.h"
 #include "resources/ogl-texture-2d.h"
-
 #include <data/lambert-shader.h>
 #include <data/unshaded-shader.h>
+#include <containers/source-container.h>
 
 using std::unique_ptr;
 using std::list;
@@ -43,14 +43,28 @@ OGLRendererResourceManager::~OGLRendererResourceManager()
         currentBackend->MakeCurrent();
 }
 
-IRenderingRule* OGLRendererResourceManager::CreateLambertRenderingRule()
+IRenderingRule* OGLRendererResourceManager::CreateRenderingRule(const IRenderingRuleGenerator& generator)
 {
-    return CreateResource<OGLRenderingRule>(lambertVertexShaderSource, lambertFragmentShaderSource);
-}
-
-IRenderingRule* OGLRendererResourceManager::CreateUnshadedRenderingRule()
-{
-    return CreateResource<OGLRenderingRule>(unshadedVertexShaderSource, unshadedFragmentShaderSource);;
+    switch (generator.GetType())
+    {
+    case IRenderingRuleGenerator::Type::UNSHADED:
+        return CreateResource<OGLRenderingRule>(unshadedVertexShaderSource, unshadedFragmentShaderSource);
+    case IRenderingRuleGenerator::Type::LAMBERT:
+        return CreateResource<OGLRenderingRule>(lambertVertexShaderSource, lambertFragmentShaderSource);
+    case IRenderingRuleGenerator::Type::CUSTOM:
+    {
+        const SourceContainer* shaderSources = static_cast<const SourceContainer*>(generator.GetCustomData());
+        if (shaderSources == nullptr)
+            return nullptr;
+        if (shaderSources->GetSourceCount() != 2ULL)
+            return nullptr;
+        const char* vertexShaderSource = shaderSources->GetSource(0U);
+        const char* fragmentShaderSource = shaderSources->GetSource(1U);
+        return CreateResource<OGLRenderingRule>(vertexShaderSource, fragmentShaderSource);
+    }
+    default:
+        return nullptr;
+    }
 }
 
 IMesh3D* OGLRendererResourceManager::Create3DMesh(const IMesh3DGenerator& generator)

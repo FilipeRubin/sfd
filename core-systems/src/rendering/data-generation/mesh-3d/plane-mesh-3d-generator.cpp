@@ -1,4 +1,4 @@
-#include <rendering/data-generation/plane-mesh-3d-generator.h>
+#include <rendering/data-generation/mesh-3d/plane-mesh-3d-generator.h>
 
 PlaneMesh3DGenerator::PlaneMesh3DGenerator(Vector2 dimensions) :
 	m_dimensions(dimensions)

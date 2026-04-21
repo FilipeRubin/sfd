@@ -1,4 +1,4 @@
-#include <rendering/data-generation/cube-mesh-3d-generator.h>
+#include <rendering/data-generation/mesh-3d/cube-mesh-3d-generator.h>
 
 CubeMesh3DGenerator::CubeMesh3DGenerator(const Vector3& dimensions) :
 	m_dimensions(dimensions)
