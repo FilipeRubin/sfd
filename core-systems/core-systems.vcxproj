@@ -165,6 +165,7 @@
   <ItemGroup>
     <ClInclude Include="include\containers\source-collection.h" />
     <ClInclude Include="include\containers\source-container.h" />
+    <ClInclude Include="include\containers\fixed-array.h" />
     <ClInclude Include="include\containers\texture-data.h" />
     <ClInclude Include="include\core-systems.h" />
     <ClInclude Include="include\rendering\data-generation\rendering-rule\i-rendering-rule-generator.h" />

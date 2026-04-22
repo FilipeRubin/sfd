@@ -186,6 +186,9 @@
     <ClInclude Include="include\rendering\data-generation\texture-2d\raw-data-texture-2d-generator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\containers\fixed-array.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core-systems.cpp">
