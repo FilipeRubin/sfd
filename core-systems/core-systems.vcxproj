@@ -197,6 +197,7 @@
     <ClInclude Include="include\math\vector4.h" />
     <ClInclude Include="include\rendering\resources\i-mesh-3d.h" />
     <ClInclude Include="include\rendering\i-drawable.h" />
+    <ClInclude Include="include\utils\shared.h" />
     <ClInclude Include="src\data\lambert-shader.h" />
     <ClInclude Include="src\data\unshaded-shader.h" />
     <ClInclude Include="src\input\win32-basic-input.h" />
