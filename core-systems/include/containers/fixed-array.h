@@ -1,5 +1,5 @@
 #pragma once
-#include <cstring>
+#include <algorithm>
 
 template<typename T>
 class FixedArray
@@ -15,7 +15,7 @@ public:
 		m_data(new T[other.m_elementCount]),
 		m_elementCount(other.m_elementCount)
 	{
-		std::memcpy(m_data, other.m_data, m_elementCount * sizeof(T));
+		std::copy(other.m_data, other.m_data + m_elementCount, m_data);
 	}
 
 	FixedArray(FixedArray&& other) noexcept :
@@ -39,7 +39,7 @@ public:
 			
 			m_data = new T[other.m_elementCount];
 			m_elementCount = other.m_elementCount;
-			std::memcpy(m_data, other.m_data, m_elementCount * sizeof(T));
+			std::copy(other.m_data, other.m_data + m_elementCount, m_data);
 		}
 		return *this;
 	}
@@ -48,6 +48,8 @@ public:
 	{
 		if (this != &other)
 		{
+			delete[] m_data;
+
 			m_data = other.m_data;
 			m_elementCount = other.m_elementCount;
 			
