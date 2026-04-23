@@ -24,14 +24,12 @@ OGLRendererResourceManager::~OGLRendererResourceManager()
     {
         m_backend->MakeCurrent();
     }
-    else
+
+    for (unique_ptr<IRendererManaged>& managed : m_waitingToCreate)
     {
-        for (unique_ptr<IRendererManaged>& managed : m_waitingToCreate)
-        {
-            managed->Destroy();
-        }
-        m_waitingToCreate.clear();
+        managed->Destroy();
     }
+    m_waitingToCreate.clear();
 
     for (unique_ptr<IRendererManaged>& managed : m_resources)
     {

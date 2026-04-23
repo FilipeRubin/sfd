@@ -32,7 +32,7 @@ void OGLMesh3D::Create()
 	glEnableVertexAttribArray(1U);
 	glEnableVertexAttribArray(2U);
 
-	GLsizeiptr indicesSize = m_vertices->GetElementCount() * sizeof(Vertex3D);
+	GLsizeiptr indicesSize = m_indices->GetElementCount() * sizeof(unsigned int);
 	glGenBuffers(1, &m_ebo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicesSize, m_indices->GetData(), GL_STATIC_DRAW);
