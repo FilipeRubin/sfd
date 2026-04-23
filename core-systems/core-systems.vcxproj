@@ -179,6 +179,7 @@
     <ClInclude Include="include\rendering\parameters\i-directional-light-parameter.h" />
     <ClInclude Include="include\rendering\parameters\i-render-parameter.h" />
     <ClInclude Include="include\rendering\parameters\i-transform-3d-parameter.h" />
+    <ClInclude Include="include\rendering\resources\i-renderer-resource.h" />
     <ClInclude Include="include\rendering\state\i-render-state.h" />
     <ClInclude Include="include\types\camera-3d.h" />
     <ClInclude Include="include\types\color.h" />

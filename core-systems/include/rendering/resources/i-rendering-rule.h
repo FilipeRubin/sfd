@@ -1,6 +1,7 @@
 #pragma once
+#include "i-renderer-resource.h"
 
-class IRenderingRule
+class IRenderingRule : public IRendererResource
 {
 public:
 	virtual ~IRenderingRule() = default;

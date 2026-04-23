@@ -1,7 +1,8 @@
 #pragma once
+#include "i-renderer-resource.h"
 #include <types/dimensions.h>
 
-class ITexture2D
+class ITexture2D : public IRendererResource
 {
 public:
 	virtual ~ITexture2D() = default;

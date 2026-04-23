@@ -15,6 +15,14 @@ void OGLMesh3D::Draw()
 	glDrawElements(GL_TRIANGLES, m_indicesCount, GL_UNSIGNED_INT, NULL);
 }
 
+bool OGLMesh3D::IsValid() const
+{
+	return
+		m_vbo != 0U and
+		m_vao != 0U and
+		m_ebo != 0U;
+}
+
 void OGLMesh3D::Create()
 {
 	glGenVertexArrays(1, &m_vao);

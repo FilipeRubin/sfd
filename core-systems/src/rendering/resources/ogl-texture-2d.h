@@ -16,6 +16,7 @@ public:
 	OGLTexture2D& operator=(OGLTexture2D&& other) noexcept = delete;
 	void Bind() override;
 	const Dimensions& GetDimensions() const override;
+	bool IsValid() const override;
 	void Create() override;
 	void Destroy() override;
 private:

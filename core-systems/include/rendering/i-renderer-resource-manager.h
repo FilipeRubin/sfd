@@ -5,6 +5,7 @@
 #include "resources/i-rendering-rule.h"
 #include "resources/i-mesh-3d.h"
 #include "resources/i-texture-2d.h"
+#include "resources/i-renderer-resource.h"
 #include <types/color8.h>
 
 class IRendererResourceManager
@@ -14,4 +15,12 @@ public:
 	virtual IRenderingRule* CreateRenderingRule(const IRenderingRuleGenerator& generator) = 0;
 	virtual IMesh3D* Create3DMesh(const IMesh3DGenerator& generator) = 0;
 	virtual ITexture2D* CreateTexture2D(const ITexture2DGenerator& generator) = 0;
+	template<typename T>
+	void Destroy(T*& resource)
+	{
+		DestroyImpl(resource);
+		resource = nullptr;
+	}
+protected:
+	virtual void DestroyImpl(IRendererResource* resource) = 0;
 };

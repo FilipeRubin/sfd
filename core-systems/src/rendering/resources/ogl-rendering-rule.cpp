@@ -14,6 +14,11 @@ void OGLRenderingRule::Bind()
 	glUseProgram(m_program);
 }
 
+bool OGLRenderingRule::IsValid() const
+{
+	return m_program == 0U;
+}
+
 void OGLRenderingRule::Create()
 {
 	m_program = glCreateProgram();

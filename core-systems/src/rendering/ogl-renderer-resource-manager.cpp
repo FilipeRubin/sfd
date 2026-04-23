@@ -12,6 +12,7 @@ using std::list;
 OGLRendererResourceManager::OGLRendererResourceManager(OGLGraphicsBackend* backend) :
     m_backend(backend),
     m_waitingToCreate(list<unique_ptr<IRendererManaged>>()),
+    m_waitingToDestroy(list<unique_ptr<IRendererManaged>>()),
     m_resources(list<unique_ptr<IRendererManaged>>())
 {
 }
@@ -21,20 +22,18 @@ OGLRendererResourceManager::~OGLRendererResourceManager()
     OGLGraphicsBackend* currentBackend = OGLGraphicsBackend::GetCurrent();
     
     if (currentBackend != m_backend)
-    {
         m_backend->MakeCurrent();
-    }
+
+    for (unique_ptr<IRendererManaged>& managed : m_waitingToDestroy)
+        managed->Destroy();
+    m_waitingToDestroy.clear();
 
     for (unique_ptr<IRendererManaged>& managed : m_waitingToCreate)
-    {
         managed->Destroy();
-    }
     m_waitingToCreate.clear();
 
     for (unique_ptr<IRendererManaged>& managed : m_resources)
-    {
         managed->Destroy();
-    }
     m_resources.clear();
 
     if (currentBackend != m_backend)
@@ -91,5 +90,38 @@ void OGLRendererResourceManager::Update()
         m_resources.push_back(std::move(managed));
     }
 
+    for (unique_ptr<IRendererManaged>& managed : m_waitingToDestroy)
+    {
+        managed->Destroy();
+    }
+
     m_waitingToCreate.clear();
+    m_waitingToDestroy.clear();
+}
+
+void OGLRendererResourceManager::DestroyImpl(IRendererResource* resource)
+{
+    list<unique_ptr<IRendererManaged>>::iterator managedIt = std::find_if(m_resources.begin(), m_resources.end(),
+        [&resource](unique_ptr<IRendererManaged>& managed)
+        {
+            return dynamic_cast<IRendererManaged*>(resource) == managed.get();
+        });
+
+    if (managedIt != m_resources.end())
+    {
+        unique_ptr<IRendererManaged> managed = std::move(*managedIt);
+        m_resources.erase(managedIt);
+
+        bool isCurrentBackend = OGLGraphicsBackend::GetCurrent() == m_backend;
+        if (isCurrentBackend)
+        {
+            managed->Destroy();
+        }
+        else
+        {
+            m_waitingToDestroy.emplace_back(std::move(managed));
+        }
+
+        resource = nullptr;
+    }
 }

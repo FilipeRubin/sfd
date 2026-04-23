@@ -18,6 +18,7 @@ public:
 private:
 	OGLGraphicsBackend* m_backend;
 	std::list<std::unique_ptr<IRendererManaged>> m_waitingToCreate;
+	std::list<std::unique_ptr<IRendererManaged>> m_waitingToDestroy;
 	std::list<std::unique_ptr<IRendererManaged>> m_resources;
 	
 	template<typename T, typename... Args>
@@ -34,4 +35,5 @@ private:
 		container.emplace_back(std::move(resource));
 		return result;
 	}
+	void DestroyImpl(IRendererResource* resource) override;
 };

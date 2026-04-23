@@ -66,7 +66,7 @@ void App::Update()
 	cubeHeightOffset += 0.001f;
 
 	// Rule binding
-	if (useLambertRenderingRule)
+	if (useLambertRenderingRule and lambertRenderingRule != nullptr)
 	{
 		currentRenderingRule = lambertRenderingRule;
 		renderer->SetClearColor({ 0.05f, 0.1f, 0.2f });

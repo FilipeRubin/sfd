@@ -19,6 +19,11 @@ const Dimensions& OGLTexture2D::GetDimensions() const
     return m_dimensions;
 }
 
+bool OGLTexture2D::IsValid() const
+{
+    return m_texture != 0U;
+}
+
 void OGLTexture2D::Create()
 {
     glGenTextures(1, &m_texture);

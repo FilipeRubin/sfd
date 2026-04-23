@@ -9,6 +9,7 @@ class OGLRenderingRule : public IRenderingRule, public IRendererManaged
 public:
 	OGLRenderingRule(const char* vertexShaderSource, const char* fragmentShaderSource);
 	void Bind() override;
+	bool IsValid() const override;
 	void Create() override;
 	void Destroy() override;
 	void SetUniform(const char* name, const Vector3& value);
