@@ -127,32 +127,32 @@ static unsigned char ComputeMiddleGradient(unsigned int stride, unsigned int val
 	return index * indexMultiplier;
 }
 
-static std::unique_ptr<Color8[]> GeneratePatternTexture(IRendererResourceManager* rm, int width, int height)
+static Shared<FixedArray<Color8>> GeneratePatternTexture(IRendererResourceManager* rm, int width, int height)
 {
-	std::unique_ptr<Color8[]> pixels = std::make_unique<Color8[]>(width * height);
+	Shared<FixedArray<Color8>> pixels = Shared<FixedArray<Color8>>(new FixedArray<Color8>(width * height));
 
 	for (int i = 0; i < width; i++)
 	{
 		for (int j = height - 1; j >= 0; j--)
 		{
-			Color8& pixel = pixels[(j * width) + i];
+			Color8& pixel = (*pixels)[(j * width) + i];
 			pixel = Color8(255 / width * i, 255 / height * j, (255 / width * i + 255 / height * j) / 2);
 			pixel.b = std::max(std::max(255 - pixel.r, 255 - pixel.b), (int)pixel.b);
 		}
 	}
 
-	return std::move(pixels);
+	return pixels;
 }
 
-static std::unique_ptr<Color8[]> GeneratePatternTexture2(IRendererResourceManager* rm, int width, int height)
+static Shared<FixedArray<Color8>> GeneratePatternTexture2(IRendererResourceManager* rm, int width, int height)
 {
-	std::unique_ptr<Color8[]> pixels = std::make_unique<Color8[]>(width * height);
+	Shared<FixedArray<Color8>> pixels = Shared<FixedArray<Color8>>(new FixedArray<Color8>(width * height));
 
 	for (int i = 0; i < width; i++)
 	{
 		for (int j = height - 1; j >= 0; j--)
 		{
-			pixels[(j * width) + i] = Color8(
+			(*pixels)[(j * width) + i] = Color8(
 				ComputeMiddleGradient(width, i),
 				ComputeMiddleGradient(height, j),
 				0
@@ -160,5 +160,5 @@ static std::unique_ptr<Color8[]> GeneratePatternTexture2(IRendererResourceManage
 		}
 	}
 
-	return std::move(pixels);
+	return pixels;
 }

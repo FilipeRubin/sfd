@@ -16,15 +16,15 @@ void App::Init(GraphicsWindow& graphicsWindow)
 
 void App::Start()
 {
-	std::unique_ptr<Color8[]> patTexture1 = GeneratePatternTexture(resourceManager, 16, 16);
-	std::unique_ptr<Color8[]> patTexture2 = GeneratePatternTexture2(resourceManager, 16, 16);
+	Shared<FixedArray<Color8>> patTexture1 = GeneratePatternTexture(resourceManager, 16, 16);
+	Shared<FixedArray<Color8>> patTexture2 = GeneratePatternTexture2(resourceManager, 16, 16);
 
 	lambertRenderingRule = renderer->GetResourceManager()->CreateRenderingRule(LambertRenderingRuleGenerator());
 	unshadedRenderingRule = renderer->GetResourceManager()->CreateRenderingRule(UnshadedRenderingRuleGenerator());
 	cubeMesh = resourceManager->Create3DMesh(CubeMesh3DGenerator({4.0f, 4.0f, 1.5f}));
 	planeMesh = resourceManager->Create3DMesh(PlaneMesh3DGenerator({ 50.0f, 50.0f }));
-	cubeTexture = resourceManager->CreateTexture2D(RawDataTexture2DGenerator(patTexture1.get(), {16, 16}));
-	planeTexture = resourceManager->CreateTexture2D(RawDataTexture2DGenerator(patTexture1.get(), {16, 16}));
+	cubeTexture = resourceManager->CreateTexture2D(RawDataTexture2DGenerator(patTexture1, {16, 16}));
+	planeTexture = resourceManager->CreateTexture2D(RawDataTexture2DGenerator(patTexture1, {16, 16}));
 
 	cameraParameter = renderer->GetParameterManager()->CreateCamera3D();
 	lightParameter = renderer->GetParameterManager()->CreateDirectionalLight();

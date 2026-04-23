@@ -6,8 +6,10 @@ class Shared
 public:
 	Shared(T* reference) :
 		m_reference(reference),
-		m_referenceCount(new size_t(1ULL))
+		m_referenceCount(nullptr)
 	{
+		if (m_reference != nullptr)
+			m_referenceCount = new size_t(1ULL);
 	}
 
 	Shared(const Shared& other) :
@@ -41,7 +43,7 @@ public:
 		return *this;
 	}
 
-	Shared& operator=(Shared&& other)
+	Shared& operator=(Shared&& other) noexcept
 	{
 		if (this != &other)
 		{
@@ -79,6 +81,21 @@ public:
 	const T* operator->() const noexcept
 	{
 		return m_reference;
+	}
+
+	bool operator==(T* pointer) const
+	{
+		return m_reference == pointer;
+	}
+
+	bool operator!=(T* pointer) const
+	{
+		return m_reference != pointer;
+	}
+
+	void Reset()
+	{
+		DecrementAndRelease();
 	}
 private:
 	T* m_reference;
