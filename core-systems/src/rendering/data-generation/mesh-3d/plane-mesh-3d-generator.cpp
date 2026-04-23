@@ -7,7 +7,7 @@ PlaneMesh3DGenerator::PlaneMesh3DGenerator(Vector2 dimensions) :
 
 MeshData PlaneMesh3DGenerator::GenerateMeshData() const
 {
-	Vertex3D vertices[]
+	Vertex3D rawVertices[]
 	{
 		{ {  m_dimensions.x / 2.0f, 0.0f,  m_dimensions.y / 2.0f }, { 0.0f, 1.0f, 0.0f }, { 1.0f, 0.0f } },
 		{ {  m_dimensions.x / 2.0f, 0.0f, -m_dimensions.y / 2.0f }, { 0.0f, 1.0f, 0.0f }, { 1.0f, 1.0f } },
@@ -15,14 +15,20 @@ MeshData PlaneMesh3DGenerator::GenerateMeshData() const
 		{ { -m_dimensions.x / 2.0f, 0.0f,  m_dimensions.y / 2.0f }, { 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f } }
 	};
 
-	unsigned int indices[]
+	unsigned int rawIndices[]
 	{
 		0U, 1U, 2U,
 		0U, 2U, 3U
 	};
 
+	Shared<FixedArray<Vertex3D>> vertices = Shared<FixedArray<Vertex3D>>(new FixedArray<Vertex3D>(24ULL));
+	Shared<FixedArray<unsigned int>> indices = Shared<FixedArray<unsigned int>>(new FixedArray<unsigned int>(36ULL));
+
+	std::copy(rawVertices, rawVertices + 4ULL, vertices->GetData());
+	std::copy(rawIndices, rawIndices + 6ULL, indices->GetData());
+
 	MeshData data;
-	data.SetVertices(vertices, 4ULL);
-	data.SetIndices(indices, 6ULL);
+	data.SetVertices(vertices);
+	data.SetIndices(indices);
 	return data;
 }

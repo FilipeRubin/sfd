@@ -2,22 +2,11 @@
 #include <ogl.h>
 #include <cstring>
 
-OGLMesh3D::OGLMesh3D(const Vertex3D* vertices, size_t verticesCount, const unsigned int* indices, size_t indicesCount) :
-	m_vbo(0U), m_vao(0U), m_ebo(0U),
-	m_indicesCount(0U),
-	m_cachedVertices(nullptr), m_cachedVerticesSize(0ULL),
-	m_cachedIndices(nullptr), m_cachedIndicesSize(0ULL)
+OGLMesh3D::OGLMesh3D(Shared<FixedArray<Vertex3D>> vertices, Shared<FixedArray<unsigned int>> indices) :
+	m_vbo(0U), m_vao(0U), m_ebo(0U), m_indicesCount(size_t(indices->GetElementCount())),
+	m_vertices(vertices),
+	m_indices(indices)
 {
-	m_cachedVertices = new Vertex3D[verticesCount];
-	m_cachedIndices = new unsigned int[indicesCount];
-
-	m_cachedVerticesSize = verticesCount * sizeof(Vertex3D);
-	m_cachedIndicesSize = indicesCount * sizeof(unsigned int);
-
-	std::memcpy(m_cachedVertices, vertices, m_cachedVerticesSize);
-	std::memcpy(m_cachedIndices, indices, m_cachedIndicesSize);
-
-	m_indicesCount = unsigned int(indicesCount);
 }
 
 void OGLMesh3D::Draw()
@@ -31,9 +20,10 @@ void OGLMesh3D::Create()
 	glGenVertexArrays(1, &m_vao);
 	glBindVertexArray(m_vao);
 
+	GLsizeiptr verticesSize = m_vertices->GetElementCount() * sizeof(Vertex3D);
 	glGenBuffers(1, &m_vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-	glBufferData(GL_ARRAY_BUFFER, m_cachedVerticesSize, m_cachedVertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, verticesSize, m_vertices->GetData(), GL_STATIC_DRAW);
 
 	glVertexAttribPointer(0U, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 8, (void*)0);
 	glVertexAttribPointer(1U, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 8, (void*)12);
@@ -42,11 +32,13 @@ void OGLMesh3D::Create()
 	glEnableVertexAttribArray(1U);
 	glEnableVertexAttribArray(2U);
 
+	GLsizeiptr indicesSize = m_vertices->GetElementCount() * sizeof(Vertex3D);
 	glGenBuffers(1, &m_ebo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_cachedIndicesSize, m_cachedIndices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicesSize, m_indices->GetData(), GL_STATIC_DRAW);
 
-	ClearCachedData();
+	m_vertices.Reset();
+	m_indices.Reset();
 }
 
 void OGLMesh3D::Destroy()
@@ -56,16 +48,4 @@ void OGLMesh3D::Destroy()
 	glDeleteBuffers(1, &m_ebo);
 
 	m_indicesCount = 0U;
-
-	ClearCachedData();
-}
-
-void OGLMesh3D::ClearCachedData()
-{
-	delete[] m_cachedVertices;
-	delete[] m_cachedIndices;
-	m_cachedVertices = nullptr;
-	m_cachedIndices = nullptr;
-	m_cachedVerticesSize = 0ULL;
-	m_cachedIndicesSize = 0ULL;
 }

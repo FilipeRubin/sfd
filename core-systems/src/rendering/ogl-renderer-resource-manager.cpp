@@ -72,9 +72,7 @@ IMesh3D* OGLRendererResourceManager::Create3DMesh(const IMesh3DGenerator& genera
     const MeshData& data = generator.GenerateMeshData();
     return CreateResource<OGLMesh3D>(
         data.GetVertices(),
-        data.GetVerticeCount(),
-        data.GetIndices(),
-        data.GetIndiceCount()
+        data.GetIndices()
     );
 }
 

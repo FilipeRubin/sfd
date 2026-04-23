@@ -7,7 +7,7 @@ CubeMesh3DGenerator::CubeMesh3DGenerator(const Vector3& dimensions) :
 
 MeshData CubeMesh3DGenerator::GenerateMeshData() const
 {
-	Vertex3D vertices[]
+	Vertex3D rawVertices[]
 	{
 		// Front (+Z)
 		{ { -m_dimensions.x / 2.0f, -m_dimensions.y / 2.0f,  m_dimensions.z  / 2.0f }, {  0.0f,  0.0f,  1.0f }, { 0.0f, 0.0f } },
@@ -46,7 +46,7 @@ MeshData CubeMesh3DGenerator::GenerateMeshData() const
 		{ { -m_dimensions.x / 2.0f, -m_dimensions.y / 2.0f,  m_dimensions.z  / 2.0f }, {  0.0f, -1.0f,  0.0f }, { 0.0f, 1.0f } }
 	};
 
-	unsigned int indices[]
+	unsigned int rawIndices[]
 	{
 		// Front (+Z)
 		0, 1, 2,
@@ -73,8 +73,14 @@ MeshData CubeMesh3DGenerator::GenerateMeshData() const
 		18, 19, 16
 	};
 
+	Shared<FixedArray<Vertex3D>> vertices = Shared<FixedArray<Vertex3D>>(new FixedArray<Vertex3D>(24ULL));
+	Shared<FixedArray<unsigned int>> indices = Shared<FixedArray<unsigned int>>(new FixedArray<unsigned int>(36ULL));
+	
+	std::copy(rawVertices, rawVertices + 24ULL, vertices->GetData());
+	std::copy(rawIndices, rawIndices + 36ULL, indices->GetData());
+
 	MeshData data;
-	data.SetVertices(vertices, 24ULL);
-	data.SetIndices(indices, 36ULL);
+	data.SetVertices(vertices);
+	data.SetIndices(indices);
 	return data;
 }
