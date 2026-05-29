@@ -18,6 +18,7 @@ public:
 	virtual IBasicInput* GetBasicInput() = 0;
 	virtual Dimensions GetSize() const = 0;
 	virtual float GetAspectRatio() const = 0;
+	virtual float GetTime() const = 0;
 	virtual WindowSizeCallback GetWindowSizeCallback() const = 0;
 	virtual void SetWindowSizeCallback(WindowSizeCallback windowSizeCallback) = 0;
 };

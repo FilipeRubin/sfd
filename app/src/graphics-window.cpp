@@ -1,5 +1,6 @@
 #include "graphics-window.h"
 #include <algorithm>
+#include <iostream>
 
 vector<GraphicsWindow*> GraphicsWindow::s_instances = vector<GraphicsWindow*>();
 

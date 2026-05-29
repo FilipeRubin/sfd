@@ -30,4 +30,6 @@ private:
 
 	float lightRotation = 0.0f;
 	float cubeHeightOffset = 0.0f;
+
+	float lastTime = 0.0f;
 };

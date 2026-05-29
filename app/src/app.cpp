@@ -12,6 +12,7 @@ void App::Init(GraphicsWindow& graphicsWindow)
 	resourceManager = renderer->GetResourceManager();
 	window = graphicsWindow.GetWindow();
 	input = window->GetBasicInput();
+	lastTime = window->GetTime();
 }
 
 void App::Start()
@@ -46,24 +47,27 @@ void App::Start()
 
 void App::Update()
 {
+	const float deltaTime = window->GetTime() - lastTime;
+	lastTime = window->GetTime();
+
 	// Input
 	if (input->IsKeyJustPressed(0x20)) // Spacebar
 		useLambertRenderingRule = not useLambertRenderingRule;
 	if (input->IsKeyDown(0x25)) // Left
-		cameraParameter->Camera().rotation.y -= 0.001f;
+		cameraParameter->Camera().rotation.y -= 0.75f * deltaTime;
 	if (input->IsKeyDown(0x26)) // Up
-		cameraParameter->Camera().rotation.x -= 0.001f;
+		cameraParameter->Camera().rotation.x -= 0.75f * deltaTime;
 	if (input->IsKeyDown(0x27)) // Right
-		cameraParameter->Camera().rotation.y += 0.001f;
+		cameraParameter->Camera().rotation.y += 0.75f * deltaTime;
 	if (input->IsKeyDown(0x28)) // Down
-		cameraParameter->Camera().rotation.x += 0.001f;
+		cameraParameter->Camera().rotation.x += 0.75f * deltaTime;
 
 	// Animation
 	cubeTransformParameter->Transform().position.y = 3.0f + (sinf(cubeHeightOffset) * 1.75f);
-	cubeTransformParameter->Transform().rotation.y += 0.00015f;
+	cubeTransformParameter->Transform().rotation.y += 0.15f * deltaTime;
 	lightParameter->Light().direction = Vector3(sinf(lightRotation), -0.5f, cosf(lightRotation));
-	lightRotation += 0.0005f;
-	cubeHeightOffset += 0.001f;
+	lightRotation += 0.005f * deltaTime;
+	cubeHeightOffset += 0.01f * deltaTime;
 
 	// Rule binding
 	if (useLambertRenderingRule and lambertRenderingRule != nullptr)

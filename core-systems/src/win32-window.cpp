@@ -10,7 +10,9 @@ Win32Window::Win32Window() :
     m_shouldClose(false),
     m_basicInput(Win32BasicInput()),
     m_windowSizeCallback(nullptr),
-    m_size(Dimensions())
+    m_size(Dimensions()),
+    m_frequency(0LL),
+    m_clockStart(0LL)
 {
 }
 
@@ -20,6 +22,7 @@ void Win32Window::Finalize()
     m_hwnd = nullptr;
     Decrement();
     m_shouldClose = false;
+    m_frequency = 0LL;
 }
 
 void Win32Window::Process()
@@ -49,6 +52,19 @@ bool Win32Window::TryInitialize(const WindowParameters& parameters)
     {
         return true;
     }
+
+    LARGE_INTEGER frequency;
+    LARGE_INTEGER clockStart;
+    if (QueryPerformanceFrequency(&frequency) == FALSE)
+    {
+        return false;
+    }
+    if (QueryPerformanceCounter(&clockStart) == FALSE)
+    {
+        return false;
+    }
+    m_frequency = frequency.QuadPart;
+    m_clockStart = clockStart.QuadPart;
 
     if (not TryIncrement())
     {
@@ -108,6 +124,13 @@ Dimensions Win32Window::GetSize() const
 float Win32Window::GetAspectRatio() const
 {
     return float(m_size.width) / float(m_size.height);
+}
+
+float Win32Window::GetTime() const
+{
+    LARGE_INTEGER counter;
+    QueryPerformanceCounter(&counter);
+    return float(double(counter.QuadPart - m_clockStart) / double(m_frequency));
 }
 
 WindowSizeCallback Win32Window::GetWindowSizeCallback() const

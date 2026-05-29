@@ -1,6 +1,5 @@
 #include "ogl-mesh-3d.h"
 #include <ogl.h>
-#include <cstring>
 
 OGLMesh3D::OGLMesh3D(Shared<FixedArray<Vertex3D>> vertices, Shared<FixedArray<unsigned int>> indices) :
 	m_vbo(0U), m_vao(0U), m_ebo(0U), m_indicesCount(unsigned int(indices->GetElementCount())),

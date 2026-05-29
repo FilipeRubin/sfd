@@ -15,6 +15,7 @@ public:
 	IBasicInput* GetBasicInput() override;
 	Dimensions GetSize() const override;
 	float GetAspectRatio() const override;
+	float GetTime() const override;
 	WindowSizeCallback GetWindowSizeCallback() const override;
 	void SetWindowSizeCallback(WindowSizeCallback windowSizeCallback) override;
 	void Close();
@@ -30,4 +31,6 @@ private:
 	Win32BasicInput m_basicInput;
 	WindowSizeCallback m_windowSizeCallback;
 	Dimensions m_size;
+	long long m_frequency;
+	long long m_clockStart;
 };
