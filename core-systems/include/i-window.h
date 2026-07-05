@@ -19,6 +19,7 @@ public:
 	virtual Dimensions GetSize() const = 0;
 	virtual float GetAspectRatio() const = 0;
 	virtual float GetTime() const = 0;
+	virtual void SetTitle(const wchar_t* title) = 0;
 	virtual WindowSizeCallback GetWindowSizeCallback() const = 0;
 	virtual void SetWindowSizeCallback(WindowSizeCallback windowSizeCallback) = 0;
 };

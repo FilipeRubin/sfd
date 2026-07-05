@@ -138,6 +138,11 @@ WindowSizeCallback Win32Window::GetWindowSizeCallback() const
     return m_windowSizeCallback;
 }
 
+void Win32Window::SetTitle(const wchar_t* title)
+{
+    SetWindowText((HWND)m_hwnd, title);
+}
+
 void Win32Window::SetWindowSizeCallback(WindowSizeCallback windowSizeCallback)
 {
     m_windowSizeCallback = windowSizeCallback;

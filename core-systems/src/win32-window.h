@@ -17,6 +17,7 @@ public:
 	float GetAspectRatio() const override;
 	float GetTime() const override;
 	WindowSizeCallback GetWindowSizeCallback() const override;
+	void SetTitle(const wchar_t* title) override;
 	void SetWindowSizeCallback(WindowSizeCallback windowSizeCallback) override;
 	void Close();
 	const void* GetHandle() const;
