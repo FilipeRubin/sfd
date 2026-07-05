@@ -21,9 +21,19 @@ struct Vector3
 		return Vector3(x + other.x, y + other.y, z + other.z);
 	}
 
+	inline constexpr Vector3 operator+(const float& value) const noexcept
+	{
+		return Vector3(x + value, y + value, z + value);
+	}
+
 	inline constexpr Vector3 operator-(const Vector3& other) const noexcept
 	{
 		return Vector3(x - other.x, y - other.y, z - other.z);
+	}
+
+	inline constexpr Vector3 operator-(const float& value) const noexcept
+	{
+		return Vector3(x - value, y - value, z - value);
 	}
 
 	inline constexpr Vector3 operator*(const Vector3& other) const noexcept
@@ -41,11 +51,24 @@ struct Vector3
 		return Vector3(x / other.x, y / other.y, z / other.z);
 	}
 
+	inline constexpr Vector3 operator/(const float& value) const noexcept
+	{
+		return Vector3(x / value, y / value, z / value);
+	}
+
 	inline constexpr Vector3& operator+=(const Vector3& other) noexcept
 	{
 		x += other.x;
 		y += other.y;
 		z += other.z;
+		return *this;
+	}
+
+	inline constexpr Vector3& operator-=(const Vector3& other) noexcept
+	{
+		x -= other.x;
+		y -= other.y;
+		z -= other.z;
 		return *this;
 	}
 };
