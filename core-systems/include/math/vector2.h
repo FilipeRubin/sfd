@@ -30,6 +30,11 @@ struct Vector2
 		return Vector2(x * other.x, y * other.y);
 	}
 
+	inline constexpr Vector2 operator*(const float& value) const noexcept
+	{
+		return Vector2(x * value, y * value);
+	}
+
 	inline constexpr Vector2 operator/(const Vector2& other) const noexcept
 	{
 		return Vector2(x / other.x, y / other.y);
