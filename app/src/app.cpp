@@ -5,6 +5,7 @@
 #include <rendering/data-generation/rendering-rule/unshaded-rendering-rule-generator.h>
 #include <rendering/data-generation/rendering-rule/lambert-rendering-rule-generator.h>
 #include <rendering/data-generation/texture-2d/raw-data-texture-2d-generator.h>
+#include <rendering/data-generation/texture-2d/checkerboard-texture-2d-generator.h>
 
 void App::Init(GraphicsWindow& graphicsWindow)
 {
@@ -22,10 +23,10 @@ void App::Start()
 
 	lambertRenderingRule = renderer->GetResourceManager()->CreateRenderingRule(LambertRenderingRuleGenerator());
 	unshadedRenderingRule = renderer->GetResourceManager()->CreateRenderingRule(UnshadedRenderingRuleGenerator());
-	cubeMesh = resourceManager->Create3DMesh(CubeMesh3DGenerator({4.0f, 4.0f, 1.5f}));
+	cubeMesh = resourceManager->Create3DMesh(CubeMesh3DGenerator({4.0f, 4.0f, 3.5f}));
 	planeMesh = resourceManager->Create3DMesh(PlaneMesh3DGenerator({ 50.0f, 50.0f }));
 	cubeTexture = resourceManager->CreateTexture2D(RawDataTexture2DGenerator(patTexture1, {16, 16}));
-	planeTexture = resourceManager->CreateTexture2D(RawDataTexture2DGenerator(patTexture1, {16, 16}));
+	planeTexture = resourceManager->CreateTexture2D(CheckerboardTexture2DGenerator({16, 16}, Color(0.0f, 1.0f, 0.0f), Color(1.0f, 0.0f, 1.0f)));
 
 	cameraParameter = renderer->GetParameterManager()->CreateCamera3D();
 	lightParameter = renderer->GetParameterManager()->CreateDirectionalLight();
@@ -63,7 +64,7 @@ void App::Update()
 		cameraParameter->Camera().rotation.x += 0.75f * deltaTime;
 
 	// Animation
-	cubeTransformParameter->Transform().position.y = 3.0f + (sinf(cubeHeightOffset) * 1.75f);
+	cubeTransformParameter->Transform().position.y = (cubeHeightOffset * 10.0f) + 3.0f + (sinf(cubeHeightOffset) * 1.75f);
 	cubeTransformParameter->Transform().rotation.y += 0.15f * deltaTime;
 	lightParameter->Light().direction = Vector3(sinf(lightRotation), -0.5f, cosf(lightRotation));
 	lightRotation += 0.005f * deltaTime;
