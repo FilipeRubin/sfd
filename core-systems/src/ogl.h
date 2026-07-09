@@ -26,6 +26,14 @@ typedef char GLchar;
 #define GL_TRIANGLES              0x0004
 #define GL_TRIANGLE_STRIP         0x0005
 #define GL_TRIANGLE_FAN           0x0006
+#define GL_FRONT                  0x0404
+#define GL_BACK                   0x0405
+#define GL_LEFT                   0x0406
+#define GL_RIGHT                  0x0407
+#define GL_FRONT_AND_BACK         0x0408
+#define GL_CW                     0x0900
+#define GL_CCW                    0x0901
+#define GL_CULL_FACE              0x0B44
 #define GL_DEPTH_TEST             0x0B71
 #define GL_STENCIL_TEST           0x0B90
 #define GL_UNPACK_SWAP_BYTES      0x0CF0
@@ -205,6 +213,7 @@ extern void          (*glClearColor)(GLfloat red, GLfloat green, GLfloat blue, G
 extern void          (*glCompileShader)(GLuint shader);
 extern GLuint        (*glCreateProgram)();
 extern GLuint        (*glCreateShader)(GLenum shaderType);
+extern void          (*glCullFace)(GLenum mode);
 extern void          (*glDeleteBuffers)(GLsizei n, GLuint* arrays);
 extern void          (*glDeleteProgram)(GLuint program);
 extern void          (*glDeleteShader)(GLuint shader);

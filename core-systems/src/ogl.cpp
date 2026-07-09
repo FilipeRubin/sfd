@@ -40,6 +40,7 @@ typedef void          (*PFNGLCLEARCOLORPROC)(GLfloat red, GLfloat green, GLfloat
 typedef void          (*PFNGLCOMPILESHADERPROC)(GLuint shader);
 typedef GLuint        (*PFNGLCREATEPROGRAMPROC)();
 typedef GLuint        (*PFNGLCREATESHADERPROC)(GLenum shaderType);
+typedef void          (*PFNGLCULLFACEPROC)(GLenum mode);
 typedef void          (*PFNGLDELETEBUFFERSPROC)(GLsizei n, GLuint* buffers);
 typedef void          (*PFNGLDELETEPROGRAMPROC)(GLuint program);
 typedef void          (*PFNGLDELETESHADERPROC)(GLuint shader);
@@ -83,6 +84,7 @@ void          (*glClearColor)(GLfloat red, GLfloat green, GLfloat blue, GLfloat 
 void          (*glCompileShader)(GLuint shader);
 GLuint        (*glCreateProgram)();
 GLuint        (*glCreateShader)(GLenum shaderType);
+void          (*glCullFace)(GLenum mode);
 void          (*glDeleteBuffers)(GLsizei n, GLuint* arrays);
 void          (*glDeleteProgram)(GLuint program);
 void          (*glDeleteShader)(GLuint shader);
@@ -298,6 +300,7 @@ static void LoadOGLFuncs()
 	glCompileShader = (PFNGLCOMPILESHADERPROC)wglGetProcAddress("glCompileShader");
 	glCreateProgram = (PFNGLCREATEPROGRAMPROC)wglGetProcAddress("glCreateProgram");
 	glCreateShader = (PFNGLCREATESHADERPROC)wglGetProcAddress("glCreateShader");
+	glCullFace = (PFNGLCULLFACEPROC)GetProcAddress(s_glLib, "glCullFace");
 	glDeleteBuffers = (PFNGLDELETEBUFFERSPROC)wglGetProcAddress("glDeleteBuffers");
 	glDeleteProgram = (PFNGLDELETEPROGRAMPROC)wglGetProcAddress("glDeleteProgram");
 	glDeleteShader = (PFNGLDELETESHADERPROC)wglGetProcAddress("glDeleteShader");

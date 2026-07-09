@@ -19,16 +19,14 @@ void App::Init(GraphicsWindow& graphicsWindow)
 
 void App::Start()
 {
-	Dimensions terrainGrid = { 10, 10 };
+	Dimensions terrainGrid = { 500, 500 };
 	size_t terrainDataSize = terrainGrid.width * terrainGrid.height;
 	Shared<FixedArray<float>> terrainData = Shared<FixedArray<float>>(new FixedArray<float>(terrainDataSize));
+
+	srand(time(NULL));
 	for (size_t i = 0; i < terrainDataSize; i++)
 	{
-		const size_t x = i % terrainGrid.width;
-		const size_t y = i / terrainGrid.width;
-		const float heightX = fabsf((float)x - (float)terrainGrid.width / 2.0f) / ((float)terrainGrid.width / 2.0f);
-		const float heightY = fabsf((float)y - (float)terrainGrid.height / 2.0f) / ((float)terrainGrid.height / 2.0f);
-		const float height = (heightX + heightY) * 2.0f;
+		const float height = float((rand() % 100) + 1.0f) / 100.0f;
 		(*terrainData)[i] = height;
 	}
 
@@ -48,13 +46,17 @@ void App::Start()
 	cameraParameter->Camera().vFOV = 3.1415f / 2.0f;
 	cameraParameter->Camera().zNear = 0.1f;
 	cameraParameter->Camera().zFar = 100.0f;
-	cameraParameter->Camera().position = Vector3(0.0f, -10.0f, 0.0f);
+	cameraParameter->Camera().position = Vector3(0.0f, -5.0f, 0.0f);
 
 	lightParameter->Light().ambient = Color(0.05f, 0.05f, 0.2f);
 	lightParameter->Light().diffuse = Color(1.0f, 0.85f, 0.7f);
 
-	transformParameter->Transform().position = { -2.5f, 0.0f, -2.5f };
-	transformParameter->Transform().scale = {10.0f, 1.0f, 10.0f};
+	transformParameter->Transform().scale = {200.0f, 1.0f, 200.0f};
+	transformParameter->Transform().position = {
+		-transformParameter->Transform().scale.x / 2.0f,
+		0.0f,
+		-transformParameter->Transform().scale.z / 2.0f 
+	};
 }
 
 void App::Update()
@@ -73,11 +75,23 @@ void App::Update()
 		cameraParameter->Camera().rotation.y += 0.75f * deltaTime;
 	if (input->IsKeyDown(0x28)) // Down
 		cameraParameter->Camera().rotation.x += 0.75f * deltaTime;
+	
+	if (input->IsKeyDown(0x41)) // A
+		transformParameter->Transform().position.x -= 1.5f * deltaTime;
+	if (input->IsKeyDown(0x44)) // D
+		transformParameter->Transform().position.x += 1.5f * deltaTime;
+	if (input->IsKeyDown(0x57)) // W
+		transformParameter->Transform().position.z += 1.5f * deltaTime;
+	if (input->IsKeyDown(0x53)) // S
+		transformParameter->Transform().position.z -= 1.5f * deltaTime;
+	if (input->IsKeyDown(0x51)) // Q
+		transformParameter->Transform().position.y -= 3.5f * deltaTime;
+	if (input->IsKeyDown(0x45)) // E
+		transformParameter->Transform().position.y += 3.5f * deltaTime;
 
 	// Animation
 	lightParameter->Light().direction = Vector3(sinf(lightRotation), -0.5f, cosf(lightRotation));
 	lightRotation += 0.005f * deltaTime;
-	transformParameter->Transform().scale.y = lightRotation * 20.0f;
 
 	// Rule binding
 	if (useLambertRenderingRule and lambertRenderingRule != nullptr)

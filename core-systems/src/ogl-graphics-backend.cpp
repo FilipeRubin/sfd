@@ -117,6 +117,7 @@ void OGLGraphicsBackend::SetDefaultRendererSettings()
 	wglMakeCurrent((HDC)m_hdc, (HGLRC)m_oglContext);
 
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
 
 	wglMakeCurrent((HDC)m_hdc, previousContext);
 }
