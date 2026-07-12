@@ -201,6 +201,9 @@
     <ClInclude Include="include\rendering\data-generation\mesh-3d\terrain-mesh-3d-generator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\input\mouse-button.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core-systems.cpp">

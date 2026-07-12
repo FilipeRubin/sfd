@@ -3,6 +3,8 @@
 #include "input/win32-basic-input.h"
 #include <Windows.h>
 
+static inline LRESULT ProcessMouseButtonMessage(const UINT& msg, const WPARAM& wParam, Win32BasicInput& input);
+
 static LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
@@ -42,6 +44,20 @@ static LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPara
 		unsigned char key = unsigned char(wParam);
 		basicInput->SetKeyState(key, false);
 		return 0;
+	}
+	case WM_LBUTTONDOWN:
+	case WM_LBUTTONUP:
+	case WM_MBUTTONDOWN:
+	case WM_MBUTTONUP:
+	case WM_RBUTTONDOWN:
+	case WM_RBUTTONUP:
+	case WM_XBUTTONDOWN:
+	case WM_XBUTTONUP:
+	case WM_MOUSEWHEEL:
+	{
+		Win32Window* window = (Win32Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+		Win32BasicInput* basicInput = (Win32BasicInput*)window->GetBasicInput();
+		return ProcessMouseButtonMessage(msg, wParam, *basicInput);
 	}
 	default:
 		return DefWindowProc(hwnd, msg, wParam, lParam);
@@ -98,4 +114,51 @@ void Win32WindowClass::Unregister()
 	UnregisterClass(m_className, (HINSTANCE)m_hInstance);
 	m_hInstance = nullptr;
 	m_className = nullptr;
+}
+
+LRESULT ProcessMouseButtonMessage(const UINT& msg, const WPARAM& wParam, Win32BasicInput& input)
+{
+	switch (msg)
+	{
+	case WM_LBUTTONDOWN:
+		input.SetMouseButtonState((MouseButton)MK_LBUTTON, true);
+		break;
+	case WM_LBUTTONUP:
+		input.SetMouseButtonState((MouseButton)MK_LBUTTON, false);
+		break;
+	case WM_MBUTTONDOWN:
+		input.SetMouseButtonState((MouseButton)MK_MBUTTON, true);
+		break;
+	case WM_MBUTTONUP:
+		input.SetMouseButtonState((MouseButton)MK_MBUTTON, false);
+		break;
+	case WM_RBUTTONDOWN:
+		input.SetMouseButtonState((MouseButton)MK_RBUTTON, true);
+		break;
+	case WM_RBUTTONUP:
+		input.SetMouseButtonState((MouseButton)MK_RBUTTON, false);
+		break;
+	case WM_XBUTTONDOWN:
+	{
+		WORD button = HIWORD(wParam);
+		if (button == XBUTTON1) input.SetMouseButtonState((MouseButton)MK_XBUTTON1, true);
+		else if (button == XBUTTON2) input.SetMouseButtonState((MouseButton)MK_XBUTTON2, true);
+		break;
+	}
+	case WM_XBUTTONUP:
+	{
+		WORD button = HIWORD(wParam);
+		if (button == XBUTTON1) input.SetMouseButtonState((MouseButton)MK_XBUTTON1, false);
+		else if (button == XBUTTON2) input.SetMouseButtonState((MouseButton)MK_XBUTTON2, false);
+		break;
+	}
+	case WM_MOUSEWHEEL:
+	{
+		short wheelDelta = GET_WHEEL_DELTA_WPARAM(wParam);
+		short mouseScroll = wheelDelta > 0 ? 1 : -1;
+		input.AddMouseScroll(mouseScroll);
+		break;
+	}
+	}
+	return 0;
 }

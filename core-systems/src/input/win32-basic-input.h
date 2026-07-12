@@ -8,9 +8,18 @@ public:
 	bool IsKeyJustPressed(unsigned char keyCode) const override;
 	bool IsKeyJustReleased(unsigned char keyCode) const override;
 	bool IsKeyDown(unsigned char keyCode) const override;
+	bool IsMouseButtonJustPressed(MouseButton mouseButton) const override;
+	bool IsMouseButtonJustReleased(MouseButton mouseButton) const override;
+	bool IsMouseButtonDown(MouseButton mouseButton) const override;
+	short GetMouseScroll() const override;
 	void SetKeyState(unsigned char keyCode, bool pressed);
+	void SetMouseButtonState(MouseButton mouseButton, bool pressed);
+	void AddMouseScroll(short mouseScroll);
 	void Update();
 private:
 	bool m_keyStates[256];
 	bool m_previouskeyStates[256];
+	unsigned char m_mouseButtonStateBitfield;
+	unsigned char m_previousMouseButtonStateBitfield;
+	short m_mouseScroll;
 };
