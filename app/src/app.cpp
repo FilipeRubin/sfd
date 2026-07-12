@@ -72,28 +72,28 @@ void App::Update()
 	lastTime = window->GetTime();
 
 	// Input
-	if (input->IsKeyJustPressed(0x20)) // Spacebar
+	if (input->IsKeyJustPressed(KeyboardKey::SPACE))
 		useLambertRenderingRule = not useLambertRenderingRule;
-	if (input->IsKeyDown(0x25)) // Left
+	if (input->IsKeyDown(KeyboardKey::LEFT))
 		cameraParameter->Camera().rotation.y -= 0.75f * deltaTime;
-	if (input->IsKeyDown(0x26)) // Up
+	if (input->IsKeyDown(KeyboardKey::UP))
 		cameraParameter->Camera().rotation.x -= 0.75f * deltaTime;
-	if (input->IsKeyDown(0x27)) // Right
+	if (input->IsKeyDown(KeyboardKey::RIGHT))
 		cameraParameter->Camera().rotation.y += 0.75f * deltaTime;
-	if (input->IsKeyDown(0x28)) // Down
+	if (input->IsKeyDown(KeyboardKey::DOWN))
 		cameraParameter->Camera().rotation.x += 0.75f * deltaTime;
 	
-	if (input->IsKeyDown(0x41)) // A
+	if (input->IsKeyDown(KeyboardKey::A))
 		transformParameter->Transform().position.x -= 1.5f * deltaTime;
-	if (input->IsKeyDown(0x44)) // D
+	if (input->IsKeyDown(KeyboardKey::D))
 		transformParameter->Transform().position.x += 1.5f * deltaTime;
-	if (input->IsKeyDown(0x57)) // W
+	if (input->IsKeyDown(KeyboardKey::W))
 		transformParameter->Transform().position.z += 1.5f * deltaTime;
-	if (input->IsKeyDown(0x53)) // S
+	if (input->IsKeyDown(KeyboardKey::S))
 		transformParameter->Transform().position.z -= 1.5f * deltaTime;
-	if (input->IsKeyDown(0x51)) // Q
+	if (input->IsKeyDown(KeyboardKey::Q))
 		cameraParameter->Camera().position.y += 3.5f * deltaTime;
-	if (input->IsKeyDown(0x45)) // E
+	if (input->IsKeyDown(KeyboardKey::E))
 		cameraParameter->Camera().position.y -= 3.5f * deltaTime;
 
 	if (input->IsMouseButtonJustPressed(MouseButton::LEFT))

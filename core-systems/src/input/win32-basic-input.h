@@ -5,9 +5,9 @@ class Win32BasicInput final : public IBasicInput
 {
 public:
 	Win32BasicInput();
-	bool IsKeyJustPressed(unsigned char keyCode) const override;
-	bool IsKeyJustReleased(unsigned char keyCode) const override;
-	bool IsKeyDown(unsigned char keyCode) const override;
+	bool IsKeyJustPressed(KeyboardKey key) const override;
+	bool IsKeyJustReleased(KeyboardKey key) const override;
+	bool IsKeyDown(KeyboardKey key) const override;
 	bool IsMouseButtonJustPressed(MouseButton mouseButton) const override;
 	bool IsMouseButtonJustReleased(MouseButton mouseButton) const override;
 	bool IsMouseButtonDown(MouseButton mouseButton) const override;

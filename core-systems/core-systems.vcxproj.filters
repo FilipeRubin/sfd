@@ -204,6 +204,9 @@
     <ClInclude Include="include\input\mouse-button.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\input\keyboard-key.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core-systems.cpp">

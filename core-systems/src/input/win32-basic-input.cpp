@@ -10,19 +10,19 @@ Win32BasicInput::Win32BasicInput() :
 {
 }
 
-bool Win32BasicInput::IsKeyJustPressed(unsigned char keyCode) const
+bool Win32BasicInput::IsKeyJustPressed(KeyboardKey key) const
 {
-	return m_keyStates[keyCode] == true and m_previouskeyStates[keyCode] == false;
+	return m_keyStates[(unsigned char)key] == true and m_previouskeyStates[(unsigned char)key] == false;
 }
 
-bool Win32BasicInput::IsKeyJustReleased(unsigned char keyCode) const
+bool Win32BasicInput::IsKeyJustReleased(KeyboardKey key) const
 {
-	return m_keyStates[keyCode] == false and m_previouskeyStates[keyCode] == true;
+	return m_keyStates[(unsigned char)key] == false and m_previouskeyStates[(unsigned char)key] == true;
 }
 
-bool Win32BasicInput::IsKeyDown(unsigned char keyCode) const
+bool Win32BasicInput::IsKeyDown(KeyboardKey key) const
 {
-	return m_keyStates[keyCode];
+	return m_keyStates[(unsigned char)key];
 }
 
 bool Win32BasicInput::IsMouseButtonJustPressed(MouseButton mouseButton) const
