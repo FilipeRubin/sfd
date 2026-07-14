@@ -12,9 +12,11 @@ public:
 	bool IsMouseButtonJustReleased(MouseButton mouseButton) const override;
 	bool IsMouseButtonDown(MouseButton mouseButton) const override;
 	short GetMouseScroll() const override;
+	Vector2 GetMouseMovement() const override;
 	void SetKeyState(unsigned char keyCode, bool pressed);
 	void SetMouseButtonState(MouseButton mouseButton, bool pressed);
 	void AddMouseScroll(short mouseScroll);
+	void UpdateMousePosition(Vector2 mousePosition);
 	void Update();
 private:
 	bool m_keyStates[256];
@@ -22,4 +24,6 @@ private:
 	unsigned char m_mouseButtonStateBitfield;
 	unsigned char m_previousMouseButtonStateBitfield;
 	short m_mouseScroll;
+	Vector2 m_mousePosition;
+	Vector2 m_previousMousePosition;
 };

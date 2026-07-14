@@ -5,6 +5,7 @@
 
 static inline LRESULT ProcessMouseButtonMessage(const UINT& msg, const WPARAM& wParam, Win32BasicInput& input);
 
+#include <iostream>
 static LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
@@ -58,6 +59,15 @@ static LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPara
 		Win32Window* window = (Win32Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
 		Win32BasicInput* basicInput = (Win32BasicInput*)window->GetBasicInput();
 		return ProcessMouseButtonMessage(msg, wParam, *basicInput);
+	}
+	case WM_MOUSEMOVE:
+	{
+		WORD x = LOWORD(lParam);
+		WORD y = HIWORD(lParam);
+		Win32Window* window = (Win32Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+		Win32BasicInput* basicInput = (Win32BasicInput*)window->GetBasicInput();
+		basicInput->UpdateMousePosition({ (float)x, (float)y });
+		return 0;
 	}
 	default:
 		return DefWindowProc(hwnd, msg, wParam, lParam);

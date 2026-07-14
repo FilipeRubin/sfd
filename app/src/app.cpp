@@ -38,13 +38,12 @@ void App::Start()
 		}
 	}
 
-	Shared<FixedArray<Color8>> patTexture1 = GeneratePatternTexture(resourceManager, 16, 16);
-	Shared<FixedArray<Color8>> patTexture2 = GeneratePatternTexture2(resourceManager, 16, 16);
+	Shared<FixedArray<Color8>> patTexture = GeneratePatternTexture(resourceManager, 16, 16);
 
 	lambertRenderingRule = renderer->GetResourceManager()->CreateRenderingRule(LambertRenderingRuleGenerator());
 	unshadedRenderingRule = renderer->GetResourceManager()->CreateRenderingRule(UnshadedRenderingRuleGenerator());
 	terrainMesh = resourceManager->Create3DMesh(TerrainMesh3DGenerator(terrainGrid, terrainData));
-	terrainTexture = resourceManager->CreateTexture2D(RawDataTexture2DGenerator(patTexture2, {16, 16}));
+	terrainTexture = resourceManager->CreateTexture2D(RawDataTexture2DGenerator(patTexture, { 16, 16 }));
 
 	cameraParameter = renderer->GetParameterManager()->CreateCamera3D();
 	lightParameter = renderer->GetParameterManager()->CreateDirectionalLight();
@@ -59,6 +58,7 @@ void App::Start()
 	lightParameter->Light().ambient = Color(0.05f, 0.05f, 0.2f);
 	lightParameter->Light().diffuse = Color(1.0f, 0.85f, 0.7f);
 
+	transformParameter->Transform().scale = {100.0f, 1.0f, 100.0f};
 	transformParameter->Transform().position = {
 		-transformParameter->Transform().scale.x / 2.0f,
 		0.0f,
@@ -71,45 +71,28 @@ void App::Update()
 	const float deltaTime = window->GetTime() - lastTime;
 	lastTime = window->GetTime();
 
-	// Input
+	// Input, camera and movement
 	if (input->IsKeyJustPressed(KeyboardKey::SPACE))
 		useLambertRenderingRule = not useLambertRenderingRule;
-	if (input->IsKeyDown(KeyboardKey::LEFT))
-		cameraParameter->Camera().rotation.y -= 0.75f * deltaTime;
-	if (input->IsKeyDown(KeyboardKey::UP))
-		cameraParameter->Camera().rotation.x -= 0.75f * deltaTime;
-	if (input->IsKeyDown(KeyboardKey::RIGHT))
-		cameraParameter->Camera().rotation.y += 0.75f * deltaTime;
-	if (input->IsKeyDown(KeyboardKey::DOWN))
-		cameraParameter->Camera().rotation.x += 0.75f * deltaTime;
-	
-	if (input->IsKeyDown(KeyboardKey::A))
-		transformParameter->Transform().position.x -= 1.5f * deltaTime;
-	if (input->IsKeyDown(KeyboardKey::D))
-		transformParameter->Transform().position.x += 1.5f * deltaTime;
-	if (input->IsKeyDown(KeyboardKey::W))
-		transformParameter->Transform().position.z += 1.5f * deltaTime;
-	if (input->IsKeyDown(KeyboardKey::S))
-		transformParameter->Transform().position.z -= 1.5f * deltaTime;
-	if (input->IsKeyDown(KeyboardKey::Q))
-		cameraParameter->Camera().position.y += 3.5f * deltaTime;
-	if (input->IsKeyDown(KeyboardKey::E))
-		cameraParameter->Camera().position.y -= 3.5f * deltaTime;
-
-	if (input->IsMouseButtonJustPressed(MouseButton::LEFT))
-		transformParameter->Transform().position.y += 1.0f;
-	else if (input->IsMouseButtonJustPressed(MouseButton::RIGHT))
-		transformParameter->Transform().position.y -= 1.0f;
-	if (input->IsMouseButtonJustReleased(MouseButton::MOUSE4))
-		transformParameter->Transform().scale.x += 1.0f;
-	else if (input->IsMouseButtonJustReleased(MouseButton::MOUSE5))
-		transformParameter->Transform().scale.z += 1.0f;
-	if (input->IsMouseButtonJustPressed(MouseButton::MIDDLE))
-		transformParameter->Transform().scale = { 1.0f, 1.0f, 1.0f };
-	
-	// Animation
-	lightParameter->Light().direction = Vector3(sinf(lightRotation), -0.5f, cosf(lightRotation));
-	lightRotation += 0.005f * deltaTime;
+	if (input->IsMouseButtonDown(MouseButton::LEFT))
+	{
+		Vector2 mouseMovement = input->GetMouseMovement();
+		cameraParameter->Camera().rotation.y += mouseMovement.x * 0.01;
+		cameraParameter->Camera().rotation.x += mouseMovement.y * 0.01;
+	}
+	{
+		Vector3& pos = cameraParameter->Camera().position;
+		Vector3& rot = cameraParameter->Camera().rotation;
+		Vector2 dir = {
+			float(input->IsKeyDown(KeyboardKey::D) - input->IsKeyDown(KeyboardKey::A)),
+			float(input->IsKeyDown(KeyboardKey::W) - input->IsKeyDown(KeyboardKey::S))
+		};
+		pos += Vector3(
+			dir.x * -cosf(rot.y) + dir.y * -sinf(rot.y),
+			0.0f,
+			dir.y * cosf(rot.y) + dir.x * -sinf(rot.y)
+		) * deltaTime * 15.0f;
+	}
 
 	// Rule binding
 	if (useLambertRenderingRule and lambertRenderingRule != nullptr)
@@ -135,9 +118,10 @@ void App::Update()
 	transformParameter->Bind(currentRenderingRule);
 	terrainTexture->Bind();
 	terrainMesh->Draw();
+	
 }
 
 void ProcessHeight(int x, int y, const int maxX, const int maxY, float& height)
 {
-	height = float(x) / maxX;
+	height = 0.0f;
 }

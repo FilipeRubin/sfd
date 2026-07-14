@@ -6,7 +6,9 @@ Win32BasicInput::Win32BasicInput() :
 	m_previouskeyStates{},
 	m_mouseButtonStateBitfield(0),
 	m_previousMouseButtonStateBitfield(0),
-	m_mouseScroll(0)
+	m_mouseScroll(0),
+	m_mousePosition(Vector2(0.0f, 0.0f)),
+	m_previousMousePosition(Vector2(0.0f, 0.0f))
 {
 }
 
@@ -47,6 +49,11 @@ short Win32BasicInput::GetMouseScroll() const
 	return m_mouseScroll;
 }
 
+Vector2 Win32BasicInput::GetMouseMovement() const
+{
+	return m_mousePosition - m_previousMousePosition;
+}
+
 void Win32BasicInput::SetKeyState(unsigned char keyCode, bool pressed)
 {
 	m_keyStates[keyCode] = pressed;
@@ -65,9 +72,15 @@ void Win32BasicInput::AddMouseScroll(short mouseScroll)
 	m_mouseScroll += mouseScroll;
 }
 
+void Win32BasicInput::UpdateMousePosition(Vector2 mousePosition)
+{
+	m_mousePosition = mousePosition;
+}
+
 void Win32BasicInput::Update()
 {
 	memcpy(m_previouskeyStates, m_keyStates, sizeof(m_keyStates));
 	m_previousMouseButtonStateBitfield = m_mouseButtonStateBitfield;
 	m_mouseScroll = 0;
+	m_previousMousePosition = m_mousePosition;
 }
