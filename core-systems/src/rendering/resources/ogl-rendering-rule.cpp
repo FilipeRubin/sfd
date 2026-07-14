@@ -16,7 +16,7 @@ void OGLRenderingRule::Bind()
 
 bool OGLRenderingRule::IsValid() const
 {
-	return m_program == 0U;
+	return m_program != 0U;
 }
 
 void OGLRenderingRule::Create()
