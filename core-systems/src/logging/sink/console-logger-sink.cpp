@@ -26,4 +26,5 @@ constexpr std::string LogLevelAsString(const LogLevel& logLevel)
 	case LogLevel::FATAL:
 		return "Fatal";
 	}
+	return "Unkown(" + std::to_string((int)logLevel) + ")";
 }
