@@ -77,8 +77,8 @@ void App::Update()
 	if (input->IsMouseButtonDown(MouseButton::LEFT))
 	{
 		Vector2 mouseMovement = input->GetMouseMovement();
-		cameraParameter->Camera().rotation.y += mouseMovement.x * 0.01;
-		cameraParameter->Camera().rotation.x += mouseMovement.y * 0.01;
+		cameraParameter->Camera().rotation.y += mouseMovement.x * 0.01f;
+		cameraParameter->Camera().rotation.x += mouseMovement.y * 0.01f;
 	}
 	{
 		Vector3& pos = cameraParameter->Camera().position;

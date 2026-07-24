@@ -170,6 +170,11 @@
     <ClInclude Include="include\core-systems.h" />
     <ClInclude Include="include\input\keyboard-key.h" />
     <ClInclude Include="include\input\mouse-button.h" />
+    <ClInclude Include="include\logging\logger.h" />
+    <ClInclude Include="include\logging\sink\console-logger-sink.h" />
+    <ClInclude Include="include\logging\sink\i-logger-sink.h" />
+    <ClInclude Include="include\logging\log-level.h" />
+    <ClInclude Include="include\logging\log-message.h" />
     <ClInclude Include="include\rendering\data-generation\mesh-3d\terrain-mesh-3d-generator.h" />
     <ClInclude Include="include\rendering\data-generation\rendering-rule\i-rendering-rule-generator.h" />
     <ClInclude Include="include\rendering\data-generation\mesh-3d\plane-mesh-3d-generator.h" />
@@ -229,6 +234,8 @@
     <ClInclude Include="src\win32-window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="include\logging\logger.cpp" />
+    <ClCompile Include="include\logging\sink\console-logger-sink.cpp" />
     <ClCompile Include="src\rendering\data-generation\mesh-3d\terrain-mesh-3d-generator.cpp" />
     <ClCompile Include="src\rendering\data-generation\texture-2d\checkerboard-texture-2d-generator.cpp" />
     <ClCompile Include="src\rendering\data-generation\texture-2d\raw-data-texture-2d-generator.cpp" />

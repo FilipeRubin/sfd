@@ -207,6 +207,21 @@
     <ClInclude Include="include\input\keyboard-key.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\logging\log-level.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\logging\log-message.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\logging\sink\i-logger-sink.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\logging\logger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\logging\sink\console-logger-sink.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core-systems.cpp">
@@ -288,6 +303,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\rendering\data-generation\mesh-3d\terrain-mesh-3d-generator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="include\logging\logger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="include\logging\sink\console-logger-sink.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
